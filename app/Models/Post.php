@@ -12,6 +12,6 @@ class Post extends Model
 
     //many to many dengan player
     public function teams() {
-        return $this->belongsToMany("App\Team", "point", "post_id", "team_id")->withPivot("points");
+        return $this->belongsToMany("App\Models\Team", "points", "post_id", "team_id")->withPivot("point");
     }
 }

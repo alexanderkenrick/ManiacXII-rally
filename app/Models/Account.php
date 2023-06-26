@@ -18,11 +18,11 @@ class Account extends Model
     // Relasi 1-1
     public function team()
     {
-        return $this->hasOne('App\Team', 'account_id', 'id');
+        return $this->hasOne('App\Models\Team', 'account_id', 'id');
     }
     // Relasi 1-1
     public function post()
     {
-        return $this->hasOne('App\Post', 'penpos_id', 'id');
+        return $this->hasOne('App\Models\Post', 'penpos_id', 'id');
     }
 }
