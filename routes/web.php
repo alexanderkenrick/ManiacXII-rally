@@ -21,6 +21,11 @@ Route::get('/penpos', function() {
     return view('penpos.input');
 })->name('input-penpos');
 
+Route::get('/peserta/dashboard', function() {
+    return view('peserta.dashboard');
+})->name('peserta-dashboard');
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
