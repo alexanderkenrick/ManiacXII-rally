@@ -74,6 +74,7 @@
                 console.log("TEST");
             },
             complete: function () {
+                // ------------------------------- ERROR ----------------------------------
                 $.ajax({
                     type: 'POST',
                     url: '{{ route('penpos.update') }}',
