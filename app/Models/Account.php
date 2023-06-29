@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
-class Account extends Model
+class Account extends Model implements Authenticatable
 {
     use HasFactory;
     protected $fillable = [
-        'username', 'password',
+        'username', 'password', 'role', 'name'
     ];
 
     protected $hidden = [
@@ -24,5 +26,34 @@ class Account extends Model
     public function post()
     {
         return $this->hasOne('App\Models\Post', 'penpos_id', 'id');
+    }
+
+    public function getAuthIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getAuthIdentifierName()
+    {
+        return 'id';
+    }
+    public function getRememberTokenName()
+    {
+        return 'remember_token';
+    }
+
+    public function getRememberToken()
+    {
+        return $this->{$this->getRememberTokenName()};
+    }
+
+    public function setRememberToken($value)
+    {
+        $this->{$this->getRememberTokenName()} = $value;
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->password;
     }
 }

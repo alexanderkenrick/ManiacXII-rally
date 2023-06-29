@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+//use http\Env\Request;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -27,7 +30,7 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-
+//    private $redirectTo = "";
     /**
      * Create a new controller instance.
      *
@@ -36,5 +39,40 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    public function index(Request $request)
+    {
+        return view('login-new');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => ['required'],
+            'password' => ['required']
+        ]);
+
+        if (Auth::attempt($credentials))
+        {
+            $request->session()->regenerate();
+
+            if (Auth::user()->role === "0")
+            {
+//                $redirectTo = RouteServiceProvider::ADMIN;
+                return redirect()->intended('/admin');
+            }
+            else if (Auth::user()->role === "1")
+            {
+//                $redirectTo = RouteServiceProvider::PENPOS;
+                return redirect()->intended('/penpos');
+            }
+            else if (Auth::user()->role === "2")
+            {
+//                $redirectTo = RouteServiceProvider::TEAM;
+                return redirect()->intended('/peserta/dashboard');
+            }
+        }
+
+        return back()->with('loginError', 'Login Gagal, kombinasi username dan password salah!');
     }
 }

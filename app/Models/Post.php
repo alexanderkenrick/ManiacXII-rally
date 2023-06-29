@@ -11,7 +11,12 @@ class Post extends Model
     protected $table = 'posts';
 
     //many to many dengan player
-    public function teams() {
-        return $this->belongsToMany("App\Models\Team", "points", "post_id", "team_id")->withPivot("point");
+    public function point() {
+        return $this->hasMany(Point::class);
+    }
+
+    public function account()
+    {
+        return $this->belongsTo('App\Models\Account', 'account_id', 'id');
     }
 }

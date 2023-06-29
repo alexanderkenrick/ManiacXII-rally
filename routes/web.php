@@ -17,14 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/penpos', function() {
-    return view('penpos.input');
-})->name('input-penpos');
+//Route::get('/penpos', function() {
+//    return view('penpos.input');
+//})->name('input-penpos');
+Route::get('/penpos', [\App\Http\Controllers\PenposController::class, 'index']);
+Route::post('/penpos-input', [\App\Http\Controllers\PenposController::class, 'inputPoin'])->name('penpos.input');
+Route::post('/penpos-update', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.update');
 
-Route::get('/peserta/dashboard', function() {
-    return view('peserta.dashboard');
-})->name('peserta-dashboard');
-
+Route::get('/peserta/dashboard', [\App\Http\Controllers\PesertaController::class, 'index'])->name('peserta-dashboard');
 
 Auth::routes();
 

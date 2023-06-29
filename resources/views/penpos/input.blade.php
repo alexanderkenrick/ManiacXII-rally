@@ -11,7 +11,7 @@
         }
 
         .submit-section{
-            
+
         }
         .submit-section .btn-submit{
             width: 60%;
@@ -32,18 +32,18 @@
                 <div class="input-section">
                     <div class="team-select my-2 ">
                         <label for="team" style="width: 80px;">Pilih Tim :</label>
-                        <select name="team[]" id="team" class="select2">
+                        <select name="team" id="team" class="select2">
                             <option value="-" selected disabled>- Pilih Team -</option>
-                            @for ($i = 1; $i <= 5; $i++)
-                                <option value="">{{ $i }}</option>
-                            @endfor
+                            @foreach($teams as $team)
+                                <option value="{{ $team->id }}" id="{{ $team->id }}">{{ $team->account->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <label for="inputPoin" style="width: 80px;">Input Poin :</label>
-                    <input type="text" name="inputPoin" id="inputPoin" style="width: 200px;">
+                    <input type="text" name="inputPoin" id="inputPoint" style="width: 200px;">
                 </div>
                 <div class="submit-section d-flex justify-content-center py-3">
-                    <button class="btn btn-primary btn-submit">Submit</button>
+                    <button class="btn btn-primary btn-submit" onclick="inputPoin()">Submit</button>
                 </div>
             </div>
         </div>
@@ -57,6 +57,39 @@
     $(document).ready(function() {
         $('.select2').select2();
     });
+
+    const inputPoin = () => {
+        const teamId = $('#team').val();
+        const poin = $('#inputPoint').val();
+        console.log('Input poin berhasil!' + '\nTeam: ' + teamId + "\nPoin: " + poin)
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('penpos.input') }}',
+            data: {
+                '_token': '<?php echo csrf_token(); ?>',
+                'team_id': teamId,
+                'poin': poin,
+            },
+            success: function(data) {
+                console.log("TEST");
+            },
+            complete: function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('penpos.update') }}',
+                    data: {
+                        '_token': '<?php echo csrf_token(); ?>',
+                        'team_id': teamId,
+                        'poin': poin,
+                    },
+                    success: function(data) {
+                        // alert('Input poin berhasil!' + '\nTeam: ' + teamId + "\nPoin: " + poin);
+                        console.log('Update Currency berhasil!' + '\nTeam: ' + teamId + "\nPoin: " + poin);
+                    }
+                });
+            }
+        });
+    }
 </script>
 
 @endsection

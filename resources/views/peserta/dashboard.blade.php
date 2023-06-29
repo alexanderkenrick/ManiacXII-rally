@@ -4,7 +4,7 @@
     {{-- Bootstrap Select --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
+
 @endsection
 
 @section('content')
@@ -17,8 +17,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <p>Nama Tim : <span id="teamName">Ini Nama Tim</span></p>
-                            <p>Poin Tim : <span id="teamPoint">100</span></p>
+                            <p>Nama Tim : <span id="teamName">{{ $team->account->name }}</span></p>
+                            <p>Poin Tim : <span id="teamPoint">{{ $currency }}</span></p>
                         </div>
                     </div>
                 </div>
