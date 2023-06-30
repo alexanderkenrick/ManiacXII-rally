@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             $table->string('status');
             $table->string('file_photo_loc');
             $table->enum('post_type', ['Single', 'Battle','Dungeon']);
+            $table->timestamps();
         });
     }
 
