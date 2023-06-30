@@ -14,7 +14,7 @@
         }
 
         .submit-section {
-            margin-top:16px;
+            margin-top: 16px;
         }
 
         .submit-section .btn-submit {
@@ -115,7 +115,7 @@
                             <input type="number" name="inputPoin" id="inputPoint" style="width: ;" required>
                         </div>
                         <div class="submit-section d-flex justify-content-center py-3">
-                            <button class="btn btn-submit" onclick="inputPoin()" id="#submitPoint">Submit</button>
+                            <button class="btn btn-submit" onclick="inputPoin()" id="submitPoint">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -135,6 +135,9 @@
                     $(this).remove();
                 });
             }, 2000);
+
+
+
         });
 
         const Toaster = Swal.mixin({
@@ -149,11 +152,21 @@
             timerProgressBar: true
         })
 
+        $('#submitPoint').click(function() {
+            $('#submitPoint').attr('disabled', 'disabled');
+            $('#submitPoint').addClass('btn-submit-disabled');
+            setTimeout(function() {
+                $('#submitPoint').removeAttr('disabled');
+                $('#submitPoint').removeClass('btn-submit-disabled');
+            }, 2000);
+
+        });
 
 
         const inputPoin = () => {
             const teamId = $('#team').val();
             const poin = $('#inputPoint').val();
+
 
 
             $.ajax({
@@ -177,7 +190,7 @@
                     $("#inputPoint").val('');
 
                 },
-                error: function(data){
+                error: function(data) {
                     window.location.reload();
                 }
             });

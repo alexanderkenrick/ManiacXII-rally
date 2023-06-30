@@ -24,6 +24,19 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card my-5">
+                    <div class="card-header">
+                        <h2 style="font-weight: bolder;text-align:left!important">History Points</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @for($i = 0; $i<count($history) ; $i++)
+                            <p>Mendapat {{$history[$i]['point']}} Poin dari Pos {{$postNames[$i]}}</p>
+                            @endfor
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
