@@ -24,6 +24,8 @@ Route::get('/penpos', [\App\Http\Controllers\PenposController::class, 'index']);
 Route::post('/penpos-input', [\App\Http\Controllers\PenposController::class, 'inputPoin'])->name('penpos.input');
 Route::post('/penpos-update', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.update');
 
+Route::post('/penpos-test', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.test');
+
 Route::get('/peserta/dashboard', [\App\Http\Controllers\PesertaController::class, 'index'])->name('peserta-dashboard');
 
 Auth::routes();

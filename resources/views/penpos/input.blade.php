@@ -5,7 +5,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    {{--  Toaster Sweet Aler  --}}
+    {{--  Toaster Sweet Alert  --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style type="text/css">
         .select2 {
@@ -106,29 +106,41 @@
                 'poin': poin,
             },
             success: function(data) {
+                updateCurrency(teamId, poin);
                 // console.log("TEST");
                 // Jalanin Toaster Input Poin
-                Toaster.fire({
-                    icon: 'success',
-                    animation: true,
-                    title: 'Input Poin Berhasil!'
-                });
+                // Toaster.fire({
+                //     icon: 'success',
+                //     animation: true,
+                //     title: 'Input Poin Berhasil!'
+                // });
+
             },
             complete: function () {
                 // ------------------------------- ERROR ----------------------------------
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('penpos.update') }}',
-                    data: {
-                        '_token': '<?php echo csrf_token(); ?>',
-                        'team_id': teamId,
-                        'poin': poin,
-                    },
-                    success: function(data) {
-                        // alert('Input poin berhasil!' + '\nTeam: ' + teamId + "\nPoin: " + poin);
-                        console.log('Update Currency berhasil!' + '\nTeam: ' + teamId + "\nPoin: " + poin);
-                    }
-                });
+
+            }
+        });
+    }
+
+    const updateCurrency = (teamId, poin) => {
+        alert(teamId + " " + poin);
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('penpos.test') }}',
+            data: {
+                '_token': '<?php echo csrf_token(); ?>',
+                'team_id': teamId,
+                'poin': poin,
+            },
+            success: function(data) {
+                alert("TESTY");
+                //alert(data.msg);
+                // alert('Input poin berhasil!' + '\nTeam: ' + teamId + "\nPoin: " + poin);
+                //console.log('Update Currency berhasil!' + '\nTeam: ' + teamId + "\nPoin: " + poin);
+            },
+            error:function(msg){
+                console.log(msg);
             }
         });
     }

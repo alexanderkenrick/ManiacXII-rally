@@ -20,14 +20,19 @@ class PenposController extends Controller
 
     public function updateCurrency(Request $request)
     {
-        $teamId = $request->get('team_id');
-        $poin = $request->get('poin');
-        dd($teamId);
-
-        $currCurrency = Team::find($teamId)->first()->currency;
-
-
-        Team::where('id', $teamId)->update(['currency' => $currCurrency + $poin]);
+        return "aaaa";
+        //dd($request);
+//        print_r($request);
+//
+//        $teamId = $request->get('team_id');
+//        $poin = $request->get('poin');
+//
+//        $currCurrency = Team::find($teamId)->first()->currency;
+//
+//        //Team::where('id', $teamId)->update(['currency' => $currCurrency + $poin]);
+//        $val = floatval($currCurrency) + floatval($poin);
+//        DB::statement("update teams set currency=?",[$val]);
+//        return "berhasil";
 
 
 //        DB::table('teams')->where('id', $teamId)->update([
