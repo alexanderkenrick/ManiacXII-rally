@@ -59,7 +59,7 @@ class PenposController extends Controller
 
     public function updateCurrency($teamId, $poin)
     {
-        $currCurrency = Team::find($teamId)->first()->currency;
+        $currCurrency = Team::where('id', $teamId)->first()->currency;
         $multiplier = 1;
         $updatedCurr = $currCurrency + $poin * $multiplier;
 
