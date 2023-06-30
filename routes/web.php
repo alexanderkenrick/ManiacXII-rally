@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Middleware\PenposMiddleware;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Routing\Route as RoutingRoute;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,21 +16,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () { return view('auth.login');});
+Auth::routes();
+
+Route::group(['middleware' => ['guest']],
+    function(){
+        Route::get('/', function () { return view('auth.login');});
+    }
+    
+);
 
 //Route::get('/penpos', function() {
 //    return view('penpos.input');
 //})->name('input-penpos');
-Route::get('/penpos', [\App\Http\Controllers\PenposController::class, 'index']);
-Route::post('/penpos-input', [\App\Http\Controllers\PenposController::class, 'inputPoin'])->name('penpos.input');
-Route::post('/penpos-update', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.update');
 
-Route::post('/penpos-test', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.test');
+// Route::middleware([PenposMiddleware::class])->group(
+//     function () {
+//         Route::get('/penpos', [\App\Http\Controllers\PenposController::class, 'index'])->name('penpos.home');
+//         Route::post('/penpos-input', [\App\Http\Controllers\PenposController::class, 'inputPoin'])->name('penpos.input');
+//         Route::post('/penpos-update', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.update');
+//     }
+// );
+Route::group(['middleware' => ['auth', 'penpos']],
+    function(){
+        Route::get('/penpos', [\App\Http\Controllers\PenposController::class, 'index'])->name('penpos.home');
+        Route::post('/penpos-input', [\App\Http\Controllers\PenposController::class, 'inputPoin'])->name('penpos.input');
+        Route::post('/penpos-update', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.update');
+    }
+);
 
-Route::get('/peserta/dashboard', [\App\Http\Controllers\PesertaController::class, 'index'])->name('peserta-dashboard');
+Route::group(['middleware' => ['auth', 'peserta']],
+    function () {
+        Route::get('/peserta/dashboard', [\App\Http\Controllers\PesertaController::class, 'index'])->name('peserta.dashboard');
+    }
+);
+    
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
