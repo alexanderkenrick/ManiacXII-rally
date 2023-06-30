@@ -20,6 +20,7 @@ class CreateTeamsTable extends Migration
             $table->integer('currency');
             // $table->int('status');
             $table->string('file_qr_loc');
+            $table->timestamps();
         });
     }
 
