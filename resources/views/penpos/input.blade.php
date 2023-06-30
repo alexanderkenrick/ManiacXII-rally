@@ -7,16 +7,17 @@
 
     {{--  Toaster Sweet Alert  --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style type="text/css">
         .select2 {
             width: 100%;
-            max-width: 200px;
         }
 
-        .submit-section{
-
+        .submit-section {
+            margin-top:16px;
         }
-        .submit-section .btn-submit{
+
+        .submit-section .btn-submit {
             width: 60%;
         }
 
@@ -39,6 +40,39 @@
         .colored-toast .swal2-html-container {
             color: white;
         }
+
+        .btn-submit {
+            width: 60%;
+            height: 40px;
+            border: 2px solid #3C486B;
+            border-radius: 12px;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            box-shadow: 0 4px #3C486B;
+            transition: 0.1s ease;
+        }
+
+        .btn-submit:hover {
+            background: #D3D3D3;
+            color: #2e2134;
+            border: 2px solid #3C486B;
+        }
+
+        .btn-submit:active {
+            background-color: #D3D3D3;
+            box-shadow: 0 2px #3C486B;
+            border: 2px solid #3C486B;
+            transform: translateY(4px);
+            color: #2e2134;
+        }
+
+        .btn-submit-disabled {
+            background-color: #D3D3D3;
+            box-shadow: 0 2px #3C486B;
+            transform: translateY(4px);
+            cursor: default;
+            color: #2e2134;
+        }
     </style>
 @endsection
 
@@ -46,104 +80,109 @@
     <div class="container">
         <div class="alert alert-info" role="alert">
             Gini dulu ya hehe
-          </div>
-        <div class="card">
-            <div class="card-header">
-                <span id="namapos">Nama Pos</span>
-            </div>
-            <div class="card-body">
-                <div class="input-section">
-                    <div class="team-select my-2 ">
-                        <label for="team" style="width: 80px;">Pilih Tim :</label>
-                        <select name="team" id="team" class="select2">
-                            <option value="-" selected disabled>- Pilih Team -</option>
-                            @foreach($teams as $team)
-                                <option value="{{ $team->id }}" id="{{ $team->id }}">{{ $team->account->name }}</option>
-                            @endforeach
-                        </select>
+            <br>
+            <sub>Ps. Req DDD design</sub>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 style="font-weight: bolder;">{{ $penpos->name }}</h1>
                     </div>
-                    <label for="inputPoin" style="width: 80px;">Input Poin :</label>
-                    <input type="text" name="inputPoin" id="inputPoint" style="width: 200px;">
-                </div>
-                <div class="submit-section d-flex justify-content-center py-3">
-                    <button class="btn btn-primary btn-submit" onclick="inputPoin()">Submit</button>
+                    <div class="card-body">
+                        @if (Session::has('valid'))
+                            @if (Session::get('valid') == 'false')
+                                <div class="alert alert-danger" style="">
+                                    Masukkan nama tim dan poin !</div>
+                            @endif
+                        @endif
+                        <div class="input-section">
+                            <div class="team-select my-2 ">
+                                <label for="team" style="">Pilih Tim :</label>
+                                <br>
+                                <select name="team" id="team" class="select2" required>
+                                    <option value="-" selected disabled>- Pilih Team -</option>
+                                    @foreach ($teams as $team)
+                                        <option value="{{ $team->id }}" id="{{ $team->id }}">
+                                            {{ $team->account->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <label for="inputPoin" style="">Input Poin :</label>
+                            <br>
+                            <input type="number" name="inputPoin" id="inputPoint" style="width: ;" required>
+                        </div>
+                        <div class="submit-section d-flex justify-content-center py-3">
+                            <button class="btn btn-submit" onclick="inputPoin()" id="#submitPoint">Submit</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
 @endsection
 
 @section('script')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.select2').select2();
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.select2').select2();
-    });
-
-    const Toaster = Swal.mixin({
-        toast: true,
-        position: 'top-right',
-        iconColor: 'white',
-        customClass: {
-            popup: 'colored-toast'
-        },
-        showConfirmButton: false,
-        timer: 2500,
-        timerProgressBar: true
-    })
-
-    const inputPoin = () => {
-        const teamId = $('#team').val();
-        const poin = $('#inputPoint').val();
-        console.log('Input poin berhasil!' + '\nTeam: ' + teamId + "\nPoin: " + poin)
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('penpos.input') }}',
-            data: {
-                '_token': '<?php echo csrf_token(); ?>',
-                'team_id': teamId,
-                'poin': poin,
-            },
-            success: function(data) {
-                updateCurrency(teamId, poin);
-                // console.log("TEST");
-                // Jalanin Toaster Input Poin
-                // Toaster.fire({
-                //     icon: 'success',
-                //     animation: true,
-                //     title: 'Input Poin Berhasil!'
-                // });
-
-            },
-            complete: function () {
-                // ------------------------------- ERROR ----------------------------------
-
-            }
+            window.setTimeout(function() {
+                $(".alert-danger").fadeTo(1000, 0).slideUp(800, function() {
+                    $(this).remove();
+                });
+            }, 2000);
         });
-    }
 
-    const updateCurrency = (teamId, poin) => {
-        alert(teamId + " " + poin);
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('penpos.test') }}',
-            data: {
-                '_token': '<?php echo csrf_token(); ?>',
-                'team_id': teamId,
-                'poin': poin,
+        const Toaster = Swal.mixin({
+            toast: true,
+            position: 'top-right',
+            iconColor: 'white',
+            customClass: {
+                popup: 'colored-toast'
             },
-            success: function(data) {
-                alert("TESTY");
-                //alert(data.msg);
-                // alert('Input poin berhasil!' + '\nTeam: ' + teamId + "\nPoin: " + poin);
-                //console.log('Update Currency berhasil!' + '\nTeam: ' + teamId + "\nPoin: " + poin);
-            },
-            error:function(msg){
-                console.log(msg);
-            }
-        });
-    }
-</script>
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true
+        })
 
+
+
+        const inputPoin = () => {
+            const teamId = $('#team').val();
+            const poin = $('#inputPoint').val();
+
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('penpos.input') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'team_id': teamId,
+                    'poin': poin,
+                },
+                success: function(data) {
+                    console.log('Input poin berhasil!' + '\nTeam: ' + teamId +
+                        "\nPoin: " + poin);
+                    Toaster.fire({
+                        icon: 'success',
+                        animation: true,
+                        title: 'Input Poin Berhasil!'
+                    });
+
+                    $("#team").val('');
+                    $("#inputPoint").val('');
+
+                },
+                error: function(data){
+                    window.location.reload();
+                }
+            });
+
+
+        }
+    </script>
 @endsection

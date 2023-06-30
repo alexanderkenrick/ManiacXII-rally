@@ -11,6 +11,8 @@
     <div class="container">
         <div class="alert alert-info" role="alert">
             Gini dulu ya hehe
+            <br>
+            <sub>Ps. Req DDD design</sub>
           </div>
         <div class="row match-height d-flex justify-content-between">
             <div class="col">

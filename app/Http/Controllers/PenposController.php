@@ -7,6 +7,9 @@ use App\Models\Post;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Expr\Cast\Object_;
 
 class PenposController extends Controller
@@ -15,56 +18,52 @@ class PenposController extends Controller
     {
         $teams = Team::all();
         $account = auth()->user();
-        return view('penpos.input', compact('teams'));
+        $penpos = Post::where('penpos_id', Auth::user()->id)->first();
+
+        return view('penpos.input', compact('teams', 'penpos'));
     }
 
-    public function updateCurrency(Request $request)
-    {
-        return "aaaa";
-        //dd($request);
-//        print_r($request);
-//
-//        $teamId = $request->get('team_id');
-//        $poin = $request->get('poin');
-//
-//        $currCurrency = Team::find($teamId)->first()->currency;
-//
-//        //Team::where('id', $teamId)->update(['currency' => $currCurrency + $poin]);
-//        $val = floatval($currCurrency) + floatval($poin);
-//        DB::statement("update teams set currency=?",[$val]);
-//        return "berhasil";
-
-
-//        DB::table('teams')->where('id', $teamId)->update([
-//            'currency' => $currCurrency + $poin * 1
-//        ]);
-
-        return response()->json(array([
-            'msg' => 'Success'
-        ]), 200);
-
-    }
 
     public function inputPoin(Request $request)
     {
-        $teamId = $request->get('team_id');
-        $penposId = Post::where('penpos_id', Auth::user()->id)->first()->id;
-        $poin = $request->get('poin');
+        // Pengecekan textbox
+        $validator = Validator::make($request->all(), [
+            'team_id' => 'required',
+            'poin' => 'required'
+        ]);
+        // Klu gagal
+        if ($validator->fails()) {
+            $request->session()->flash('valid', 'false');
+            return view('penpos.home');
+        }
+        //Klu berhasil
+        else {
+            $request->session()->flash('valid', 'true');
+            $teamId = $request->get('team_id');
+            $penposId = Post::where('penpos_id', Auth::user()->id)->first()->id;
+            $poin = $request->get('poin');
 
-//        DB::table('points')->where([
-//            'post_id' => $penposId,
-//            'team_id' => $teamId
-//        ]);
+            $addPoint = new Point();
+            $addPoint->post_id = $penposId;
+            $addPoint->team_id = $teamId;
+            $addPoint->point = $poin;
+            $addPoint->save();
 
-        $point = new Point();
-        $point->post_id = $penposId;
-        $point->team_id = $teamId;
-        $point->point = $poin;
-        $point->save();
+            $this->updateCurrency($teamId, $poin);
+        }
 
         return response()->json(array([
             'msg' => 'Success'
         ]), 200);
+    }
+
+    public function updateCurrency($teamId, $poin)
+    {
+        $currCurrency = Team::find($teamId)->first()->currency;
+        $multiplier = 1;
+        $updatedCurr = $currCurrency + $poin * $multiplier;
+
+        Team::where('id', $teamId)->update(['currency' => $updatedCurr]);
     }
 
     public function ambilTeam()
