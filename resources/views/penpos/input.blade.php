@@ -4,6 +4,9 @@
     {{-- Bootstrap Select --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    {{--  Toaster Sweet Aler  --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style type="text/css">
         .select2 {
             width: 100%;
@@ -15,6 +18,26 @@
         }
         .submit-section .btn-submit{
             width: 60%;
+        }
+
+        .colored-toast.swal2-icon-success {
+            background-color: #a5dc86 !important;
+        }
+
+        .colored-toast.swal2-icon-error {
+            background-color: #f27474 !important;
+        }
+
+        .colored-toast .swal2-title {
+            color: white;
+        }
+
+        .colored-toast .swal2-close {
+            color: white;
+        }
+
+        .colored-toast .swal2-html-container {
+            color: white;
         }
     </style>
 @endsection
@@ -58,6 +81,18 @@
         $('.select2').select2();
     });
 
+    const Toaster = Swal.mixin({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast'
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true
+    })
+
     const inputPoin = () => {
         const teamId = $('#team').val();
         const poin = $('#inputPoint').val();
@@ -71,7 +106,13 @@
                 'poin': poin,
             },
             success: function(data) {
-                console.log("TEST");
+                // console.log("TEST");
+                // Jalanin Toaster Input Poin
+                Toaster.fire({
+                    icon: 'success',
+                    animation: true,
+                    title: 'Input Poin Berhasil!'
+                });
             },
             complete: function () {
                 // ------------------------------- ERROR ----------------------------------
