@@ -81,6 +81,9 @@
             border-top-right-radius: 0 !important;
         }
 
+        #app{
+            height: 100vh;
+        }
         
     </style>
 </head>
