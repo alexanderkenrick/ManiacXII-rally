@@ -5,6 +5,9 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    {{-- QR Scanner --}}
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
     {{--  Toaster Sweet Alert  --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -73,6 +76,16 @@
             cursor: default;
             color: #2e2134;
         }
+
+        #reader{
+            width: 500px;
+        }
+        .qr-section{
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+        }
     </style>
 @endsection
 
@@ -91,6 +104,9 @@
                         <h1 style="font-weight: bolder;">{{ $penpos->name }}</h1>
                     </div>
                     <div class="card-body">
+                        <div class="qr-section">
+                            <div id="reader"></div>
+                        </div>
                         @if (Session::has('valid'))
                             @if (Session::get('valid') == 'false')
                                 <div class="alert alert-danger" style="">
@@ -99,16 +115,17 @@
                         @endif
                         <div class="input-section">
                             <div class="team-select my-2 ">
-                                <label for="team" style="">Pilih Tim :</label>
+                                <label for="team" style="">Nama Tim :</label>
                                 <br>
-                                <select name="team" id="team" class="select2" required>
+                                <input type="text" id='team-name' value="" disabled>
+                                {{-- <select name="team" id="team" class="select2" required>
                                     <option value="-" selected disabled>- Pilih Team -</option>
                                     @foreach ($teams as $team)
                                         <option value="{{ $team->id }}" id="{{ $team->id }}">
                                             {{ $team->account->name }}
                                         </option>
                                     @endforeach
-                                </select>
+                                </select> --}}
                             </div>
                             <label for="inputPoin" style="">Input Poin :</label>
                             <br>
@@ -135,9 +152,6 @@
                     $(this).remove();
                 });
             }, 2000);
-
-
-
         });
 
         const Toaster = Swal.mixin({
@@ -159,15 +173,12 @@
                 $('#submitPoint').removeAttr('disabled');
                 $('#submitPoint').removeClass('btn-submit-disabled');
             }, 2000);
-
         });
 
 
         const inputPoin = () => {
             const teamId = $('#team').val();
             const poin = $('#inputPoint').val();
-
-
 
             $.ajax({
                 type: 'POST',
@@ -194,8 +205,31 @@
                     window.location.reload();
                 }
             });
+        }
+        
+        //============ QR ==============
+        function onScanSuccess(decodedText, decodedResult) {
+            // handle the scanned code as you like, for example:
+            console.log(`Code matched = ${decodedText}`, decodedResult);
+            $('#team-name').attr('value', decodedText);
+        }
 
+        function onScanFailure(error) {
+            // handle scan failure, usually better to ignore and keep scanning.
+            // for example:
 
         }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", {
+                fps: 10,
+                qrbox: {
+                    width: 250,
+                    height: 250
+                }
+            },
+            /* verbose= */
+            false);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     </script>
 @endsection
