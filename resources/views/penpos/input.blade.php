@@ -117,7 +117,7 @@
                             <div class="team-select my-2 ">
                                 <label for="team" style="">Nama Tim :</label>
                                 <br>
-                                <input type="text" id='team-name' value="" disabled>
+                                <input type="text" id='team' value="" disabled>
                                 {{-- <select name="team" id="team" class="select2" required>
                                     <option value="-" selected disabled>- Pilih Team -</option>
                                     @foreach ($teams as $team)
@@ -177,7 +177,7 @@
 
 
         const inputPoin = () => {
-            const teamId = $('#team').val();
+            const teamName = $('#team').val();
             const poin = $('#inputPoint').val();
 
             $.ajax({
@@ -185,11 +185,11 @@
                 url: '{{ route('penpos.input') }}',
                 data: {
                     '_token': '<?php echo csrf_token(); ?>',
-                    'team_id': teamId,
+                    'team_name': teamName,
                     'poin': poin,
                 },
                 success: function(data) {
-                    console.log('Input poin berhasil!' + '\nTeam: ' + teamId +
+                    console.log('Input poin berhasil!' + '\nTeam: ' + teamName +
                         "\nPoin: " + poin);
                     Toaster.fire({
                         icon: 'success',
@@ -211,7 +211,7 @@
         function onScanSuccess(decodedText, decodedResult) {
             // handle the scanned code as you like, for example:
             console.log(`Code matched = ${decodedText}`, decodedResult);
-            $('#team-name').attr('value', decodedText);
+            $('#team').attr('value', decodedText);
         }
 
         function onScanFailure(error) {
