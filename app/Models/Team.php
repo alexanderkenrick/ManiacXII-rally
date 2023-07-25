@@ -18,4 +18,15 @@ class Team extends Model
     {
         return $this->belongsTo("App\Models\Account", "account_id", "id");
     }
+
+    public function inventory() {
+        return $this->hasMany(Inventory::class);
+    }
+    public function salvos_post() {
+        return $this->hasMany(SalvosPost::class);
+    }
+
+    public function treasure_post() {
+        return $this->hasMany(TreasurePost::class);
+    }
 }
