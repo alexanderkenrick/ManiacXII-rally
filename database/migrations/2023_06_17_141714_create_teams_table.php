@@ -17,6 +17,7 @@ class CreateTeamsTable extends Migration
             $table->id();
             $table->foreignId('account_id');
             $table->foreign('account_id')->references('id')->on('accounts')->onUpdate('cascade')->onDelete('cascade');
+            // $table->string('name');
             $table->integer('currency');
             // $table->int('status');
             $table->string('file_qr_loc');

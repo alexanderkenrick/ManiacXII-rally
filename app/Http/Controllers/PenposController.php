@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\Point;
 use App\Models\Post;
 use App\Models\Team;
@@ -28,7 +29,7 @@ class PenposController extends Controller
     {
         // Pengecekan textbox
         $validator = Validator::make($request->all(), [
-            'team_id' => 'required',
+            'team_name' => 'required',
             'poin' => 'required'
         ]);
         // Klu gagal
@@ -39,7 +40,8 @@ class PenposController extends Controller
         //Klu berhasil
         else {
             $request->session()->flash('valid', 'true');
-            $teamId = $request->get('team_id');
+            $teamName = request()->get('team_name');
+            $teamId = PenposController::searchByName($teamName);
             $penposId = Post::where('penpos_id', Auth::user()->id)->first()->id;
             $poin = $request->get('poin');
 
@@ -66,8 +68,10 @@ class PenposController extends Controller
         Team::where('id', $teamId)->update(['currency' => $updatedCurr]);
     }
 
-    public function ambilTeam()
+    public function searchByName($teamName)
     {
-        //
+        $accId = Account::where('name', $teamName)->first()->id;
+        $teamId = Team::where('account_id', $accId)->first()->id;
+        return $teamId;
     }
 }
