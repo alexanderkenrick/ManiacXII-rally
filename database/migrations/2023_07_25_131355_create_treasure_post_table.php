@@ -13,14 +13,15 @@ class CreateTreasurePostTable extends Migration
      */
     public function up()
     {
-        Schema::create('treasure_post', function (Blueprint $table) {
+        Schema::create('treasure_players', function (Blueprint $table) {
             $table->id();
             $table->foreignId('teams_id');
             $table->foreign('teams_id')->references('id')->on('teams')->onUpdate('cascade')->onDelete('cascade');
             $table->dateTime('start_session');
-            $table->dateTime('end_session')->nullable();
+            $table->integer('move_left');
             $table->integer('dig_left');
-            $table->boolean('poisoned');
+            $table->integer('row');
+            $table->integer('column');
             $table->timestamps();
         });
     }

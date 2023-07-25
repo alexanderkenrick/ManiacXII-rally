@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
            AccountSeeder::class,
            TeamSeeder::class,
-           PostSeeder::class
+           PostSeeder::class,
+           TreasureMapSeeder::class
         ]);
     }
 }

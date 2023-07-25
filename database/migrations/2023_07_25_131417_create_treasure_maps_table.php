@@ -17,7 +17,7 @@ class CreateTreasureMapsTable extends Migration
             $table->id();
             $table->integer('row');
             $table->integer('column');
-            $table->boolean('digged')->default('false');
+            $table->boolean('digged')->default(false);
             $table->integer('krona');
             $table->timestamps();
         });

@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TreasurePost extends Model
+class TreasurePlayer extends Model
 {
+    public $table = "treasure_players";
     use HasFactory;
 
     public function team()
