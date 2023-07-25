@@ -51,5 +51,8 @@ Route::group(['middleware' => ['auth', 'peserta']],
     }
 );
     
+Route::get('/battle', function(){
+    return view('battle');
+});
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
