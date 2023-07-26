@@ -55,4 +55,8 @@ Route::get('/battle', function(){
     return view('battle');
 });
 
+Route::get('/treasure', function(){
+    return view('treasure');
+});
+
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

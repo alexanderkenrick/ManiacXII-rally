@@ -1,0 +1,186 @@
+body {
+    background-color: #0c2548;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.map-wrapper {
+    width: 720px;
+    height: 720px;
+    background: #ffc483;
+    padding: 10px;
+}
+
+.map-kolom {
+    background-image: url("../img/treasure/digged.png");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 70px;
+    height: 70px;
+    padding: 0;
+    margin: 0;
+}
+
+.map-tanah {
+    width: 70px;
+    height: 70px;
+}
+
+#control-section {
+    background-color: #576cbc;
+    border: 0;
+    border-radius: 20px;
+    color: #a5d7e8;
+    height: 720px;
+}
+
+.select2-selection--single {
+    width: 100%;
+
+
+    border-radius: 10px !important;
+    outline: none;
+    font-size: 16px;
+}
+
+.select2-dropdown--below {
+
+    border-radius: 10px !important;
+}
+
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--single,
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.select2-container--open .select2-dropdown--below {
+    border-top: none !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: #19376d;
+    color: #a5d7e8;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #a5d7e8;
+}
+
+.select2-container {}
+
+.timer-button-section{
+    gap: 40px;
+}
+
+.button{
+    background-color: #19376d;
+    color: #a5d7e8;
+    width: 100px;
+    height: 40px;
+    border-radius: 25px;
+    border: 0;
+}
+.button:hover{
+    background-color: #DBA035;
+    color: #19376d;
+    width: 100px;
+    height: 40px;
+    border-radius: 25px;
+    border: 0;
+}
+.inventory-section{
+    background-color: #19376d;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.inventory-section .image-container .item-image{
+    width: 80px;
+    height: 80px;
+
+}
+
+.inventory-section .item{
+    background-color: #a5d7e8;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    color: #19376d;
+    
+}
+
+.inventory-section .image-container{
+    flex-basis: 80px;
+}
+
+.inventory-section .text-container{
+    flex-grow: 1;
+    flex-basis: auto;
+}
+
+.inventory-section .button-container{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    flex-basis: 100px;
+}
+
+.krona-section{
+    display: flex;
+    justify-content: space-between;
+}
+
+.movement-section{
+    position: relative;
+    height: 160px;
+}
+
+.movement-section .button{
+    width: 110px;
+    height: 55px;
+}
+
+#btn-up{
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#btn-down{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#btn-left{
+    position: absolute;
+    bottom: 50%;
+    left: 80px;
+    transform: translateY(50%);
+}
+
+#btn-right{
+    position: absolute;
+    bottom: 50%;
+    right: 80px;
+    transform: translateY(50%);
+}
+
+::-webkit-scrollbar{
+    width: 5px;
+}
+.inventory-section::-webkit-scrollbar-thumb{
+    background-color: #a5d7e8;
+    border-radius: 20px;
+}

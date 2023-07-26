@@ -25,8 +25,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
     <style type="text/css">
+    @import url('https://fonts.cdnfonts.com/css/montserrat');
         body {
-            background: #F9D949;
+            background: #0c2548;
         }
 
         .card {
@@ -82,16 +83,29 @@
             border-top-right-radius: 0 !important;
         }
 
-        #app{
+        #app {
             height: 100vh;
         }
-        
+
+        #btn-logout{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 2;
+        }
+
+        .nes-dialog.is-rounded, .nes-btn,.nes-textarea {
+            border-image-repeat: stretch !important;
+        }
+        .nes-btn{
+            font-family: 'Broken Console', sans-serif !important;
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Maniac XII') }}
@@ -122,7 +136,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                            @endif --}}
+                            @endif 
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -142,11 +156,21 @@
                                     </form>
                                 </div>
                             </li>
+
+
                         @endguest
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> --}}
+
+        {{-- @if(Auth::check()) --}}
+            <button class="nes-btn is-error" id="btn-logout" href="{{ route('logout') }}"  onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</button>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        {{-- @endif --}}
 
         <main class="py-4">
             @yield('content')
@@ -154,6 +178,18 @@
     </div>
 
     @yield('script')
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.select2').select2();
+
+            // window.setTimeout(function() {
+            //     $(".alert-danger").fadeTo(1000, 0).slideUp(800, function() {
+            //         $(this).remove();
+            //     });
+            // }, 2000);
+        });
+    </script>
 </body>
 
 </html>
