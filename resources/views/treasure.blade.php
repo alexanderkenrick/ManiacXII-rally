@@ -22,6 +22,10 @@
                                 <tr>
                                     @for ($kolom = 1; $kolom <= 10; $kolom++)
                                         <td id="{{ $baris }}-{{ $kolom }}" class="map-kolom">
+                                            @if($baris==2 && $kolom==4)
+                                                <span class="pion">1</span>
+                                                {{-- <span class="pion">2</span> --}}
+                                            @endif
                                             <img src="{{ asset('/img/treasure/tanah.png') }}" alt=""
                                                 class="map-tanah">
                                         </td>
@@ -135,6 +139,10 @@
         $(document).on('click', '#button-start', function() {
             if (!running) {
                 $("#timer").css('display', 'inline');
+                $('#button-start').attr('disabled', true);
+                $('#button-start').addClass('button-disabled');
+                $('#button-pause').removeClass('button-disabled');
+                $('#button-pause').removeAttr('disabled');
                 running = true;
                 timer = setInterval(function() {
                     second--;
@@ -157,6 +165,10 @@
         
         $(document).on('click', '#button-pause', function() {
             // $("#timer").text(second);
+            $('#button-pause').addClass('button-disabled');
+            $('#button-pause').attr('disabled', true);
+            $('#button-start').removeClass('button-disabled');
+            $('#button-start').removeAttr('disabled');
             showTimer(second);
             running = false
             clearInterval(timer);
@@ -164,6 +176,10 @@
 
         $(document).on('click', '#button-reset', function() {
             $("#timer").text('05:00');
+            $('#button-start').removeAttr('disabled');
+            $('#button-start').removeClass('button-disabled');
+            $('#button-pause').removeClass('button-disabled');
+            $('#button-pause').removeAttr('disabled');
             running = false;
             clearInterval(timer);
             second = 300;

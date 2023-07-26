@@ -4,8 +4,8 @@ body {
 }
 
 .map-wrapper {
-    width: 720px;
-    height: 720px;
+    width: 731px;
+    height: 731px;
     background: #ffc483;
     padding: 10px;
 }
@@ -19,7 +19,24 @@ body {
     height: 70px;
     padding: 0;
     margin: 0;
+    position: relative;
+    border: 1px solid black;
 }
+
+.pion {
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    display: inline-block;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-image: url('../img/treasure/pion.png');
+    background-size: cover;
+    text-align: center;
+}
+
 
 .map-tanah {
     width: 70px;
@@ -91,6 +108,11 @@ body {
     height: 40px;
     border-radius: 25px;
     border: 0;
+}
+
+.button-disabled{
+    background-color: #DBA035;
+    color: #19376d;
 }
 .inventory-section{
     background-color: #19376d;
@@ -184,3 +206,5 @@ body {
     background-color: #a5d7e8;
     border-radius: 20px;
 }
+
+
