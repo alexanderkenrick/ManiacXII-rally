@@ -19,9 +19,13 @@ class Team extends Model
         return $this->belongsTo("App\Models\Account", "account_id", "id");
     }
 
-    public function inventory() {
-        return $this->hasMany(Inventory::class);
+    public function item(){
+        return $this->belongsToMany("App\Models\Item","inventories","teams_id","items_id")->withPivot("count");
     }
+
+    // public function inventory() {
+    //     return $this->hasMany(Inventory::class);
+    // }
     public function salvos_post() {
         return $this->hasMany(SalvosPost::class);
     }

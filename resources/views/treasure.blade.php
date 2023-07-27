@@ -22,7 +22,7 @@
                                 <tr>
                                     @for ($kolom = 1; $kolom <= 10; $kolom++)
                                         <td id="{{ $baris }}-{{ $kolom }}" class="map-kolom">
-                                            @if($baris==2 && $kolom==4)
+                                            @if ($baris == 2 && $kolom == 4)
                                                 <span class="pion">1</span>
                                                 {{-- <span class="pion">2</span> --}}
                                             @endif
@@ -44,11 +44,14 @@
                     <div class="card-body">
                         {{-- Team Select --}}
                         <div class="team-select-section">
-                            <select name="" id="" class="select2 w-100" style=" ">
-                                <option value="" selected disabled>--Pilih Team--</option>
-                                @for ($team = 1; $team <= 20; $team++)
-                                    <option value="">Team {{ $team }}</option>
-                                @endfor
+                            <select name="team" id="team" class="select2 w-100" onchange="getTeamInventory()"
+                                required>
+                                <option value="-" selected disabled>- Pilih Team -</option>
+                                @foreach ($teams as $team)
+                                    <option value="{{ $team->id }}" id="{{ $team->id }}">
+                                        {{ $team->account->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -80,7 +83,7 @@
                                 </div>
                                 <div class="text-container px-3">
                                     <h2>Shovel</h2>
-                                    <p>Jumlah : <span id="shovel-remaining">3</span></p>
+                                    <p>Jumlah : <span id="shovel-remaining">-</span></p>
                                 </div>
                                 <div class="button-container">
                                     <button class="button" id="shovel-use">Use</button>
@@ -93,7 +96,7 @@
                                 </div>
                                 <div class="text-container px-3">
                                     <h2>Thief Bag</h2>
-                                    <p>Jumlah : <span id="thief-remaining">3</span></p>
+                                    <p>Jumlah : <span id="thief-remaining">-</span></p>
                                 </div>
                                 <div class="button-container">
                                     <button class="button" id="thief-use">Use</button>
@@ -106,7 +109,7 @@
                                 </div>
                                 <div class="text-container px-3">
                                     <h2>Angel Card</h2>
-                                    <p>Jumlah : <span id="angel-remaining">3</span></p>
+                                    <p>Jumlah : <span id="angel-remaining">-</span></p>
                                 </div>
                                 <div class="button-container">
                                     <button class="button" id="angel-use">Use</button>
@@ -162,7 +165,7 @@
                 }, 1000);
             }
         });
-        
+
         $(document).on('click', '#button-pause', function() {
             // $("#timer").text(second);
             $('#button-pause').addClass('button-disabled');
@@ -199,6 +202,30 @@
             }
 
             $("#timer").text(`${minuteString}:${secondString}`);
+        }
+
+        const getTeamInventory = () => {
+            const team_id = $('#team').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('treasure.getInv') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'id': team_id,
+                },
+                success: function(data) {
+                    let team_inv = data[0].teamInventory;
+                    console.log(team_inv);
+                    $("#shovel-remaining").text(team_inv[0]);
+                    $("#thief-remaining").text(team_inv[1]);
+                    $("#angel-remaining").text(team_inv[2]);
+
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
         }
     </script>
 @endsection

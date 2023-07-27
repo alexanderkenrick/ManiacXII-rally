@@ -9,7 +9,11 @@ class Item extends Model
 {
     use HasFactory;
 
-    public function inventory() {
-        return $this->hasMany(Inventory::class);
+    // public function inventory() {
+    //     return $this->hasMany(Inventory::class);
+    // }
+
+    public function team(){
+        return $this->belongsToMany("App\Models\Team","inventories","items_id","teams_id")->withPivot("count");
     }
 }
