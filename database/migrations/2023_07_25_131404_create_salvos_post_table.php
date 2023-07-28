@@ -13,7 +13,7 @@ class CreateSalvosPostTable extends Migration
      */
     public function up()
     {
-        Schema::create('salvos_post', function (Blueprint $table) {
+        Schema::create('salvos_games', function (Blueprint $table) {
             $table->id();
             $table->foreignId('teams_id');
             $table->foreign('teams_id')->references('id')->on('teams')->onUpdate('cascade')->onDelete('cascade');

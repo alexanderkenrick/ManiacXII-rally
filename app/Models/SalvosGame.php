@@ -5,8 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TreasureMap extends Model
+class SalvosGame extends Model
 {
-    public $table = "treasure_maps";
     use HasFactory;
+
+
+    public function team() {
+        return $this->belongsTo(Team::class);
+    }
 }
