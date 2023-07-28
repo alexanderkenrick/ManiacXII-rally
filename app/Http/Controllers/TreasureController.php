@@ -78,13 +78,13 @@ class TreasureController extends Controller
             $xPos = ($team_pos->row) + ($xMove);
             $yPos = ($team_pos->column) + ($yMove);
 
-            if ($xPos < 0) {
-                $xPos = 0;
+            if ($xPos > 1) {
+                $xPos = 1;
             } else if ($xPos > 10) {
                 $xPos = 10;
             }
-            if ($yPos < 0) {
-                $yPos = 0;
+            if ($yPos < 1)  {
+                $yPos = 1;
             } else if ($yPos > 10) {
                 $yPos = 10;
             }
