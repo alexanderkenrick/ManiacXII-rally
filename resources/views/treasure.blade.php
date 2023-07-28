@@ -233,7 +233,7 @@
                     'yMove': yMove,
                 },
                 success: function(data) {
-                    alert(data[0].xPos + "-" + data[0].yPos + ":" + data[0].moves + "/" + data[0]
+                    alert(data[0].yPos + "-" + data[0].xPos + ":" + data[0].moves + "/" + data[0]
                         .outOfMove);
 
                     $(`#${data[0].yPos }-${data[0].xPos}`).html(
@@ -241,6 +241,8 @@
                         // kasih pengecekan is_digged
                     )
                     $('#sisa-gerakan').text(data[0].moves);
+
+                    updateMap();
                 
                 },
                 error: function(data) {
@@ -265,9 +267,24 @@
                     $("#shovel-remaining").text(team_inv[0]);
                     $("#thief-remaining").text(team_inv[1]);
                     $("#angel-remaining").text(team_inv[2]);
-                    console.log(data[0].moves, data[0].krona);
                     $('#sisa-gerakan').text(data[0].moves);
                     $('#krona').text(data[0].krona);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        const updateMap = () => {
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('treasure.updateMap') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                },
+                success: function(data) {
+
                 },
                 error: function(data) {
                     console.log(data);
