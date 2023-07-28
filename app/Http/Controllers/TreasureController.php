@@ -98,24 +98,20 @@ class TreasureController extends Controller
                 $row = $team_pos->row;
                 $col = $team_pos->column;
                 $status = false;
-                $team_pos->save();
             } else {
                 $team_pos->row = $row;
                 $team_pos->column = $col;
                 $status = false;
                 $team_pos->move_left = $move_left - 1;
-
-                $team_pos->save();
             }
         } else {
             $row = $team_pos->row;
             $col = $team_pos->column;
             $status = true;
             $team_pos->move_left = 0;
-
-            $team_pos->save();
         }
         $move_left = $team_pos->move_left;
+        $team_pos->save();
         return response()->json(array([
             'xPos' => $col,
             'yPos' => $row,
@@ -143,17 +139,101 @@ class TreasureController extends Controller
     public function useShovel(Request $request)
     {
         $team_pos = TreasurePlayer::where("teams_id", '=', $request['team_id'])->first();
-        $team = Team::where("id",'=',$request['id'])->first();
+        $team = Team::where("id", '=', $request['id'])->first();
+        $item = $team->item()->wherePivot("items_id", 1)->get();
+        if ($item->pivot->count > 0) {
+            $item->pivot->count -= 1;
+            $row = $team_pos->row;
+            $col = $team_pos->column;
+            $map = DB::table('treasure_maps')
+                ->where('row', '=', $row)
+                ->where('column', '=', $col)
+                ->get();
+            if ($map->digged == false) {
+                $krona = $map->krona;
+                $map->digged = true;
+                $team->currency += $krona;
+
+                $msg = "Digging succeeded! you got " . $krona . " !";
+            } else {
+                $team->currency;
+                $msg = "Digging failed the tile is already digged!";
+            }
+        } else {
+            $msg = "You don't have enough shovel!";
+        }
+        $map->save();
+        $team->save();
+        $item->save();
+        return response()->json(array([
+            'msg' => $msg,
+            'krona' => $team->currency
+        ]), 200);
+    }
+
+    public function useThief(Request $request)
+    {
+        $team_pos = TreasurePlayer::where("teams_id", '=', $request['team_id'])->first();
+        $team = Team::where("id", '=', $request['id'])->first();
+
         $row = $team_pos->row;
         $col = $team_pos->column;
-        $map = DB::table('treasure_maps')
+
+        $opp_team_pos = DB::table('treasure_players')
             ->where('row', '=', $row)
             ->where('column', '=', $col)
+            ->where('teams_id', '!=', $request['team_id'])
             ->get();
-        if($map->digged == false){
-            $krona = $map->krona;
-            $map->digged = true;
-            
+        $opp_team = Team::where("id", '=', $opp_team_pos->teams_id)->first();
+
+        $item = $team->item()->wherePivot("items_id", 2)->get();
+        if ($item->pivot->count > 0) {
+            $item->pivot->count -= 1;
+
+            if ($opp_team_pos->angel_active  == false) {
+
+                $opp_team->currency -= (0.25 * $opp_team->currency);
+                $team->currency += (0.25 * $opp_team->currency);
+
+
+                $msg = "Thief bag succeeded! you got " . (0.25 * $opp_team->currency) . " !";
+            } else {
+                $opp_team_pos->angel_active = false;
+                $msg = "Thief bag failed the opposing team has an angel card!";
+            }
+        } else {
+            $msg = "You don't have enough thief bag!";
         }
+        $opp_team->save();
+        $team->save();
+        $item->save();
+        return response()->json(array([
+            'msg' => $msg,
+            'krona' => $team->currency
+        ]), 200);
+    }
+
+    public function useAngel(Request $request)
+    {
+        $team_pos = TreasurePlayer::where("teams_id", '=', $request['team_id'])->first();
+        $team = Team::where("id", '=', $request['id'])->first();
+        $item = $team->item()->wherePivot("items_id", 3)->get();
+        if ($item->pivot->count > 0) {
+
+            if ($team_pos->angel_active  == false) {
+                $item->pivot->count -= 1;
+                $team_pos->angel_active = true;
+                $msg = "Using angel card succeeded!";
+            } else {
+                $msg = "Using angel card failed! Angel card already active!";
+            }
+        } else {
+            $msg = "You don't have enough angel card!";
+        }
+        $team_pos->save();
+        $item->save();
+        return response()->json(array([
+            'msg' => $msg,
+        ]), 200);
     }
 }

@@ -22,6 +22,7 @@ class CreateTreasurePostTable extends Migration
             $table->integer('dig_left');
             $table->integer('row');
             $table->integer('column');
+            $table->boolean('angel_active')->default(false);
             $table->timestamps();
         });
     }
