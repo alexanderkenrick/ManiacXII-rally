@@ -142,8 +142,18 @@ class TreasureController extends Controller
 
     public function useShovel(Request $request)
     {
-
-        $team = TreasurePlayer::where("teams_id", '=', $request['team_id'])->first();
-
+        $team_pos = TreasurePlayer::where("teams_id", '=', $request['team_id'])->first();
+        $team = Team::where("id",'=',$request['id'])->first();
+        $row = $team_pos->row;
+        $col = $team_pos->column;
+        $map = DB::table('treasure_maps')
+            ->where('row', '=', $row)
+            ->where('column', '=', $col)
+            ->get();
+        if($map->digged == false){
+            $krona = $map->krona;
+            $map->digged = true;
+            
+        }
     }
 }
