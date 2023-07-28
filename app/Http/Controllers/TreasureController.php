@@ -79,15 +79,19 @@ class TreasureController extends Controller
             $col = ($team_pos->column) + ($xMove);
             $row = ($team_pos->row) + ($yMove);
 
-            if ($col < 0) {
+            if ($col < 1) {
                 $col = 1;
+                $move_left += 1;
             } else if ($col > 10) {
                 $col = 10;
+                $move_left += 1;
             }
-            if ($row < 0) {
+            if ($row < 1) {
                 $row = 1;
+                $move_left += 1;
             } else if ($row > 10) {
                 $row = 10;
+                $move_left += 1;
             }
 
             $team_in_pos = DB::table('treasure_players')
