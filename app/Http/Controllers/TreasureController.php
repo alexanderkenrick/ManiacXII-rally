@@ -23,6 +23,10 @@ class TreasureController extends Controller
     public function getTeamInventory(Request $request)
     {
         $team = Team::where("id", "=", $request['id'])->first();
+        $team_pos = TreasurePlayer::where("teams_id", "=", $request['id'])->first();
+        $team_pos->move_left = 10;
+        $moves = $team_pos->move_left;
+        $team_pos->save();
         $item_id = [1, 2, 3];
         $item_amount = [];
         foreach ($item_id as $id) {
@@ -35,7 +39,9 @@ class TreasureController extends Controller
             }
         }
         return response()->json(array([
-            'teamInventory' => $item_amount
+            'teamInventory' => $item_amount,
+            'moves' => $moves,
+            'krona' => $team->currency,
         ]), 200);
     }
 
@@ -98,10 +104,12 @@ class TreasureController extends Controller
 
             $team_pos->save();
         }
+        $move_left = $team_pos->move_left;
         return response()->json(array([
             'xPos' => $xPos,
             'yPos' => $yPos,
-            'outOfMove' => $status
+            'outOfMove' => $status,
+            'moves' => $move_left
         ]), 200);
     }
 

@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth', 'penpos']],
         Route::post('/penpos-update', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.update');
         Route::get('/treasure', [\App\Http\Controllers\TreasureController::class, 'index'])->name('treasure');
         Route::post('/treasure-invCheck', [\App\Http\Controllers\TreasureController::class, 'getTeamInventory'])->name('treasure.getInv');
+        Route::post('/treasure-updatePost', [\App\Http\Controllers\TreasureController::class, 'updatePosition'])->name('treasure.updatePost');
     }
 );
 

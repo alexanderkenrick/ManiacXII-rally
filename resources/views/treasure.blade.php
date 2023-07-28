@@ -17,15 +17,15 @@
             <div class="col-7 ">
                 <div class="map-wrapper">
                     <div class="">
-                        <table>
+                        <table id="map-table">
                             @for ($baris = 1; $baris <= 10; $baris++)
-                                <tr>
+                                <tr id="baris-{{$baris}}">
                                     @for ($kolom = 1; $kolom <= 10; $kolom++)
                                         <td id="{{ $baris }}-{{ $kolom }}" class="map-kolom">
-                                            @if ($baris == 2 && $kolom == 4)
+                                            {{-- @if ($baris == 2 && $kolom == 4)
                                                 <span class="pion">1</span>
-                                                {{-- <span class="pion">2</span> --}}
-                                            @endif
+                                                {{-- <span class="pion">2</span>
+                                            @endif --}}
                                             <img src="{{ asset('/img/treasure/tanah.png') }}" alt=""
                                                 class="map-tanah">
                                         </td>
@@ -119,22 +119,26 @@
 
                         {{-- Krona & Sisa Gerak --}}
                         <div class="krona-section mt-2">
-                            <p>Krona : <span id="krona">300</span></p>
-                            <p>Sisa Gerakan : <span id="sisa-gerakan">3</span></p>
+                            <p>Krona : <span id="krona">-</span></p>
+                            <p>Sisa Gerakan : <span id="sisa-gerakan">-</span></p>
                         </div>
 
                         {{-- Movement Button --}}
                         <div class="movement-section mt-3">
-                            <button class="button" id="btn-up">U</button>
-                            <button class="button" id="btn-right">R</button>
-                            <button class="button" id="btn-down">D</button>
-                            <button class="button" id="btn-left">L</button>
+                            <button class="button" id="btn-up" onclick="updatePosition('up')">U</button>
+                            <button class="button" id="btn-right" onclick="updatePosition('right')">R</button>
+                            <button class="button" id="btn-down" onclick="updatePosition('down')">D</button>
+                            <button class="button" id="btn-left" onclick="updatePosition('left')">L</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('script')
     <script>
         var timer;
         var second = 300;
@@ -204,8 +208,49 @@
             $("#timer").text(`${minuteString}:${secondString}`);
         }
 
+        const updatePosition = (movement) => {
+            let team_id = $('#team').val();
+            let xMove = 0;
+            let yMove = 0;
+
+            if (movement == 'up') {
+                yMove = -1;
+            } else if (movement == 'right') {
+                xMove = 1;
+            } else if (movement == 'down') {
+                yMove = 1;
+            } else if (movement == 'left') {
+                xMove = -1;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('treasure.updatePost') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'team_id': team_id,
+                    'xMove': xMove,
+                    'yMove': yMove,
+                },
+                success: function(data) {
+                    alert(data[0].xPos + "-" + data[0].yPos + ":" + data[0].moves + "/" + data[0]
+                        .outOfMove);
+
+                    $(`#${data[0].yPos }-${data[0].xPos}`).html(
+                        `<span class="pion">${team_id}</span>`
+                        // kasih pengecekan is_digged
+                    )
+                    $('#sisa-gerakan').text(data[0].moves);
+                
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+
         const getTeamInventory = () => {
-            const team_id = $('#team').val();
+            let team_id = $('#team').val();
 
             $.ajax({
                 type: 'POST',
@@ -220,7 +265,9 @@
                     $("#shovel-remaining").text(team_inv[0]);
                     $("#thief-remaining").text(team_inv[1]);
                     $("#angel-remaining").text(team_inv[2]);
-
+                    console.log(data[0].moves, data[0].krona);
+                    $('#sisa-gerakan').text(data[0].moves);
+                    $('#krona').text(data[0].krona);
                 },
                 error: function(data) {
                     console.log(data);
@@ -228,7 +275,4 @@
             });
         }
     </script>
-@endsection
-
-@section('script')
 @endsection
