@@ -116,7 +116,6 @@ class TreasureController extends Controller
     public function getMap(Request $request)
     {
         $map = TreasureMap::all();
-        var_dump($map);
         return response()->json(array([
             'array_Map' => $map
         ]), 200);
