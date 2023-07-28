@@ -123,18 +123,18 @@ class TreasureController extends Controller
     public function getMap()
     {
         $map = TreasureMap::all();
+        $teams = TreasurePlayer::all();
         return response()->json(array([
-            'array_Map' => $map
+            'array_Map' => $map,
+            'array_Team' => $teams,
         ]), 200);
     }
 
-    public function getPlayer()
-    {
-        $teams = TreasurePlayer::all();
-        return response()->json(array([
-            'array_Team' => $teams
-        ]), 200);
-    }
+    // public function getPlayer()
+    // {
+    //     $teams = TreasurePlayer::all();
+    //     return $team;
+    // }
 
     public function useShovel(Request $request)
     {

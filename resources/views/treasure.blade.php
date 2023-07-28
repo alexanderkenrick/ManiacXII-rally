@@ -18,20 +18,20 @@
                 <div class="map-wrapper">
                     <div class="">
                         <table id="map-table">
-                            @for ($baris = 1; $baris <= 10; $baris++)
-                                <tr id="baris-{{$baris}}">
+                            {{-- @for ($baris = 1; $baris <= 10; $baris++)
+                                <tr id="baris-{{ $baris }}">
                                     @for ($kolom = 1; $kolom <= 10; $kolom++)
                                         <td id="{{ $baris }}-{{ $kolom }}" class="map-kolom">
-                                            {{-- @if ($baris == 2 && $kolom == 4)
-                                                <span class="pion">1</span>
-                                                {{-- <span class="pion">2</span>
-                                            @endif --}}
+                                            @if ($baris == 2 && $kolom == 4)
+                                                <span class="pion-2">1</span>
+                                                <span class="pion-2">2</span>
+                                            @endif
                                             <img src="{{ asset('/img/treasure/tanah.png') }}" alt=""
                                                 class="map-tanah">
                                         </td>
                                     @endfor
                                 </tr>
-                            @endfor
+                            @endfor --}}
                         </table>
                     </div>
 
@@ -140,6 +140,10 @@
 
 @section('script')
     <script>
+
+        $(document).ready(function () {
+            updateMap();
+        });
         var timer;
         var second = 300;
         var running = false;
@@ -233,17 +237,17 @@
                     'yMove': yMove,
                 },
                 success: function(data) {
-                    alert(data[0].yPos + "-" + data[0].xPos + ":" + data[0].moves + "/" + data[0]
-                        .outOfMove);
+                    // alert(data[0].yPos + "-" + data[0].xPos + ":" + data[0].moves + "/" + data[0]
+                    //     .outOfMove);
 
-                    $(`#${data[0].yPos }-${data[0].xPos}`).html(
-                        `<span class="pion">${team_id}</span>`
-                        // kasih pengecekan is_digged
-                    )
+                    // $(`#${data[0].yPos }-${data[0].xPos}`).html(
+                    //     `<span class="pion">${team_id}</span>`
+                    //     // kasih pengecekan is_digged
+                    // )
                     $('#sisa-gerakan').text(data[0].moves);
 
                     updateMap();
-                
+
                 },
                 error: function(data) {
                     console.log(data);
@@ -284,7 +288,53 @@
                     '_token': '<?php echo csrf_token(); ?>',
                 },
                 success: function(data) {
+                    console.log(data[0].array_Team[1]);
+                    document.getElementById("map-table") .innerHTML = '';
+                    
+                    let counterId=0;
+                    for (let i = 0 ;i <10 ; i++) {
+                        document.getElementById("map-table") .innerHTML += `<tr id="baris-${i+1}">`;
+                            let kolom = ''; 
+                            for (let j = 0 ;j <10 ; j++){
+                                let tempRow = data[0].array_Map[counterId]['row'];
+                                let tempCol = data[0].array_Map[counterId]['column'];
+                                if(data[0].array_Team.length){
 
+                                    for(let playerCount = 0;playerCount < data[0].array_Team.length;playerCount++){
+                                            if(data[0].array_Team[playerCount]['row'] == tempRow && data[0].array_Team[playerCount]['column'] == tempCol){
+                                                if(data[0].array_Map[counterId]['digged']=='1'){
+                                                    kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"><span class="pion">${data[0].array_Team[playerCount]['teams_id']}</span></td>`;
+                                                }else{
+                                                    kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah"><span class="pion">${data[0].array_Team[playerCount]['teams_id']}</span></td>`;
+                                                }
+                                            }
+                                            else{
+                                                if(data[0].array_Map[counterId]['digged']=='1'){
+                                                    kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"></td>`;
+                                                }else{
+                                                    kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah"></td>`;
+                                                }
+                                            }
+                                        }
+                                    
+                                    
+                                    counterId+=1;
+                                }
+                                else{
+                                    if(data[0].array_Map[counterId]['digged']=='1'){
+                                        kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"></td>`;
+                                    }else{
+                                        kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah"></td>`;
+                                    }
+                                    counterId+=1;
+                               }
+                                
+                                
+                            }
+                            kolom+=`</tr>`;
+
+                        document.getElementById(`baris-${i+1}`).innerHTML += kolom;
+                    }
                 },
                 error: function(data) {
                     console.log(data);
