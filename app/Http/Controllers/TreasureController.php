@@ -8,6 +8,7 @@ use App\Models\TreasureMap;
 use App\Models\TreasurePlayer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TreasureController extends Controller
 {
@@ -75,30 +76,40 @@ class TreasureController extends Controller
         $move_left = $team_pos->move_left;
 
         if ($move_left > 0) {
-            $xPos = ($team_pos->row) + ($xMove);
-            $yPos = ($team_pos->column) + ($yMove);
+            $col = ($team_pos->column) + ($xMove);
+            $row = ($team_pos->row) + ($yMove);
 
-            if ($xPos < 0) {
-                $xPos = 1;
-            } else if ($xPos > 10) {
-                $xPos = 10;
+            if ($col < 0) {
+                $col = 1;
+            } else if ($col > 10) {
+                $col = 10;
             }
-            if ($yPos < 0)  {
-                $yPos = 1;
-            } else if ($yPos > 10) {
-                $yPos = 10;
+            if ($row < 0) {
+                $row = 1;
+            } else if ($row > 10) {
+                $row = 10;
             }
 
-            $team_pos->row = $xPos;
-            $team_pos->column = $yPos;
-            $status = false;
-            $team_pos->move_left = $move_left - 1;
+            $team_in_pos = DB::table('treasure_players')
+                ->where('row', '=', $row)
+                ->where('column', '=', $col)
+                ->get();
+            if (count($team_in_pos) == 2) {
+                $row = $team_pos->row;
+                $col = $team_pos->column;
+                $status = false;
+                $team_pos->save();
+            } else {
+                $team_pos->row = $row;
+                $team_pos->column = $col;
+                $status = false;
+                $team_pos->move_left = $move_left - 1;
 
-            $team_pos->save();
+                $team_pos->save();
+            }
         } else {
-
-            $xPos = $team_pos->row;
-            $yPos = $team_pos->column;
+            $row = $team_pos->row;
+            $col = $team_pos->column;
             $status = true;
             $team_pos->move_left = 0;
 
@@ -106,14 +117,14 @@ class TreasureController extends Controller
         }
         $move_left = $team_pos->move_left;
         return response()->json(array([
-            'xPos' => $xPos,
-            'yPos' => $yPos,
+            'xPos' => $col,
+            'yPos' => $row,
             'outOfMove' => $status,
             'moves' => $move_left
         ]), 200);
     }
 
-    public function getMap(Request $request)
+    public function getMap()
     {
         $map = TreasureMap::all();
         return response()->json(array([
@@ -127,5 +138,12 @@ class TreasureController extends Controller
         return response()->json(array([
             'array_Team' => $teams
         ]), 200);
+    }
+
+    public function useShovel(Request $request)
+    {
+
+        $team = TreasurePlayer::where("teams_id", '=', $request['team_id'])->first();
+
     }
 }
