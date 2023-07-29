@@ -22,91 +22,38 @@ body {
     position: relative;
     border: 1px solid black;
 }
+/* Pion */
+.map-kolom .pion{
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    z-index: 2;
+    display: inline-block;
+    transform: translate(-50%,-50%);
+    background-image: url('../img/treasure/pion.png');
+    background-size: cover;
+    text-align: center;
+}
 
 .map-kolom:has(> :nth-child(1)) .pion {
-    position: absolute;
-    height: 25px;
-    width: 25px;
-    display: inline-block;
-    z-index: 2;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
-    background-image: url('../img/treasure/pion.png');
-    background-size: cover;
-    text-align: center;
 }
-
-
 
 .map-kolom:has(> .pion:nth-child(2)) .pion:first-of-type{
-    position: absolute;
-    height: 25px;
-    width: 25px;
-    display: inline-block;
-    z-index: 2;
     top: 25%;
     left: 25%;
-    transform: translate(-50%,-50%);
-    background-image: url('../img/treasure/pion.png');
-    background-size: cover;
-    text-align: center;
 }
 .map-kolom:has(> .pion:nth-child(2)) .pion:last-of-type{
-    position: absolute;
-    height: 25px;
-    width: 25px;
-    display: inline-block;
-    z-index: 2;
     top: 75%;
     left: 75%;
-    transform: translate(-50%,-50%);
-    background-image: url('../img/treasure/pion.png');
-    background-size: cover;
-    text-align: center;
 }
 
 .map-kolom:has(> .pion:nth-child(2)) .pion:only-of-type{
-    position: absolute;
-    height: 25px;
-    width: 25px;
-    display: inline-block;
-    z-index: 2;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
-    background-image: url('../img/treasure/pion.png');
-    background-size: cover;
-    text-align: center;
 }
-
-.pion-2 {
-    position: absolute;
-    height: 25px;
-    width: 25px;
-    display: inline-block;
-    z-index: 2;
-    top: 25%;
-    left: 25%;
-    transform: translate(-50%,-50%);
-    background-image: url('../img/treasure/pion.png');
-    background-size: cover;
-    text-align: center;
-}
-
-.pion-2:last-of-type {
-    position: absolute;
-    height: 25px;
-    width: 25px;
-    display: inline-block;
-    z-index: 2;
-    top: 75%;
-    left: 75%;
-    transform: translate(-50%,-50%);
-    background-image: url('../img/treasure/pion.png');
-    background-size: cover;
-    text-align: center;
-}
+/* End of Pion */
 
 .map-tanah {
     width: 70px;

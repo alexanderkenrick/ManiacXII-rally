@@ -289,7 +289,7 @@
                 },
                 success: function(data) {
                     document.getElementById("map-table") .innerHTML = '';
-                    console.log(data[0].array_Team.length);
+                    // console.log(data[0].array_Team.length);
                     let counterId=0;
                     let playerCount = 0;
                     for (let i = 0 ;i <10 ; i++) {
@@ -317,7 +317,7 @@
                         for(let playerCount = 0;playerCount < data[0].array_Team.length;playerCount++){
                             let tempSpan = `<span class="pion">${data[0].array_Team[playerCount]['teams_id']}</span>`;
                             let tempId = `${data[0].array_Team[playerCount]['row']}-${data[0].array_Team[playerCount]['column']}`;
-                            console.log(tempId);
+                            // console.log(tempId);
                             document.getElementById(tempId).innerHTML += tempSpan;
                         }
                     }
@@ -328,7 +328,6 @@
                 }
             });
         }
-
-        // setInterval(updateMap, 3000);
+        setInterval(updateMap, 3000);
     </script>
 @endsection
