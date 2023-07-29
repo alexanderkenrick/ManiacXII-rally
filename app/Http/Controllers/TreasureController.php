@@ -128,6 +128,7 @@ class TreasureController extends Controller
     {
         $map = TreasureMap::all();
         $teams = TreasurePlayer::all();
+ 
         return response()->json(array([
             'array_Map' => $map,
             'array_Team' => $teams,

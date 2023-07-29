@@ -291,6 +291,7 @@
                     document.getElementById("map-table") .innerHTML = '';
                     console.log(data[0].array_Team.length);
                     let counterId=0;
+                    let playerCount = 0;
                     for (let i = 0 ;i <10 ; i++) {
                         document.getElementById("map-table") .innerHTML += `<tr id="baris-${i+1}">`;
                             let kolom = ''; 
@@ -311,6 +312,7 @@
 
                         document.getElementById(`baris-${i+1}`).innerHTML += kolom;
                     }
+
                     if(data[0].array_Team.length){
                         for(let playerCount = 0;playerCount < data[0].array_Team.length;playerCount++){
                             let tempSpan = `<span class="pion">${data[0].array_Team[playerCount]['teams_id']}</span>`;
@@ -327,6 +329,6 @@
             });
         }
 
-        setInterval(updateMap, 3000);
+        // setInterval(updateMap, 3000);
     </script>
 @endsection
