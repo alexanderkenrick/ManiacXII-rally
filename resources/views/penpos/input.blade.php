@@ -12,15 +12,18 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style type="text/css">
-        label{
+        label {
             color: white;
         }
-        h1{
+
+        h1 {
             color: white;
         }
+
         .select2 {
             width: 100%;
         }
+
         .submit-section {
             margin-top: 16px;
         }
@@ -82,12 +85,13 @@
             color: #2e2134;
         }
 
-        #reader{
+        #reader {
             width: auto;
             background: #a5d7e8;
             border-radius: 15px;
         }
-        .qr-section{
+
+        .qr-section {
             width: 100%;
             height: auto;
             display: flex;
@@ -216,7 +220,7 @@
                 }
             });
         }
-        
+
         //============ QR ==============
         function onScanSuccess(decodedText, decodedResult) {
             // handle the scanned code as you like, for example:

@@ -25,13 +25,14 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
     <style type="text/css">
-    @import url('https://fonts.cdnfonts.com/css/montserrat');
+        @import url('https://fonts.cdnfonts.com/css/montserrat');
+
         body {
             background: #0c2548;
         }
 
         .card {
-            background: #576cbc ;
+            background: #576cbc;
             border-radius: 25px;
             box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.2);
             overflow: hidden;
@@ -39,7 +40,7 @@
         }
 
         .card-header {
-            background:  #576cbc;
+            background: #576cbc;
             text-align: center;
             padding-top: 1.5rem;
             padding-bottom: 0;
@@ -48,7 +49,7 @@
 
         input {
             width: 100%;
-            background:#a5d7e8;
+            background: #a5d7e8;
             border: 2px solid black;
             border-radius: 10px;
             outline: none;
@@ -87,17 +88,20 @@
             height: 100vh;
         }
 
-        #btn-logout{
+        #btn-logout {
             position: absolute;
             top: 10px;
             right: 10px;
             z-index: 2;
         }
 
-        .nes-dialog.is-rounded, .nes-btn,.nes-textarea {
+        .nes-dialog.is-rounded,
+        .nes-btn,
+        .nes-textarea {
             border-image-repeat: stretch !important;
         }
-        .nes-btn{
+
+        .nes-btn {
             font-family: 'Broken Console', sans-serif !important;
         }
     </style>
@@ -164,12 +168,13 @@
             </div>
         </nav> --}}
 
-        {{-- @if(Auth::check()) --}}
-            <button class="nes-btn is-error" id="btn-logout" href="{{ route('logout') }}"  onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</button>
+        {{-- @if (Auth::check()) --}}
+        <button class="nes-btn is-error" id="btn-logout" href="{{ route('logout') }}"
+            onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</button>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
         {{-- @endif --}}
 
         <main class="py-4">
