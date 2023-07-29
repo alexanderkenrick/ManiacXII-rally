@@ -31,8 +31,7 @@
         }
 
         .card {
-
-            background: #f8f9fa;
+            background: #576cbc ;
             border-radius: 25px;
             box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.2);
             overflow: hidden;
@@ -40,7 +39,7 @@
         }
 
         .card-header {
-            background: #f8f9fa;
+            background:  #576cbc;
             text-align: center;
             padding-top: 1.5rem;
             padding-bottom: 0;
@@ -49,12 +48,13 @@
 
         input {
             width: 100%;
-            background: transparent;
+            background:#a5d7e8;
             border: 2px solid black;
             border-radius: 10px;
             outline: none;
             padding: 4px 8px;
             font-size: 16px;
+            color: #19376d;
         }
 
         .select2-selection--single {

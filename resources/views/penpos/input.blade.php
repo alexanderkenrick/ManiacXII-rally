@@ -12,10 +12,15 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style type="text/css">
+        label{
+            color: white;
+        }
+        h1{
+            color: white;
+        }
         .select2 {
             width: 100%;
         }
-
         .submit-section {
             margin-top: 16px;
         }
@@ -56,8 +61,8 @@
         }
 
         .btn-submit:hover {
-            background: #D3D3D3;
-            color: #2e2134;
+            background: #0c2548;
+            color: #a5d7e8;
             border: 2px solid #3C486B;
         }
 
@@ -78,13 +83,18 @@
         }
 
         #reader{
-            width: 500px;
+            width: auto;
+            background: #a5d7e8;
+            border-radius: 15px;
         }
         .qr-section{
             width: 100%;
             height: auto;
             display: flex;
             justify-content: center;
+            background: #0c2548;
+            padding: 1rem;
+            border-radius: 15px;
         }
     </style>
 @endsection
@@ -105,7 +115,7 @@
                     </div>
                     <div class="card-body">
                         <div class="qr-section">
-                            <div id="reader"></div>
+                            <div id="reader" class="px-3 pt-4"></div>
                         </div>
                         @if (Session::has('valid'))
                             @if (Session::get('valid') == 'false')
