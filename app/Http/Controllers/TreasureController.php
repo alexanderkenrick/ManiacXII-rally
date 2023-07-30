@@ -201,10 +201,10 @@ class TreasureController extends Controller
         $opp_team = Team::where("id", '=', $opp_team_pos->teams_id)->first();
 
         $item = $team->item()->wherePivot("items_id", 2)->get();
-        if ($item->pivot->count > 0) {
-            $item->pivot->count -= 1;
+        if ($item[0]->pivot->count > 0) {
+            $item[0]->pivot->count -= 1;
 
-            if ($opp_team_pos->angel_active  == false) {
+            if ($opp_team_pos[0]->angel_active  == false) {
 
                 $opp_team->currency -= (0.25 * $opp_team->currency);
                 $team->currency += (0.25 * $opp_team->currency);
@@ -212,7 +212,7 @@ class TreasureController extends Controller
 
                 $msg = "Thief bag succeeded! you got " . (0.25 * $opp_team->currency) . " !";
             } else {
-                $opp_team_pos->angel_active = false;
+                $opp_team_pos[0]->angel_active = false;
                 $msg = "Thief bag failed the opposing team has an angel card!";
             }
         } else {
@@ -220,7 +220,8 @@ class TreasureController extends Controller
         }
         $opp_team->save();
         $team->save();
-        $item[0]->save();
+        $item[0]->pivot->save();
+        $opp_team_pos[0]->save();
         return response()->json(array([
             'msg' => $msg,
             'krona' => $team->currency
@@ -232,10 +233,10 @@ class TreasureController extends Controller
         $team_pos = TreasurePlayer::where("teams_id", '=', $request['team_id'])->first();
         $team = Team::where("id", '=', $request['id'])->first();
         $item = $team->item()->wherePivot("items_id", 3)->get();
-        if ($item->pivot->count > 0) {
+        if ($item[0]->pivot->count > 0) {
 
             if ($team_pos->angel_active  == false) {
-                $item->pivot->count -= 1;
+                $item[0]->pivot->count -= 1;
                 $team_pos->angel_active = true;
                 $msg = "Using angel card succeeded!";
             } else {
@@ -245,7 +246,7 @@ class TreasureController extends Controller
             $msg = "You don't have enough angel card!";
         }
         $team_pos->save();
-        $item[0]->save();
+        $item[0]->pivot->save();
         return response()->json(array([
             'msg' => $msg,
         ]), 200);
