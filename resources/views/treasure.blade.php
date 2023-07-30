@@ -323,7 +323,7 @@
                 }
             });
         }
-        setInterval(updateMap, 3000);
+        // setInterval(updateMap, 3000);
 
         const useShovel =()=>{
             let team_id = $('#team').val();
@@ -338,6 +338,29 @@
                 success: function(data) {
                     alert(data[0].msg);
                     $('#krona').text(data[0].krona);
+                    getTeamInventory();
+                    updateMap();
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        const useThief =()=>{
+            let team_id = $('#team').val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('treasure.useThief') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'team_id': team_id,
+                    'id': team_id,
+                },
+                success: function(data) {
+                    alert(data[0].msg);
+                    $('#krona').text(data[0].krona);
+                    getTeamInventory();
                     updateMap();
                 },
                 error: function(data) {

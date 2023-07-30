@@ -170,7 +170,7 @@ class TreasureController extends Controller
                 $msg = "Digging succeeded! you got " . $krona . " !";
                 DB::table('treasure_maps')->where('row', $row)->where('column',$col)->update(['digged' => $map[0]->digged]);
                 $team->save();
-                $item[0]->save();
+                $item[0]->pivot->save();
             } else {
                 $team->currency;
                 $msg = "Digging failed the tile is already digged!";

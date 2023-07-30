@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth', 'penpos']],
         Route::post('/treasure-updateMap', [\App\Http\Controllers\TreasureController::class, 'getMap'])->name('treasure.updateMap');
         Route::post('/treasure-startPost', [\App\Http\Controllers\TreasureController::class, 'startPosition'])->name('treasure.startPost');
         Route::post('/treasure-useShovel', [\App\Http\Controllers\TreasureController::class, 'useShovel'])->name('treasure.useShovel');
+        Route::post('/treasure-useThief', [\App\Http\Controllers\TreasureController::class, 'useThief'])->name('treasure.useThief');
     }
 );
 
