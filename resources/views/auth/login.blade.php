@@ -94,7 +94,7 @@
 
         @media (max-width:960px) {
             .moon {
-                left: 2em;
+                right: 2em;
                 top: 8em;
                 width: 15em;
             }

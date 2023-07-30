@@ -64,9 +64,9 @@
         }
 
         .btn-submit:hover {
-            background: #0c2548;
-            color: #a5d7e8;
-            border: 2px solid #3C486B;
+            background: #d14d72;
+            color: #fcc8d1;
+            border: 2px solid #0b2447;
         }
 
         .btn-submit:active {
@@ -96,43 +96,278 @@
             height: auto;
             display: flex;
             justify-content: center;
-            background: #0c2548;
-            padding: 1rem;
+            background: #0b2447;
+            padding: 2rem;
             border-radius: 15px;
+            opacity: ;
+        }
+
+        .qr-section-container {
+            margin-left: 20%;
+            margin-right: 20%;
+        }
+
+        .penpos-name {
+            letter-spacing: 5px;
+        }
+
+        .poison {
+            width: 8em;
+            left: 4em;
+            transform: rotate(15deg);
+            bottom: 1em;
+            animation: 5s infinite poisonShine;
+
+        }
+
+        .angel {
+            width: 6em;
+            transform: scaleX(-1);
+            right: 10em;
+            top: 15em;
+            filter: drop-shadow(-1px 1px 00.5rem #7c7c7c)
+        }
+
+        .cloud {
+            width: 25%;
+            left: 3em;
+            top: 25em;
+            z-index: 1;
+            filter: drop-shadow(0 1px 0.25rem #fef2f4);
+            animation: cloud 6s 2s infinite ease-in-out;
+        }
+
+        .butterfly {
+            width: 2em;
+            height: 4em;
+        }
+
+        .butterfly1 {
+            top: 30em;
+            left: -10em;
+            width: 5%;
+            transform: scaleX(-1);
+            filter: drop-shadow(0 0 00.5rem #ffd93d)
+        }
+
+        .moon {
+            right: -6em;
+            width: 8em;
+            top: 5em;
+        }
+
+        .main-branch {
+            z-index: -1;
+            top: 35em;
+            filter: drop-shadow(0 0 0.25rem #ffabab);
+        }
+
+        .cloud1 {
+            width: 25%;
+            top: 25em;
+            right: 3em;
+            filter: drop-shadow(1px 3px 0.5rem #fef2f4);
+            z-index: 1;
+            animation: cloud 6s infinite reverse 2s ease-in-out;
+        }
+
+        .branch1 {
+            top: -5em;
+            transform: rotate(10deg);
+            left: -30em;
+            width: 50%;
+            filter: drop-shadow(0 0 0.75rem #4f200d)
+        }
+
+        /* media quaries */
+        @media (max-width:1200px) {
+            .cloud1 {
+                right: 4em;
+                z-index: 1;
+            }
+
+            .branch1 {
+                top: -4em;
+                left: -4em;
+                width: 25em;
+            }
+
+            .moon {
+                right: -1em;
+            }
+
+            .poison {
+                z-index: 1;
+                left: 1em;
+                bottom: -1em;
+            }
+
+            .butterfly1 {
+                left: -3em;
+            }
+        }
+
+        @media (max-width:960px) {
+            .cloud {
+                left: 3em;
+                top: 20em;
+            }
+
+            .poison {
+                left: 1em;
+                z-index: 1;
+            }
+
+            .cloud1 {
+                right: 3em;
+                top: 20em;
+            }
+
+            .branch1 {
+                left: -15em;
+
+            }
+
+            .butterfly1 {
+                left: -5em;
+                top: 25em;
+                width: 7%;
+            }
+
+            .branch1 {
+                top: -3em;
+
+            }
+
+            .moon {
+                right: -5em;
+            }
+        }
+
+        @media (max-width:760px) {
+            .cloud {
+                left: 2em;
+                z-index: 1;
+            }
+
+            .cloud1 {
+                right: 2em;
+            }
+
+            .poison {
+                left: 0;
+                z-index: 1;
+                bottom: 0.5em;
+            }
+
+            .moon {
+                top: 2em;
+                width: 6em;
+                right: 2em;
+            }
+
+            .butterfly1 {
+                left: -3em;
+            }
+
+            .branch1 {
+                top: -5em;
+                left: -10em;
+                z-index: -1;
+            }
+
+        }
+
+        @media(max-width:490px) {
+            .poison {
+                z-index: 1;
+                width: 6em;
+            }
+
+            .moon {
+                right: 4em;
+            }
+
+            .branch1 {
+                top: -4em;
+                left: -8em;
+                z-index: -1;
+            }
+        }
+
+        /* animation */
+        @keyframes poisonShine {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 0.25rem #bc905b)
+            }
+
+            50% {
+                filter: drop-shadow(0 0 1rem #fef2f4)
+            }
+        }
+
+        @keyframes cloud {
+
+            0%,
+            100% {
+                transform: translateX(0px);
+            }
+
+            50% {
+                transform: translateX(10px);
+            }
+
+
         }
     </style>
 @endsection
 
 @section('content')
-    <div class="container">
-        <div class="alert alert-info" role="alert">
+    <div class="container d-flex justify-content-center position-relative">
+        <img class="w-50" src="{{ asset('../img/asset/Asset 1.png') }}" alt="logo-maniacxii">
+        <img class="mt-lg-3 butterfly" src="{{ asset('../img/asset/Asset 4.png') }}" alt="logo">
+        <img class="butterfly1 position-absolute" src="{{ asset('../img/asset/Asset 4.png') }}" alt="logo">
+        <img class="moon position-absolute" src="{{ asset('../img/asset/Asset 3.png') }}" alt="moon">
+        <img class="cloud position-absolute" src="{{ asset('../img/asset/Asset 15.png') }}" alt="cloud">
+        <img class="cloud1 position-absolute" src="{{ asset('../img/asset/Asset 7.png') }}" alt="cloud">
+        <img class="branch1 position-absolute" src="{{ asset('../img/asset/Asset 8.png') }}" alt="cloud">
+    </div>
+    <div class="container-fluid position-relative overflow-hidden">
+        <img class="poison position-absolute" src="{{ asset('../img/treasure/poison.png') }}" alt="poison">
+
+        <div class="container my-3 mt-lg-5">
+            {{-- <div class="alert alert-info" role="alert">
             Gini dulu ya hehe
             <br>
             <sub>Ps. Req DDD design</sub>
-        </div>
+        </div> --}}
+            <div class="row">
+                <div class="col">
+                    <div class="card px-3">
+                        <div class="card-header position-relative">
 
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h1 style="font-weight: bolder;">{{ $penpos->name }}</h1>
-                    </div>
-                    <div class="card-body">
-                        <div class="qr-section">
-                            <div id="reader" class="px-3 pt-4"></div>
+                            <h1 class="penpos-name" style="font-weight: bolder;">{{ $penpos->name }}</h1>
                         </div>
-                        @if (Session::has('valid'))
-                            @if (Session::get('valid') == 'false')
-                                <div class="alert alert-danger" style="">
-                                    Masukkan nama tim dan poin !</div>
+                        <div class="card-body">
+                            <div class="qr-section-container">
+                                <div class="qr-section">
+                                    <div id="reader" class="px-3 pt-4"></div>
+                                </div>
+                            </div>
+                            @if (Session::has('valid'))
+                                @if (Session::get('valid') == 'false')
+                                    <div class="alert alert-danger" style="">
+                                        Masukkan nama tim dan poin !</div>
+                                @endif
                             @endif
-                        @endif
-                        <div class="input-section">
-                            <div class="team-select my-2 ">
-                                <label for="team" style="">Nama Tim :</label>
-                                <br>
-                                <input type="text" id='team' value="" disabled>
-                                {{-- <select name="team" id="team" class="select2" required>
+                            <div class="input-section">
+                                <div class="team-select my-2 ">
+                                    <label for="team" style="">Nama Tim :</label>
+                                    <br>
+                                    <input type="text" id='team' value="" disabled>
+                                    {{-- <select name="team" id="team" class="select2" required>
                                     <option value="-" selected disabled>- Pilih Team -</option>
                                     @foreach ($teams as $team)
                                         <option value="{{ $team->id }}" id="{{ $team->id }}">
@@ -140,19 +375,23 @@
                                         </option>
                                     @endforeach
                                 </select> --}}
+                                </div>
+                                <label for="inputPoin" style="">Input Poin :</label>
+                                <br>
+                                <input type="number" name="inputPoin" id="inputPoint" style="width: ;" required>
                             </div>
-                            <label for="inputPoin" style="">Input Poin :</label>
-                            <br>
-                            <input type="number" name="inputPoin" id="inputPoint" style="width: ;" required>
-                        </div>
-                        <div class="submit-section d-flex justify-content-center py-3">
-                            <button class="btn btn-submit" onclick="inputPoin()" id="submitPoint">Submit</button>
+                            <div class="submit-section d-flex justify-content-center py-3">
+                                <button class="btn btn-submit" onclick="inputPoin()" id="submitPoint">Submit</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+    </div>
+    <div class="img-branch d-flex flex-column-reverse">
+        <img class="position-absolute w-75 align-self-end main-branch" src="{{ asset('../img/asset/Asset 10 fixed.png') }}"
+            alt="branch">
     </div>
 @endsection
 
