@@ -39,7 +39,6 @@ body {
     top: 50%;
     left: 50%;
 }
-
 .map-kolom:has(> .pion:nth-child(2)) .pion:first-of-type{
     top: 25%;
     left: 25%;
@@ -48,7 +47,6 @@ body {
     top: 75%;
     left: 75%;
 }
-
 .map-kolom:has(> .pion:nth-child(2)) .pion:only-of-type{
     top: 50%;
     left: 50%;
@@ -70,15 +68,12 @@ body {
 
 .select2-selection--single {
     width: 100%;
-
-
     border-radius: 10px !important;
     outline: none;
     font-size: 16px;
 }
 
 .select2-dropdown--below {
-
     border-radius: 10px !important;
 }
 

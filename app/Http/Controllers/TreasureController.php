@@ -146,20 +146,24 @@ class TreasureController extends Controller
         $team_pos = TreasurePlayer::where("teams_id", '=', $request['team_id'])->first();
         $team = Team::where("id", '=', $request['id'])->first();
         $item = $team->item()->wherePivot("items_id", 1)->get();
-        if ($item->pivot->count > 0) {
-            $item->pivot->count -= 1;
+
+        if ($item[0]->pivot->count > 0) {
+            $item[0]->pivot->count -= 1;
             $row = $team_pos->row;
             $col = $team_pos->column;
             $map = DB::table('treasure_maps')
                 ->where('row', '=', $row)
                 ->where('column', '=', $col)
                 ->get();
-            if ($map->digged == false) {
-                $krona = $map->krona;
-                $map->digged = true;
+            if ($map[0]->digged == 0) {
+                $krona = $map[0]->krona;
+                $map[0]->digged = 1;
                 $team->currency += $krona;
 
                 $msg = "Digging succeeded! you got " . $krona . " !";
+                DB::table('treasure_maps')->where('row', $row)->where('column',$col)->update(['digged' => $map[0]->digged]);
+                $team->save();
+                $item[0]->save();
             } else {
                 $team->currency;
                 $msg = "Digging failed the tile is already digged!";
@@ -167,9 +171,7 @@ class TreasureController extends Controller
         } else {
             $msg = "You don't have enough shovel!";
         }
-        $map->save();
-        $team->save();
-        $item->save();
+
         return response()->json(array([
             'msg' => $msg,
             'krona' => $team->currency
@@ -211,7 +213,7 @@ class TreasureController extends Controller
         }
         $opp_team->save();
         $team->save();
-        $item->save();
+        $item[0]->save();
         return response()->json(array([
             'msg' => $msg,
             'krona' => $team->currency
@@ -236,7 +238,7 @@ class TreasureController extends Controller
             $msg = "You don't have enough angel card!";
         }
         $team_pos->save();
-        $item->save();
+        $item[0]->save();
         return response()->json(array([
             'msg' => $msg,
         ]), 200);

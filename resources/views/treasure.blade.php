@@ -49,7 +49,7 @@
                                 <option value="-" selected disabled>- Pilih Team -</option>
                                 @foreach ($teams as $team)
                                     <option value="{{ $team->id }}" id="{{ $team->id }}">
-                                        {{ $team->account->name }}
+                                        [{{$team->id}}]&nbsp;{{ $team->account->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -86,7 +86,7 @@
                                     <p>Jumlah : <span id="shovel-remaining">-</span></p>
                                 </div>
                                 <div class="button-container">
-                                    <button class="button" id="shovel-use">Use</button>
+                                    <button class="button" id="shovel-use" onclick="useShovel()">Use</button>
                                 </div>
                             </div>
                             <div class="item">
@@ -140,10 +140,11 @@
 
 @section('script')
     <script>
-
         $(document).ready(function () {
             updateMap();
         });
+
+        // Timer
         var timer;
         var second = 300;
         var running = false;
@@ -211,6 +212,7 @@
 
             $("#timer").text(`${minuteString}:${secondString}`);
         }
+        // End of Timer
 
         const updatePosition = (movement) => {
             let team_id = $('#team').val();
@@ -237,17 +239,8 @@
                     'yMove': yMove,
                 },
                 success: function(data) {
-                    // alert(data[0].yPos + "-" + data[0].xPos + ":" + data[0].moves + "/" + data[0]
-                    //     .outOfMove);
-
-                    // $(`#${data[0].yPos }-${data[0].xPos}`).html(
-                    //     `<span class="pion">${team_id}</span>`
-                    //     // kasih pengecekan is_digged
-                    // )
                     $('#sisa-gerakan').text(data[0].moves);
-
                     updateMap();
-
                 },
                 error: function(data) {
                     console.log(data);
@@ -267,7 +260,7 @@
                 },
                 success: function(data) {
                     let team_inv = data[0].teamInventory;
-                    console.log(team_inv);
+                    // console.log(team_inv);
                     $("#shovel-remaining").text(team_inv[0]);
                     $("#thief-remaining").text(team_inv[1]);
                     $("#angel-remaining").text(team_inv[2]);
@@ -304,7 +297,6 @@
                                 }else{
                                     kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah"></td>`;
                                 }
-                                
                                 counterId+=1;
                             
                             }
@@ -321,13 +313,38 @@
                             document.getElementById(tempId).innerHTML += tempSpan;
                         }
                     }
-
                 },
                 error: function(data) {
                     console.log(data);
                 }
             });
         }
-        setInterval(updateMap, 3000);
+        // setInterval(updateMap, 3000);
+
+        const useShovel =()=>{
+            let team_id = $('#team').val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('treasure.useShovel') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'team_id': team_id,
+                    'id': team_id,
+                },
+                success: function(data) {
+                    alert(data[0].msg);
+                    $('#krona').text(data[0].krona);
+                    updateMap();
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        const startPosition = ()=>{
+
+        }
+        
     </script>
 @endsection
