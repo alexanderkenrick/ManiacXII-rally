@@ -76,11 +76,12 @@
                                         id="shovel-image">
                                 </div>
                                 <div class="text-container px-3">
-                                    <h2>Shovel</h2>
+                                    <h2>Shovel <span style="font-size: 16px">(100)</span></h2>
                                     <p>Jumlah : <span id="shovel-remaining">-</span></p>
                                 </div>
                                 <div class="button-container">
                                     <button class="button" id="shovel-use" onclick="useShovel()">Use</button>
+                                    <button class="button-buy" id="shovel-buy" onclick="">Buy</button>
                                 </div>
                             </div>
                             <div class="item">
@@ -89,11 +90,12 @@
                                         id="thief-image">
                                 </div>
                                 <div class="text-container px-3">
-                                    <h2>Thief Bag</h2>
+                                    <h2>Thief Bag <span style="font-size: 16px">(200)</span></h2>
                                     <p>Jumlah : <span id="thief-remaining">-</span></p>
                                 </div>
                                 <div class="button-container">
-                                    <button class="button" id="thief-use">Use</button>
+                                    <button class="button" id="thief-use" onclick="useThief()">Use</button>
+                                    <button class="button-buy" id="thief-buy" onclick="">Buy</button>
                                 </div>
                             </div>
                             <div class="item">
@@ -102,11 +104,12 @@
                                         id="angel-image">
                                 </div>
                                 <div class="text-container px-3">
-                                    <h2>Angel Card</h2>
+                                    <h2>Angel Card <span style="font-size: 16px">(150)</span></h2>
                                     <p>Jumlah : <span id="angel-remaining">-</span></p>
                                 </div>
                                 <div class="button-container">
-                                    <button class="button" id="angel-use">Use</button>
+                                    <button class="button" id="angel-use" onclick="useAngel()">Use</button>
+                                    <button class="button-buy" id="angel-buy" onclick="">Buy</button>
                                 </div>
                             </div>
                         </div>
@@ -360,6 +363,27 @@
                 success: function(data) {
                     alert(data[0].msg);
                     $('#krona').text(data[0].krona);
+                    getTeamInventory();
+                    updateMap();
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        const useAngel =()=>{
+            let team_id = $('#team').val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('treasure.useAngel') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'team_id': team_id,
+                    'id': team_id,
+                },
+                success: function(data) {
+                    alert(data[0].msg);
                     getTeamInventory();
                     updateMap();
                 },

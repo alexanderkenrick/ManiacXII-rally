@@ -113,13 +113,19 @@ body {
     border-radius: 25px;
     border: 0;
 }
-.button:hover{
-    background-color: #DBA035;
-    color: #19376d;
-    width: 100px;
-    height: 40px;
+.button-buy{
+    background-color: #19376d;
+    color: #a5d7e8;
+    width: 75px;
+    height: 25px;
     border-radius: 25px;
     border: 0;
+    font-size: 14px;
+}
+.button:hover,.button-buy:hover{
+    background-color: #DBA035;
+    color: #19376d;
+    cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAzElEQVRYR+2X0Q6AIAhF5f8/2jYXZkwEjNSVvVUjDpcrGgT7FUkI2D9xRfQETwNIiWO85wfINfQUEyxBG2ArsLwC0jioGt5zFcwF4OYDPi/mBYKm4t0U8ATgRm3ThFoAqkhNgWkA0jJLvaOVSs7j3qMnSgXWBMiWPXe94QqMBMBc1VZIvaTu5u5pQewq0EqNZvIEMCmxAawK0DNkay9QmfFNAJUXfgGgUkLaE7j/h8fnASkxHTz0DGIBMCnBeeM7AArpUd3mz2x3C7wADglA8BcWMZhZAAAAAElFTkSuQmCC) 14 0,pointer;
 }
 
 .button-disabled{
@@ -166,6 +172,8 @@ body {
     justify-content: end;
     align-items: center;
     flex-basis: 100px;
+    gap: 5px;
+    flex-direction: column;
 }
 
 .krona-section{

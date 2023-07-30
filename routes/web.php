@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth', 'penpos']],
         Route::get('/penpos', [\App\Http\Controllers\PenposController::class, 'index'])->name('penpos.home');
         Route::post('/penpos-input', [\App\Http\Controllers\PenposController::class, 'inputPoin'])->name('penpos.input');
         Route::post('/penpos-update', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.update');
+
+        // TREASURE
         Route::get('/treasure', [\App\Http\Controllers\TreasureController::class, 'index'])->name('treasure');
         Route::post('/treasure-invCheck', [\App\Http\Controllers\TreasureController::class, 'getTeamInventory'])->name('treasure.getInv');
         Route::post('/treasure-updatePost', [\App\Http\Controllers\TreasureController::class, 'updatePosition'])->name('treasure.updatePost');
@@ -50,6 +52,7 @@ Route::group(['middleware' => ['auth', 'penpos']],
         Route::post('/treasure-startPost', [\App\Http\Controllers\TreasureController::class, 'startPosition'])->name('treasure.startPost');
         Route::post('/treasure-useShovel', [\App\Http\Controllers\TreasureController::class, 'useShovel'])->name('treasure.useShovel');
         Route::post('/treasure-useThief', [\App\Http\Controllers\TreasureController::class, 'useThief'])->name('treasure.useThief');
+        Route::post('/treasure-useAngel', [\App\Http\Controllers\TreasureController::class, 'useAngel'])->name('treasure.useAngel');
     }
 );
 

@@ -198,30 +198,33 @@ class TreasureController extends Controller
             ->where('column', '=', $col)
             ->where('teams_id', '!=', $request['team_id'])
             ->get();
-        $opp_team = Team::where("id", '=', $opp_team_pos->teams_id)->first();
-
+        $opp_team = Team::where("id", '=', $opp_team_pos[0]->teams_id)->first();
         $item = $team->item()->wherePivot("items_id", 2)->get();
         if ($item[0]->pivot->count > 0) {
             $item[0]->pivot->count -= 1;
 
-            if ($opp_team_pos[0]->angel_active  == false) {
+            if ($opp_team_pos[0]->angel_active  == 0) {
 
-                $opp_team->currency -= (0.25 * $opp_team->currency);
-                $team->currency += (0.25 * $opp_team->currency);
+                $stolenKrona = floor(0.25 * $opp_team->currency);
+                $team->currency += $stolenKrona;
+                $opp_team->currency -= $stolenKrona;
+                
+                $msg = "Thief bag succeeded! you got " . ($stolenKrona) . " !";
 
-
-                $msg = "Thief bag succeeded! you got " . (0.25 * $opp_team->currency) . " !";
+                $opp_team->save();
+                $team->save();
+                $item[0]->pivot->save();
             } else {
-                $opp_team_pos[0]->angel_active = false;
+                $opp_team_pos[0]->angel_active = 0;
                 $msg = "Thief bag failed the opposing team has an angel card!";
+                $item[0]->pivot->save();
+                DB::table('treasure_players')->where('teams_id', $opp_team_pos[0]->teams_id)->update(['angel_active' => $opp_team_pos[0]->angel_active]);
             }
         } else {
             $msg = "You don't have enough thief bag!";
         }
-        $opp_team->save();
-        $team->save();
-        $item[0]->pivot->save();
-        $opp_team_pos[0]->save();
+       
+        // $opp_team_pos[0]->save();
         return response()->json(array([
             'msg' => $msg,
             'krona' => $team->currency
@@ -235,7 +238,7 @@ class TreasureController extends Controller
         $item = $team->item()->wherePivot("items_id", 3)->get();
         if ($item[0]->pivot->count > 0) {
 
-            if ($team_pos->angel_active  == false) {
+            if ($team_pos->angel_active  == 0) {
                 $item[0]->pivot->count -= 1;
                 $team_pos->angel_active = true;
                 $msg = "Using angel card succeeded!";
