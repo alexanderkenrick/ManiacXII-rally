@@ -16,23 +16,17 @@
         <div class="row">
             <div class="col-7 ">
                 <div class="map-wrapper">
-                    <div class="">
+                    <div class="marking">
                         <table id="map-table">
-                            {{-- @for ($baris = 1; $baris <= 10; $baris++)
-                                <tr id="baris-{{ $baris }}">
-                                    @for ($kolom = 1; $kolom <= 10; $kolom++)
-                                        <td id="{{ $baris }}-{{ $kolom }}" class="map-kolom">
-                                            @if ($baris == 2 && $kolom == 4)
-                                                <span class="pion-2">1</span>
-                                                <span class="pion-2">2</span>
-                                            @endif
-                                            <img src="{{ asset('/img/treasure/tanah.png') }}" alt=""
-                                                class="map-tanah">
-                                        </td>
-                                    @endfor
-                                </tr>
-                            @endfor --}}
+
                         </table>
+                        @for($i=1;$i<=10;$i++)
+                            @php
+                                $alpha = ['a','b','c','d','e','f','g','h','i','j']
+                            @endphp
+                        <span id='x-{{$i}}'>{{$alpha[$i-1]}}</span>
+                        <span id='y-{{$i}}'>{{$i}}</span>
+                        @endfor
                     </div>
 
                 </div>
@@ -293,9 +287,19 @@
                                 let tempCol = data[0].array_Map[counterId]['column'];
 
                                 if(data[0].array_Map[counterId]['digged']=='1'){
+                                    if((tempRow == 1 && tempCol == 1) || (tempRow == 1 && tempCol == 10) || (tempRow == 10 && tempCol == 1) || (tempRow == 10 && tempCol == 10)){
+                                        kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom" onclick='startPosition(${tempRow},${tempCol})'></td>`;
+                                    }else{
                                         kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"></td>`;
+                                    }
+                                        
                                 }else{
-                                    kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah"></td>`;
+                                    if((tempRow == 1 && tempCol == 1) || (tempRow == 1 && tempCol == 10) || (tempRow == 10 && tempCol == 1) || (tempRow == 10 && tempCol == 10)){
+                                        kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah" onclick='startPosition(${tempRow},${tempCol})'></td>`;
+                                    }else{
+                                        kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah"></td>`;
+                                    }
+                                    
                                 }
                                 counterId+=1;
                             
@@ -319,7 +323,7 @@
                 }
             });
         }
-        // setInterval(updateMap, 3000);
+        setInterval(updateMap, 3000);
 
         const useShovel =()=>{
             let team_id = $('#team').val();
@@ -342,8 +346,28 @@
             });
         }
 
-        const startPosition = ()=>{
-
+        const startPosition = (row,col)=>{
+            let team_id = $('#team').val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('treasure.startPost') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'team_id': team_id,
+                    'row': row,
+                    'col': col,
+                },
+                success: function(data) {
+                    if(data[0].msg!=""){
+                        alert(data[0].msg);
+                    }
+                    getTeamInventory();
+                    updateMap();
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
         }
         
     </script>

@@ -51,19 +51,26 @@ class TreasureController extends Controller
         $row = $request['row'];
         $col = $request['col'];
         $moves = 10;
-
+        $msg = "Team is already playing";
         $team_pos = TreasurePlayer::where("teams_id", '=', $request['team_id'])->first();
-
-        $team_pos->row = $row;
-        $team_pos->column = $col;
-        $team_pos->move_left = $moves;
-        $team_pos->save();
-
+        if(!$team_pos){
+            $team_pos = new TreasurePlayer();
+            $team_pos->teams_id = $request['team_id'];
+            $team_pos->move_left=1;
+            $team_pos->dig_left = 1;
+            $team_pos->row = $row;
+            $team_pos->column = $col;
+            $team_pos->move_left = $moves;
+            $team_pos->save();
+            $msg = "";
+        }
+        
 
         return response()->json(array([
             'xPos' => $row,
             'yPos' => $col,
-            'moves' => $moves
+            'moves' => $moves,
+            'msg' => $msg,
         ]), 200);
     }
 
