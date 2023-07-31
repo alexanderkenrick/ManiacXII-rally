@@ -9,6 +9,7 @@ use App\Models\TreasurePlayer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\Switch_;
 
 class TreasureController extends Controller
 {
@@ -63,8 +64,8 @@ class TreasureController extends Controller
             $team_pos->move_left = $moves;
             $team_pos->save();
             $msg = "";
+            TreasureController::createInventory($request['team_id']);
         }
-
 
         return response()->json(array([
             'xPos' => $row,
@@ -74,73 +75,79 @@ class TreasureController extends Controller
         ]), 200);
     }
 
+    //Waktu Start Position
+    public function createInventory($team){
+        for($i=1;$i<=3;$i++){
+            if($i==1){
+                DB::table('inventories')->insert([
+                    'teams_id' => $team,
+                    'items_id' => $i,
+                    'count' => 0,
+                ]);
+            }else{
+                DB::table('inventories')->insert([
+                    'teams_id' => $team,
+                    'items_id' => $i,
+                    'count' => 0,
+                ]);
+            } 
+        }
+    }
+
     public function addShovel(Request $request)
     {
         $team = Team::where("id", '=', $request['id'])->first();
         $item = $team->item()->wherePivot("items_id", 1)->get();
 
-        $item->pivot->count += 1;
-        $item->save();
+        $item[0]->pivot->count += 1;
+        $item[0]->pivot->save();
     }
 
-    public function buyShovel(Request $request)
-    {
+    public function removeShovel(Request $request){
         $team = Team::where("id", '=', $request['id'])->first();
         $item = $team->item()->wherePivot("items_id", 1)->get();
-        if (($team->currency - 50) >= 0) {
-            $item->pivot->count += 1;
-            $item->save();
-            $team->currency -= 50;
-            $team->save();
-            $msg = "Bought 1 Shovel!";
-        } else {
-            $item->save();
-            $msg = "Not Enough Krona!";
-        }
-        return response()->json(array([
-            'msg' => $msg,
-            'krona' => $team->currency
-        ]), 200);
-    }
-    public function buyThief(Request $request)
-    {
-        $team = Team::where("id", '=', $request['id'])->first();
-        $item = $team->item()->wherePivot("items_id", 2)->get();
-        if (($team->currency - 200) >= 0) {
-            $item->pivot->count += 1;
-            $item->save();
-            $team->currency -= 200;
-            $team->save();
-            $msg = "Bought 1 Thief Bag!";
-        } else {
-            $item->save();
-            $msg = "Not Enough Krona!";
-        }
-        return response()->json(array([
-            'msg' => $msg,
-            'krona' => $team->currency
-        ]), 200);
-    }
-    public function buyAngel(Request $request)
-    {
-        $team = Team::where("id", '=', $request['id'])->first();
-        $item = $team->item()->wherePivot("items_id", 3)->get();
-        if (($team->currency - 150) >= 0) {
-            $item->pivot->count += 1;
-            $item->save();
-            $team->currency -= 150;
-            $team->save();
-            $msg = "Bought 1 Angel Card!";
-        } else {
-            $item->save();
-            $msg = "Not Enough Krona!";
-        }
-        return response()->json(array([
-            'msg' => $msg,
-            'krona' => $team->currency
-        ]), 200);
+
+        $item[0]->pivot->count -= 1;
+        $item[0]->pivot->save();
     }
 
+    public function buyItem(Request $request)
+    {
+        $team = Team::where("id", '=', $request['id'])->first();
+        $item = $team->item()->wherePivot("items_id", $request['items_id'])->get();
+        $msg = "Not Enough Krona!";
+        if($request['items_id']==1){
+            if (($team->currency - 100) >= 0) {
+                $item[0]->pivot->count += 1;
+                $item[0]->pivot->save();
+                $team->currency -= 100;
+                $team->save();
+                $msg = "Bought 1 Shovel!";
+            } 
+        } else if($request['items_id']==2){
+            if (($team->currency - 200) >= 0) {
+                $item[0]->pivot->count += 1;
+                $item[0]->pivot->save();
+                $team->currency -= 200;
+                $team->save();
+                $msg = "Bought 1 Thief Bag!";
+            }
+        } else if($request['items_id']==3){
+            if (($team->currency - 150) >= 0) {
+                $item[0]->pivot->count += 1;
+                $item[0]->pivot->save();
+                $team->currency -= 150;
+                $team->save();
+                $msg = "Bought 1 Angel Card!";
+            }
+        }
+
+        return response()->json(array([
+            'msg' => $msg,
+            'krona' => $team->currency
+        ]), 200);
+    }
+   
     public function updatePosition(Request $request)
     {
         $xMove = $request['xMove'];

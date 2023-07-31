@@ -62,9 +62,9 @@
                                 </div>
                             </div>
                             <div class="timer-button-section d-flex justify-content-center">
-                                <button class="button" id="button-start">Start</button>
+                                <button class="button" id="button-start" onclick="addShovel()">Start</button>
                                 <button class="button" id="button-pause">Pause</button>
-                                <button class="button" id="button-reset">Reset</button>
+                                <button class="button" id="button-reset" onclick="removeShovel()">Reset</button>
                             </div>
                         </div>
 
@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="button-container">
                                     <button class="button" id="shovel-use" onclick="useShovel()">Use</button>
-                                    <button class="button-buy" id="shovel-buy" onclick="">Buy</button>
+                                    <button class="button-buy" id="shovel-buy" onclick="buyItem(1)">Buy</button>
                                 </div>
                             </div>
                             <div class="item">
@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="button-container">
                                     <button class="button" id="thief-use" onclick="useThief()">Use</button>
-                                    <button class="button-buy" id="thief-buy" onclick="">Buy</button>
+                                    <button class="button-buy" id="thief-buy" onclick="buyItem(2)">Buy</button>
                                 </div>
                             </div>
                             <div class="item">
@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="button-container">
                                     <button class="button" id="angel-use" onclick="useAngel()">Use</button>
-                                    <button class="button-buy" id="angel-buy" onclick="">Buy</button>
+                                    <button class="button-buy" id="angel-buy" onclick="buyItem(3)">Buy</button>
                                 </div>
                             </div>
                         </div>
@@ -140,6 +140,8 @@
         $(document).ready(function () {
             updateMap();
         });
+
+        let shovelUsed = false;
 
         // Timer
         var timer;
@@ -305,7 +307,6 @@
                                     
                                 }
                                 counterId+=1;
-                            
                             }
                             kolom+=`</tr>`;
 
@@ -328,6 +329,50 @@
         }
         // setInterval(updateMap, 3000);
 
+        const addShovel = () =>{
+            let team_id = $('#team').val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('treasure.addShovel') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'id': team_id,
+                },
+                success: function(data) {
+                    getTeamInventory();
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        $('#team').change(function (e) { 
+            shovelUsed = false; 
+        });
+
+        const removeShovel = () => {
+            alert(shovelUsed)
+            if(shovelUsed==false){
+                let team_id = $('#team').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('treasure.removeShovel') }}',
+                    data: {
+                        '_token': '<?php echo csrf_token(); ?>',
+                        'id': team_id,
+                    },
+                    success: function(data) {
+                        getTeamInventory();
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            }
+            getTeamInventory();
+        }
+
         const useShovel =()=>{
             let team_id = $('#team').val();
             $.ajax({
@@ -339,10 +384,12 @@
                     'id': team_id,
                 },
                 success: function(data) {
+            
                     alert(data[0].msg);
                     $('#krona').text(data[0].krona);
                     getTeamInventory();
                     updateMap();
+                    shovelUsed = true;
                 },
                 error: function(data) {
                     console.log(data);
@@ -386,6 +433,26 @@
                     alert(data[0].msg);
                     getTeamInventory();
                     updateMap();
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        const buyItem =(items_id)=>{
+            let team_id = $('#team').val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('treasure.buyItem') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'id': team_id,
+                    'items_id': items_id,
+                },
+                success: function(data) {
+                    alert(data[0].msg);
+                    getTeamInventory();
                 },
                 error: function(data) {
                     console.log(data);

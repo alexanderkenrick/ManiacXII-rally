@@ -53,6 +53,9 @@ Route::group(['middleware' => ['auth', 'penpos']],
         Route::post('/treasure-useShovel', [\App\Http\Controllers\TreasureController::class, 'useShovel'])->name('treasure.useShovel');
         Route::post('/treasure-useThief', [\App\Http\Controllers\TreasureController::class, 'useThief'])->name('treasure.useThief');
         Route::post('/treasure-useAngel', [\App\Http\Controllers\TreasureController::class, 'useAngel'])->name('treasure.useAngel');
+        Route::post('/treasure-buyItem', [\App\Http\Controllers\TreasureController::class, 'buyItem'])->name('treasure.buyItem');
+        Route::post('/treasure-addShovel', [\App\Http\Controllers\TreasureController::class, 'addShovel'])->name('treasure.addShovel');
+        Route::post('/treasure-removeShovel', [\App\Http\Controllers\TreasureController::class, 'removeShovel'])->name('treasure.removeShovel');
     }
 );
 
