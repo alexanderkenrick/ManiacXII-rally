@@ -17,9 +17,8 @@ class CreateTreasurePostTable extends Migration
             $table->id();
             $table->foreignId('teams_id');
             $table->foreign('teams_id')->references('id')->on('teams')->onUpdate('cascade')->onDelete('cascade');
-            $table->dateTime('start_session');
+            $table->dateTime('start_session')->default(now());
             $table->integer('move_left');
-            $table->integer('dig_left');
             $table->integer('row');
             $table->integer('column');
             $table->boolean('angel_active')->default(false);
