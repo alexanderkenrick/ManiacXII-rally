@@ -53,10 +53,10 @@ class TreasureController extends Controller
         $moves = 10;
         $msg = "Team is already playing";
         $team_pos = TreasurePlayer::where("teams_id", '=', $request['team_id'])->first();
-        if(!$team_pos){
+        if (!$team_pos) {
             $team_pos = new TreasurePlayer();
             $team_pos->teams_id = $request['team_id'];
-            $team_pos->move_left=1;
+            $team_pos->move_left = 1;
             $team_pos->dig_left = 1;
             $team_pos->row = $row;
             $team_pos->column = $col;
@@ -64,13 +64,80 @@ class TreasureController extends Controller
             $team_pos->save();
             $msg = "";
         }
-        
+
 
         return response()->json(array([
             'xPos' => $row,
             'yPos' => $col,
             'moves' => $moves,
             'msg' => $msg,
+        ]), 200);
+    }
+
+    public function addShovel(Request $request)
+    {
+        $team = Team::where("id", '=', $request['id'])->first();
+        $item = $team->item()->wherePivot("items_id", 1)->get();
+
+        $item->pivot->count += 1;
+        $item->save();
+    }
+
+    public function buyShovel(Request $request)
+    {
+        $team = Team::where("id", '=', $request['id'])->first();
+        $item = $team->item()->wherePivot("items_id", 1)->get();
+        if (($team->currency - 50) >= 0) {
+            $item->pivot->count += 1;
+            $item->save();
+            $team->currency -= 50;
+            $team->save();
+            $msg = "Bought 1 Shovel!";
+        } else {
+            $item->save();
+            $msg = "Not Enough Krona!";
+        }
+        return response()->json(array([
+            'msg' => $msg,
+            'krona' => $team->currency
+        ]), 200);
+    }
+    public function buyThief(Request $request)
+    {
+        $team = Team::where("id", '=', $request['id'])->first();
+        $item = $team->item()->wherePivot("items_id", 2)->get();
+        if (($team->currency - 200) >= 0) {
+            $item->pivot->count += 1;
+            $item->save();
+            $team->currency -= 200;
+            $team->save();
+            $msg = "Bought 1 Thief Bag!";
+        } else {
+            $item->save();
+            $msg = "Not Enough Krona!";
+        }
+        return response()->json(array([
+            'msg' => $msg,
+            'krona' => $team->currency
+        ]), 200);
+    }
+    public function buyAngel(Request $request)
+    {
+        $team = Team::where("id", '=', $request['id'])->first();
+        $item = $team->item()->wherePivot("items_id", 3)->get();
+        if (($team->currency - 150) >= 0) {
+            $item->pivot->count += 1;
+            $item->save();
+            $team->currency -= 150;
+            $team->save();
+            $msg = "Bought 1 Angel Card!";
+        } else {
+            $item->save();
+            $msg = "Not Enough Krona!";
+        }
+        return response()->json(array([
+            'msg' => $msg,
+            'krona' => $team->currency
         ]), 200);
     }
 
@@ -135,7 +202,7 @@ class TreasureController extends Controller
     {
         $map = TreasureMap::all();
         $teams = TreasurePlayer::all();
- 
+
         return response()->json(array([
             'array_Map' => $map,
             'array_Team' => $teams,
@@ -168,7 +235,7 @@ class TreasureController extends Controller
                 $team->currency += $krona;
 
                 $msg = "Digging succeeded! you got " . $krona . " !";
-                DB::table('treasure_maps')->where('row', $row)->where('column',$col)->update(['digged' => $map[0]->digged]);
+                DB::table('treasure_maps')->where('row', $row)->where('column', $col)->update(['digged' => $map[0]->digged]);
                 $team->save();
                 $item[0]->pivot->save();
             } else {
@@ -208,7 +275,7 @@ class TreasureController extends Controller
                 $stolenKrona = floor(0.25 * $opp_team->currency);
                 $team->currency += $stolenKrona;
                 $opp_team->currency -= $stolenKrona;
-                
+
                 $msg = "Thief bag succeeded! you got " . ($stolenKrona) . " !";
 
                 $opp_team->save();
@@ -223,7 +290,7 @@ class TreasureController extends Controller
         } else {
             $msg = "You don't have enough thief bag!";
         }
-       
+
         // $opp_team_pos[0]->save();
         return response()->json(array([
             'msg' => $msg,
