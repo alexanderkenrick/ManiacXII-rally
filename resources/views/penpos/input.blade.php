@@ -96,16 +96,9 @@
             height: auto;
             display: flex;
             justify-content: center;
-            background: #0b2447;
-            padding: 2rem;
             border-radius: 15px;
-            opacity: ;
         }
 
-        .qr-section-container {
-            margin-left: 20%;
-            margin-right: 20%;
-        }
 
         .penpos-name {
             letter-spacing: 5px;
@@ -209,8 +202,8 @@
 
         @media (max-width:960px) {
             .cloud {
-                left: 3em;
-                top: 20em;
+                left: 2em;
+                top: 10em;
             }
 
             .poison {
@@ -219,12 +212,13 @@
             }
 
             .cloud1 {
-                right: 3em;
-                top: 20em;
+                right: 2em;
+                top: 10em;
             }
 
             .branch1 {
-                left: -15em;
+                left: -9em;
+                top: -7em;
 
             }
 
@@ -236,34 +230,35 @@
 
             .branch1 {
                 top: -3em;
-
             }
 
             .moon {
-                right: -5em;
+                top: 3em;
+                width: 5em;
+                right: 2em;
             }
         }
 
         @media (max-width:760px) {
             .cloud {
-                left: 2em;
+                left: 1em;
                 z-index: 1;
             }
 
             .cloud1 {
-                right: 2em;
+                right: 1em;
             }
 
             .poison {
                 left: 0;
                 z-index: 1;
-                bottom: 0.5em;
+                bottom: 0.1em;
             }
 
             .moon {
                 top: 2em;
-                width: 6em;
-                right: 2em;
+                width: 4em;
+                right: -1em;
             }
 
             .butterfly1 {
@@ -285,13 +280,17 @@
             }
 
             .moon {
-                right: 4em;
+                width: 3em;
+                right: 2em;
             }
 
             .branch1 {
                 top: -4em;
                 left: -8em;
                 z-index: -1;
+            }
+            .butterfly1 {
+                display: none;
             }
         }
 
@@ -351,11 +350,9 @@
                             <h1 class="penpos-name" style="font-weight: bolder;">{{ $penpos->name }}</h1>
                         </div>
                         <div class="card-body">
-                            <div class="qr-section-container">
                                 <div class="qr-section">
                                     <div id="reader" class="px-3 pt-4"></div>
                                 </div>
-                            </div>
                             @if (Session::has('valid'))
                                 @if (Session::get('valid') == 'false')
                                     <div class="alert alert-danger" style="">
@@ -390,7 +387,7 @@
         </div>
     </div>
     <div class="img-branch d-flex flex-column-reverse">
-        <img class="position-absolute w-75 align-self-end main-branch" src="{{ asset('../img/asset/Asset 10 fixed.png') }}"
+        <img class="position-absolute w-100 align-self-end main-branch" src="{{ asset('../img/asset/Asset 10 fixed.png') }}"
             alt="branch">
     </div>
 @endsection
