@@ -221,9 +221,9 @@ class AccountSeeder extends Seeder
             ],
             [
                 'id' => '30',
-                'username' => 'treasure1',
+                'username' => 'treasure2',
                 'password' => Hash::make('maniac123'),
-                'name' => 'Treasure 1',
+                'name' => 'Treasure 2',
                 'role' => '1'
             ],
 
