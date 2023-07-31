@@ -154,6 +154,7 @@
                 $('#button-start').addClass('button-disabled');
                 $('#button-pause').removeClass('button-disabled');
                 $('#button-pause').removeAttr('disabled');
+                shovelUsed = false;
                 running = true;
                 timer = setInterval(function() {
                     second--;
