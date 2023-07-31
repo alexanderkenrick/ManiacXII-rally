@@ -352,7 +352,6 @@
         });
 
         const removeShovel = () => {
-            alert(shovelUsed)
             if(shovelUsed==false){
                 let team_id = $('#team').val();
                 $.ajax({
