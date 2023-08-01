@@ -66,10 +66,127 @@ class SalvosController extends Controller
     {
         $team = Team::where("id", "=", $request['id'])->first();
         $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
+        if (!$salvosGame) {
+            $salvosGame = new SalvosGame();
+            $salvosGame->teams_id = $request['id'];
+            $salvosGame->player_hp = 10000;
+            $salvosGame->enemy_hp = 10000;
+            $salvosGame->weap_lv = 1;
+            $salvosGame->turn = 1;
+            $salvosGame->save();
+        }
         return response()->json(array([
             'player_hp' => $salvosGame->player_hp,
             'enemy_hp' => $salvosGame->enemy_hp,
+            'weap_lv' => $salvosGame->weap_lv,
             'krona' => $team->currency,
+            'turn' => $salvosGame->turn,
+        ]), 200);
+    }
+
+    public function upgradeWeap(Request $request)
+    {
+        $team = Team::where("id", "=", $request['id'])->first();
+        $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
+        $weapLv = $salvosGame->weap_lv;
+        $price = 150;
+        if ($weapLv == 2)
+            $price = 200;
+        if ($team->currency < $price)
+        {
+            return response()->json(array([
+                'msg' => 'Krona tidak cukup untuk upgrade weapon',
+            ]), 200);
+        }
+        $team->update(['currency' => $team->currency - $price]);
+        $updated = $weapLv + 1;
+        if ($updated >= 3){
+            return response()->json(array([
+                'msg' => 'Weapon sudah mencapai level maksimal',
+            ]), 200);
+        }
+        $salvosGame->update(['weap_lv' => $updated]);
+        return response()->json(array([
+            'msg' => 'Weapon berhasil diupgrade ke level '.$updated,
+        ]), 200);
+    }
+
+
+    public function prosesPlayerAttack(Request $request)
+    {
+        $team = Team::where("id", "=", $request['id'])->first();
+        $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
+        if ($salvosGame->player_hp <= 0)
+        {
+            return response()->json(array([
+                'status' => false,
+                'msg' => 'Tidak dapat menyerang karena sudah mati',
+            ]), 200);
+        }
+        $enemyHP = $salvosGame->enemy_hp;
+        $weapLv = $salvosGame->weap_lv;
+        $turn = $salvosGame->turn;
+        if ($weapLv == 1)
+            $dmg = 100;
+        else if ($weapLv == 2)
+            $dmg = 200;
+        else if ($weapLv == 3)
+            $dmg = 300;
+        
+        $updatedHP = $enemyHP - $dmg;
+        $updateTurn = $turn + 1;
+        $detail = 'Serangan berhasil dengan damage '.$dmg;
+        if ($updatedHP < 0){
+            $updatedHP = 0;
+            $bonusKrona = 2500 - $turn*10;
+            $updatedKrona = $team->currency + $bonusKrona;
+            $team->update([
+                'currency' => $updatedKrona,
+            ]);
+            $detail += "\nSalvos sudah dikalahkan pada turn ".$updateTurn;
+            $detail += "\nMendapatkan bonus krona ".$updatedKrona;
+        }
+        $salvosGame->update([
+            'enemy_hp' => $updatedHP, 
+            'turn' => $updateTurn, 
+        ]);
+        return response()->json(array([
+            'status' => true,
+            'msg' => $detail,
+        ]), 200);
+    }
+
+    public function prosesEnemyAttack(Request $request)
+    {
+        $team = Team::where("id", "=", $request['id'])->first();
+        $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
+        $salvosDamage = SalvosDamage::all();
+        $playerHP = $salvosGame->player_hp;
+        $weapLv = $salvosGame->weap_lv;
+        $turn = $salvosGame->turn;
+        if ($turn % 3 == 0) // nyerangnya enemy tiap 3 turn
+        {
+            $dmg = 500;
+            foreach($salvosDamage as $data){
+                if ($data->turn == $turn){
+                    $dmg = $dmg * $data->multiple;
+                }
+            }
+            $updatedHP = $playerHP - $dmg;
+            if ($updatedHP < 0){
+                $updatedHP = 0;
+            }
+            $salvosGame->update([
+                'player_hp' => $updatedHP, 
+            ]);
+            return response()->json(array([
+                'status' => true,
+                'msg' => 'Musuh menyerang dengan damage '.$dmg,
+            ]), 200);
+        }
+        return response()->json(array([
+            'status' => false,
+            'msg' => 'Musuh tidak ada penyerangan',
         ]), 200);
     }
 }
