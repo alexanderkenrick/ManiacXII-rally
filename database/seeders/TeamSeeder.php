@@ -74,6 +74,18 @@ class TeamSeeder extends Seeder
                 'account_id' => '28',
                 'currency' => '0',
                 'file_qr_loc' => ""
+            ],
+            [
+                'id' => '11',
+                'account_id' => '29',
+                'currency' => '0',
+                'file_qr_loc' => ""
+            ],
+            [
+                'id' => '12',
+                'account_id' => '30',
+                'currency' => '0',
+                'file_qr_loc' => ""
             ]
         ];
         foreach ($teams as $value) {

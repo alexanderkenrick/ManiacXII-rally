@@ -153,7 +153,7 @@ class PostSeeder extends Seeder
             ], 
             [
                 'id' => '18',
-                'penpos_id' => '29',
+                'penpos_id' => '31',
                 'name' => 'Treasure 1',
                 'status' => "Full",
                 'file_photo_loc' => "",
@@ -161,7 +161,7 @@ class PostSeeder extends Seeder
             ], 
             [
                 'id' => '19',
-                'penpos_id' => '30',
+                'penpos_id' => '32',
                 'name' => 'Treasure 2',
                 'status' => "Full",
                 'file_photo_loc' => "",

@@ -214,13 +214,27 @@ class AccountSeeder extends Seeder
             ],
             [
                 'id' => '29',
+                'username' => 'tim11',
+                'password' => Hash::make('maniac123'),
+                'name' => 'Tim 11',
+                'role' => '2'
+            ],
+            [
+                'id' => '30',
+                'username' => 'tim12',
+                'password' => Hash::make('maniac123'),
+                'name' => 'Tim 12',
+                'role' => '2'
+            ],
+            [
+                'id' => '31',
                 'username' => 'treasure1',
                 'password' => Hash::make('maniac123'),
                 'name' => 'Treasure 1',
                 'role' => '1'
             ],
             [
-                'id' => '30',
+                'id' => '32',
                 'username' => 'treasure2',
                 'password' => Hash::make('maniac123'),
                 'name' => 'Treasure 2',
