@@ -17,10 +17,9 @@ class CreateSalvosPostTable extends Migration
             $table->id();
             $table->foreignId('teams_id');
             $table->foreign('teams_id')->references('id')->on('teams')->onUpdate('cascade')->onDelete('cascade');
-            $table->dateTime('start_session');
-            $table->integer('player_hp');
-            $table->integer('enemy_hp');
-            $table->enum('status',['battle','dead']);
+            $table->integer('player_hp')->default(10000);
+            $table->integer('enemy_hp')->default(10000);
+            $table->integer('turn')->default(0);
             $table->timestamps();
         });
     }

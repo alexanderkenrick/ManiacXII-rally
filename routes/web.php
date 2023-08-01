@@ -39,11 +39,14 @@ Route::group(['middleware' => ['guest']],
 // );
 Route::group(['middleware' => ['auth', 'penpos']],
     function(){
-        Route::get('/salvos', [\App\Http\Controllers\SalvosController::class, 'index']);
         Route::get('/penpos', [\App\Http\Controllers\PenposController::class, 'index'])->name('penpos.home');
         Route::post('/penpos-input', [\App\Http\Controllers\PenposController::class, 'inputPoin'])->name('penpos.input');
         Route::post('/penpos-update', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.update');
-
+        
+        // SALVOS
+        Route::get('/salvos', [\App\Http\Controllers\SalvosController::class, 'index'])->name('salvos.home');
+        Route::post('/salvos-load', [\App\Http\Controllers\SalvosController::class, 'index'])->name('salvos.load');
+        
         // TREASURE
         Route::get('/treasure', [\App\Http\Controllers\TreasureController::class, 'index'])->name('treasure');
         Route::post('/treasure-invCheck', [\App\Http\Controllers\TreasureController::class, 'getTeamInventory'])->name('treasure.getInv');

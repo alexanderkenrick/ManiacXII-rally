@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SalvosGame extends Model
 {
+    public $table = "salvos_games";
     use HasFactory;
 
 

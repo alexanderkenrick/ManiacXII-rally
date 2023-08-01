@@ -16,7 +16,7 @@ class SalvosDamageTable extends Migration
         Schema::create('salvos_damages', function (Blueprint $table) {
             $table->id();
             $table->integer('multiple');
-            $table->dateTime('waktu');
+            $table->integer('turn');
             $table->timestamps();
         });
     }   

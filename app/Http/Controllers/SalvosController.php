@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Carbon\Carbon;
+use App\Models\Post;
 use App\Models\Team;
 use App\Models\SalvosGame;
 use App\Models\SalvosRevive;
@@ -15,7 +16,12 @@ class SalvosController extends Controller
     public function index()
     {
         $teams = Team::all();
-        $salvosGame = SalvosGame::where('id', Auth::user()->team()->id)->first();
+        $account = auth()->user();
+        $penpos = Post::where('penpos_id', Auth::user()->id)->first();
+
+        return view('salvos.home', compact('teams', 'penpos'));
+        // gak jadi
+        /*$salvosGame = SalvosGame::where('id', Auth::user()->team()->id)->first();
         $hpPlayer = 10000;
         $hpEnemy = 10000;
         $status = 'battle'; //dead
@@ -52,6 +58,18 @@ class SalvosController extends Controller
                                                           'enemy_hp' => $hpEnemy,
                                                           'status' => $status]);
         
-        return view('salvos.home', compact('teams'));
+        return view('salvos.home', compact('teams'));*/
+
+    }
+
+    public function load(Request $request)
+    {
+        $team = Team::where("id", "=", $request['id'])->first();
+        $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
+        return response()->json(array([
+            'player_hp' => $salvosGame->player_hp,
+            'enemy_hp' => $salvosGame->enemy_hp,
+            'krona' => $team->currency,
+        ]), 200);
     }
 }
