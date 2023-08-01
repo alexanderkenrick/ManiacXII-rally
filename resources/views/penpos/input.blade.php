@@ -363,7 +363,7 @@
                                 <div class="team-select my-2 ">
                                     <label for="team" style="">Nama Tim :</label>
                                     <br>
-                                    <input type="text" id='team' value="">
+                                    <input type="text" id='team' value="" disabled>
                                     {{-- <select name="team" id="team" class="select2" required>
                                     <option value="-" selected disabled>- Pilih Team -</option>
                                     @foreach ($teams as $team)
