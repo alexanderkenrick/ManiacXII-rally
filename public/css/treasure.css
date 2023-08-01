@@ -3,8 +3,12 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+.container{
+    width: 100%;
+}
+
 .map-wrapper {
-    width: 731px;
+    width: 1085px;
     height: 731px;
     background: #ffc483;
     padding: 10px;
@@ -64,6 +68,7 @@ body {
     border-radius: 20px;
     color: #a5d7e8;
     height: 720px;
+    /* width: 200px; */
 }
 
 .select2-selection--single {
@@ -320,6 +325,26 @@ body {
 #y-10{
     top: 0;
     left: 690px;
+}
+#y-11{
+    top: 0;
+    left:760px;
+}
+#y-12{
+    top: 0;
+    left: 830px;
+}
+#y-13{
+    top: 0;
+    left: 900px;
+}
+#y-14{
+    top: 0;
+    left: 970px;
+}
+#y-15{
+    top: 0;
+    left: 1040px;
 }
 
 

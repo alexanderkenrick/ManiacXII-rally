@@ -11,10 +11,10 @@
 
 @section('content')
 
-    <div class="container my-4">
+    <div class="mx-1 my-4">
 
-        <div class="row">
-            <div class="col-7 ">
+        <div class="row px-2">
+            <div class="col-8 ">
                 <div class="map-wrapper">
                     <div class="marking">
                         <table id="map-table">
@@ -25,7 +25,9 @@
                                 $alpha = ['a','b','c','d','e','f','g','h','i','j']
                             @endphp
                         <span id='x-{{$i}}'>{{$alpha[$i-1]}}</span>
-                        <span id='y-{{$i}}'>{{$i}}</span>
+                        @endfor
+                        @for ($i = 1; $i <= 15; $i++)
+                            <span id='y-{{$i}}'>{{$i}}</span>
                         @endfor
                     </div>
 
@@ -33,7 +35,7 @@
             </div>
 
             {{-- Sisi Kanan --}}
-            <div class="col-5">
+            <div class="col-4">
                 <div class="card" id="control-section">
                     <div class="card-body">
                         {{-- Team Select --}}
@@ -313,19 +315,19 @@
                     for (let i = 0 ;i <10 ; i++) {
                         document.getElementById("map-table") .innerHTML += `<tr id="baris-${i+1}">`;
                             let kolom = ''; 
-                            for (let j = 0 ;j <10 ; j++){
+                            for (let j = 0 ;j <15 ; j++){
                                 let tempRow = data[0].array_Map[counterId]['row'];
                                 let tempCol = data[0].array_Map[counterId]['column'];
 
                                 if(data[0].array_Map[counterId]['digged']=='1'){
-                                    if((tempRow == 1 && tempCol == 1) || (tempRow == 1 && tempCol == 10) || (tempRow == 10 && tempCol == 1) || (tempRow == 10 && tempCol == 10)){
+                                    if((tempRow == 1 && tempCol == 1) || (tempRow == 1 && tempCol == 15) || (tempRow == 15 && tempCol == 1) || (tempRow == 15 && tempCol == 15)){
                                         kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom" onclick='startPosition(${tempRow},${tempCol})'></td>`;
                                     }else{
                                         kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"></td>`;
                                     }
                                         
                                 }else{
-                                    if((tempRow == 1 && tempCol == 1) || (tempRow == 1 && tempCol == 10) || (tempRow == 10 && tempCol == 1) || (tempRow == 10 && tempCol == 10)){
+                                    if((tempRow == 1 && tempCol == 1) || (tempRow == 1 && tempCol == 15) || (tempRow == 15 && tempCol == 1) || (tempRow == 15 && tempCol == 15)){
                                         kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah" onclick='startPosition(${tempRow},${tempCol})'></td>`;
                                     }else{
                                         kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah"></td>`;
@@ -353,7 +355,7 @@
                 }
             });
         }
-        setInterval(updateMap, 3000);
+        // setInterval(updateMap, 3000);
 
         const addShovel = () =>{
             let team_id = $('#team').val();

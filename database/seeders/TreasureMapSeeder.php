@@ -16,7 +16,7 @@ class TreasureMapSeeder extends Seeder
     {
         for ($i = 1; $i <= 10; $i++)
         { 
-            for ($j = 1; $j <= 10; $j++)
+            for ($j = 1; $j <= 15; $j++)
             {
                 $getKrona = 0;
                 $rand = rand(0, 100);
