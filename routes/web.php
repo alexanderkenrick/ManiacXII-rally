@@ -45,7 +45,10 @@ Route::group(['middleware' => ['auth', 'penpos']],
         
         // SALVOS
         Route::get('/salvos', [\App\Http\Controllers\SalvosController::class, 'index'])->name('salvos.home');
-        Route::post('/salvos-load', [\App\Http\Controllers\SalvosController::class, 'index'])->name('salvos.load');
+        Route::post('/salvos-load', [\App\Http\Controllers\SalvosController::class, 'load'])->name('salvos.load');
+        Route::post('/salvos-playerAttack', [\App\Http\Controllers\SalvosController::class, 'prosesPlayerAttack'])->name('salvos.playerAttack');
+        Route::post('/salvos-enemyAttack', [\App\Http\Controllers\SalvosController::class, 'prosesEnemyAttack'])->name('salvos.enemyAttack');
+        Route::post('/salvos-upgrade', [\App\Http\Controllers\SalvosController::class, 'upgradeWeap'])->name('salvos.upgrade');
         
         // TREASURE
         Route::get('/treasure', [\App\Http\Controllers\TreasureController::class, 'index'])->name('treasure');

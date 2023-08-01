@@ -10,6 +10,10 @@ class SalvosGame extends Model
     public $table = "salvos_games";
     use HasFactory;
 
+    protected $fillable = [
+        'enemy_hp', 'player_hp','turn' 
+    ];
+
 
     public function team() {
         return $this->belongsTo(Team::class);

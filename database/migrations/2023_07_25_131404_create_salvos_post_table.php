@@ -20,6 +20,7 @@ class CreateSalvosPostTable extends Migration
             $table->integer('player_hp')->default(10000);
             $table->integer('enemy_hp')->default(10000);
             $table->integer('turn')->default(0);
+            $table->integer('weap_lv')->default(1);
             $table->timestamps();
         });
     }
