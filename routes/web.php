@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth', 'penpos']],
         // TREASURE
         Route::get('/treasure', [\App\Http\Controllers\TreasureController::class, 'index'])->name('treasure');
         Route::post('/treasure-invCheck', [\App\Http\Controllers\TreasureController::class, 'getTeamInventory'])->name('treasure.getInv');
+        Route::post('/treasure-refInv', [\App\Http\Controllers\TreasureController::class, 'refreshInventory'])->name('treasure.refInv');
         Route::post('/treasure-updatePost', [\App\Http\Controllers\TreasureController::class, 'updatePosition'])->name('treasure.updatePost');
         Route::post('/treasure-updateMap', [\App\Http\Controllers\TreasureController::class, 'getMap'])->name('treasure.updateMap');
         Route::post('/treasure-startPost', [\App\Http\Controllers\TreasureController::class, 'startPosition'])->name('treasure.startPost');

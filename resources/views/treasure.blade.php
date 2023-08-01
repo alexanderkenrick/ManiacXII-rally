@@ -273,6 +273,31 @@
             });
         }
 
+        const refreshInventory = () => {
+            let team_id = $('#team').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('treasure.refInv') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'id': team_id,
+                },
+                success: function(data) {
+                    let team_inv = data[0].teamInventory;
+                    // console.log(team_inv);
+                    $("#shovel-remaining").text(team_inv[0]);
+                    $("#thief-remaining").text(team_inv[1]);
+                    $("#angel-remaining").text(team_inv[2]);
+                    $('#sisa-gerakan').text(data[0].moves);
+                    $('#krona').text(data[0].krona);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+
         const updateMap = () => {
             $.ajax({
                 type: 'POST',
@@ -387,7 +412,7 @@
             
                     alert(data[0].msg);
                     $('#krona').text(data[0].krona);
-                    getTeamInventory();
+                    refreshInventory();
                     updateMap();
                     shovelUsed = true;
                 },
@@ -410,7 +435,7 @@
                 success: function(data) {
                     alert(data[0].msg);
                     $('#krona').text(data[0].krona);
-                    getTeamInventory();
+                    refreshInventory();
                     updateMap();
                 },
                 error: function(data) {
@@ -431,7 +456,7 @@
                 },
                 success: function(data) {
                     alert(data[0].msg);
-                    getTeamInventory();
+                    refreshInventory();
                     updateMap();
                 },
                 error: function(data) {
@@ -452,7 +477,7 @@
                 },
                 success: function(data) {
                     alert(data[0].msg);
-                    getTeamInventory();
+                    refreshInventory();
                 },
                 error: function(data) {
                     console.log(data);

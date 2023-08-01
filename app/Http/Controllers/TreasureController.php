@@ -47,6 +47,30 @@ class TreasureController extends Controller
         ]), 200);
     }
 
+    public function refreshInventory(Request $request)
+    {
+        $team = Team::where("id", "=", $request['id'])->first();
+        $team_pos = TreasurePlayer::where("teams_id", "=", $request['id'])->first();
+        $moves = $team_pos->move_left;
+        $team_pos->save();
+        $item_id = [1, 2, 3];
+        $item_amount = [];
+        foreach ($item_id as $id) {
+            $item = $team->item()->wherePivot("items_id", $id)->get();
+
+            if (count($item) != 0) {
+                array_push($item_amount, $item[0]->pivot->count);
+            } else {
+                array_push($item_amount, 0);
+            }
+        }
+        return response()->json(array([
+            'teamInventory' => $item_amount,
+            'moves' => $moves,
+            'krona' => $team->currency,
+        ]), 200);
+    }
+
     public function startPosition(Request $request)
     {
         $row = $request['row'];
@@ -243,6 +267,8 @@ class TreasureController extends Controller
                 $msg = "Digging succeeded! you got " . $krona . " !";
                 DB::table('treasure_maps')->where('row', $row)->where('column', $col)->update(['digged' => $map[0]->digged]);
                 $team->save();
+                $team_pos->move_left -= 1;
+                $team_pos->save();
                 $item[0]->pivot->save();
             } else {
                 $team->currency;
