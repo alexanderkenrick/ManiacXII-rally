@@ -80,6 +80,8 @@ Route::get('/battle', function(){
     return view('treasure');
 });*/
 
-
+Route::get('/leaderboard', function(){ 
+    return view('leaderboard');
+});
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
