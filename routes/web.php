@@ -23,7 +23,7 @@ Route::group(['middleware' => ['guest']],
     function(){
         Route::get('/', function () { return view('auth.login');});
     }
-    
+
 );
 
 //Route::get('/penpos', function() {
@@ -42,14 +42,14 @@ Route::group(['middleware' => ['auth', 'penpos']],
         Route::get('/penpos', [\App\Http\Controllers\PenposController::class, 'index'])->name('penpos.home');
         Route::post('/penpos-input', [\App\Http\Controllers\PenposController::class, 'inputPoin'])->name('penpos.input');
         Route::post('/penpos-update', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.update');
-        
+
         // SALVOS
         Route::get('/salvos', [\App\Http\Controllers\SalvosController::class, 'index'])->name('salvos.home');
         Route::post('/salvos-load', [\App\Http\Controllers\SalvosController::class, 'load'])->name('salvos.load');
         Route::post('/salvos-playerAttack', [\App\Http\Controllers\SalvosController::class, 'prosesPlayerAttack'])->name('salvos.playerAttack');
         Route::post('/salvos-enemyAttack', [\App\Http\Controllers\SalvosController::class, 'prosesEnemyAttack'])->name('salvos.enemyAttack');
         Route::post('/salvos-upgrade', [\App\Http\Controllers\SalvosController::class, 'upgradeWeap'])->name('salvos.upgrade');
-        
+
         // TREASURE
         Route::get('/treasure', [\App\Http\Controllers\TreasureController::class, 'index'])->name('treasure');
         Route::post('/treasure-invCheck', [\App\Http\Controllers\TreasureController::class, 'getTeamInventory'])->name('treasure.getInv');
@@ -71,7 +71,7 @@ Route::group(['middleware' => ['auth', 'peserta']],
         Route::get('/peserta/dashboard', [\App\Http\Controllers\PesertaController::class, 'index'])->name('peserta.dashboard');
     }
 );
-    
+
 Route::get('/battle', function(){
     return view('battle');
 });
@@ -80,8 +80,9 @@ Route::get('/battle', function(){
     return view('treasure');
 });*/
 
-Route::get('/leaderboard', function(){ 
-    return view('leaderboard');
-});
+//Route::get('/leaderboard', function(){
+//    return view('leaderboard');
+//});
+Route::get('/leaderboard', [\App\Http\Controllers\AdminController::class, 'index']);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
