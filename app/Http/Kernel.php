@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'penpos' => \App\Http\Middleware\PenposMiddleware::class,
         'peserta' => \App\Http\Middleware\PesertaMiddleware::class,
+        'treasure' => \App\Http\Middleware\TreasureMiddleware::class,
     ];
 }

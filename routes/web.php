@@ -51,6 +51,12 @@ Route::group(['middleware' => ['auth', 'penpos']],
         Route::post('/salvos-enemyAttack', [\App\Http\Controllers\SalvosController::class, 'prosesEnemyAttack'])->name('salvos.enemyAttack');
         Route::post('/salvos-upgrade', [\App\Http\Controllers\SalvosController::class, 'upgradeWeap'])->name('salvos.upgrade');
 
+        
+    }
+);
+
+Route::group(['middleware' => ['auth', 'treasure']],
+    function(){
         // TREASURE
         Route::get('/treasure', [\App\Http\Controllers\TreasureController::class, 'index'])->name('treasure');
         Route::post('/treasure-invCheck', [\App\Http\Controllers\TreasureController::class, 'getTeamInventory'])->name('treasure.getInv');
