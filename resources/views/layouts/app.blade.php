@@ -169,15 +169,15 @@
         </nav> --}}
 
         @if (Auth::check())
-        <button class="nes-btn is-error" id="btn-logout" href="{{ route('logout') }}"
-            onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</button>
+            <button class="nes-btn is-error" id="btn-logout" href="{{ route('logout') }}"
+                onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</button>
 
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-            @csrf
-        </form>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
         @endif
 
-        <main class="py-4">
+        <main class="py-4 main-container">
             @yield('content')
         </main>
     </div>

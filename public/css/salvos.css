@@ -1,0 +1,181 @@
+.py-4{
+    padding: 0 !important;
+}
+ 
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+    color: #fff;
+}
+.select2-container--default .select2-selection--single{
+    background: transparent !important;
+    color: #fff;;
+    margin-bottom: 8px;
+        
+}
+.select2-selection--single {
+    width: 100%;
+    background: transparent;
+    border: 0px black !important;
+}
+
+.select2-dropdown--below {
+    border: 0px black !important;
+    border-radius: 10px !important;
+}
+
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--single,
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.select2-container--open .select2-dropdown--below {
+    border-top: none !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+
+.actionbar {
+    position: fixed;
+    left: 32px;
+    right: 32px;
+    bottom: 32px;
+    height: 25%;
+}
+
+.selection {
+    top: 20px;
+}
+
+.actionbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+.krona{
+    width: 30px;
+    height: 30px;
+}
+.monster {
+    animation: MoveUpDown 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    position: absolute;
+    bottom: 150px;
+}
+
+.player {
+    width: 250px;
+    height: 300px;
+    align-self: flex-end;
+}
+
+.dragon {
+    width: 700px;
+    height: 400px;
+    align-self: flex-end;
+}
+
+.row {
+    height: 100vh;
+}
+
+.image-background {
+    background-image: url('../img/salvos/bg_battle fixed.png');
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    position: relative;
+}
+
+.dragon {
+    position: absolute;
+    right: 3%;
+    bottom: 105px;
+}
+
+.player {
+    position: absolute;
+    left: 80px;
+    bottom: 105px;
+}
+
+@keyframes MoveUpDown {
+
+    0%,
+    100% {
+        bottom: 150px;
+    }
+
+    50% {
+        bottom: 175px;
+    }
+}
+
+.healthbar-wrapper {
+    /* position: absolute; */
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.hb {
+    /* position: absolute; */
+    width: 300px;
+    /* top: 20px; */
+}
+
+/* .player-section {
+    left: 20px
+} */
+
+/* .salvos-section {
+    right: 20px;
+} */
+
+.healthbar {
+    width: 100%;
+    background: transparent;
+    border: 3px solid yellow;
+    transform: rotateY(0deg);
+    border-radius: 8px;
+    position: relative;
+}
+
+.h-s {
+    transform: rotateY(180deg);
+}
+
+.health-label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: #fff;
+    text-indent: 10px;
+    text-align: right;
+}
+
+#health-player {
+    /* width: 100%; */
+    width: 0;
+    height: 30px;
+    background: #ed4747;
+    border-radius: 4px;
+    transition: linear 0.5s;
+}
+
+#health-salvos {
+    width: 0;
+    height: 30px;
+    background: #ed4747;
+    border-radius: 4px;
+    transition: linear 0.5s;
+}
+
+.label-hp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.h-s .label-hp {
+    transform: translate(-50%, -50%) rotateY(180deg);
+}
