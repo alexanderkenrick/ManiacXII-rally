@@ -39,6 +39,7 @@ Route::group(['middleware' => ['guest']],
 // );
 Route::group(['middleware' => ['auth', 'penpos']],
     function(){
+        Route::get('/leaderboard', [\App\Http\Controllers\AdminController::class, 'index']);
         Route::get('/penpos', [\App\Http\Controllers\PenposController::class, 'index'])->name('penpos.home');
         Route::post('/penpos-input', [\App\Http\Controllers\PenposController::class, 'inputPoin'])->name('penpos.input');
         Route::post('/penpos-update', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.update');
@@ -83,6 +84,5 @@ Route::get('/battle', function(){
 //Route::get('/leaderboard', function(){
 //    return view('leaderboard');
 //});
-Route::get('/leaderboard', [\App\Http\Controllers\AdminController::class, 'index']);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
