@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Point;
+use App\Models\Post;
 use App\Models\Team;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,7 @@ class AdminController extends Controller
             }
             $totalPoint = $rallyPoint + $gameBesPoint;
             $arr = [
+                "team_id" => $team->id,
                 "rally_point" => $rallyPoint,
                 "game_besar_point" => $gameBesPoint,
                 "total_point" => $totalPoint
@@ -35,5 +37,31 @@ class AdminController extends Controller
         array_multisort( array_column($teamsData, "total_point"), SORT_DESC, $teamsData);
         return view('leaderboard', compact('teamsData'));
 
+    }
+
+    public function getHistory(Request $request) {
+        $teamId = $request->get('id');
+        $history = $this->history($teamId);
+        $postNames = $this->getPostName($history);
+        return response()->json(array([
+            'history' => $history,
+            'postNames' => $postNames
+        ]), 200);
+    }
+
+    public function history($id) {
+        $history = Point::where('team_id', $id)->get();
+
+        return $history;
+    }
+
+    public function getPostName($history) {
+        $postArr = [];
+
+        foreach ($history as $data) {
+            $postArr[] = Post::where('id', $data['post_id'])->first()->name;
+        }
+
+        return $postArr;
     }
 }
