@@ -133,7 +133,7 @@
                 @else
                     <tr>
                         <td class="text-center fs-5 fw-bold py-4">{{ $team }}</td>
-                        <td class="text-center fs-5 py-4">{{ $data["rally_point"]  }}</td>
+                        <td class="text-center fs-5 py-4 rallyPoint">{{ $data["rally_point"]  }} <button id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rallyButton">History</button></td>
                         <td class="text-center fs-5 py-4">{{ $data["game_besar_point"] }}</td>
                         <td class="text-center fs-5 fw-semibold py-4">{{ $data["total_point"] }}</td>
                     </tr>
@@ -188,7 +188,7 @@
                     points = data[0].history;
                     posts = data[0].postNames;
                 }
-            })
+            });
 
             for (let i = 0 ; i < points.length; i++) {
                 let p = document.createElement("p");
