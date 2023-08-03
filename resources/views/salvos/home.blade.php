@@ -4,7 +4,7 @@
     {{-- Bootstrap Select --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('/css/treasure.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/salvos.css') }}">
@@ -16,11 +16,32 @@
     <div class="container-fluid">
         <div class="row">
             <div class="image-background col-">
-
+                <div class="container-modal position-absolute">
+                    <div id="modal-header">
+                        Market
+                    </div>
+                    <div id="modal-body" class="d-flex justify-content-center py-2">
+                        <div class="d-flex">
+                            <img src="{{ asset('../img/salvos/potion.png') }}" alt="potion" class="potion">
+                            <div class="d-flex align-items-center pt-3">
+                                <p>Pilih salah satu <em>potion</em> di bawah ini</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modal-footer" class="d-flex justify-content-center pb-3">
+                        <button class="button-salvos market">
+                            <img class="krona krona-icon" src="{{ asset('../img/salvos/krona.png') }}"
+                                alt="">100/1000
+                            hp</button>
+                        <button class="button-salvos"><img class="krona krona-icon"
+                                src="{{ asset('../img/salvos/krona.png') }}" alt="">200/3000 hp</button>
+                    </div>
+                </div>
                 <div class="healthbar-wrapper d-flex pt-5 py-3">
                     <div class="player-section hb">
                         <div class="team-select-section">
-                            <select name="team" id="team" class="select2 w-50 mb-3" onchange="loadGanti()" required>
+                            <select name="team" id="team" class="select2 w-100 mb-3" onchange="loadGanti()"
+                                required>
                                 <option value="-" selected disabled>- Pilih Team -</option>
                                 @foreach ($teams as $team)
                                     <option value="{{ $team->id }}" id="{{ $team->id }}">
@@ -43,7 +64,8 @@
                             <p class="player-desc" style="color:white">Level <span id="weap_lv">-</span></p>
                         </div>
                     </div>
-                    <h3 style="color:white;text-align: center">Turn<br><span id="turn"></span><br><br><span id="turn_sapa">Your Turn</span></h3>
+                    <h3 style="color:white;text-align: center">Turn<br><span id="turn"></span><br><br><span
+                            id="turn_sapa">Your Turn</span></h3>
                     <div class="salvos-section hb">
                         <label for="health-salvos" class="health-label">Salvos</label>
                         <div class="healthbar h-s">
@@ -55,28 +77,38 @@
                         </div>
                     </div>
 
+
+                    {{-- stuff --}}
                 </div>
                 <img src="{{ asset('../img/salvos/player_idle.gif') }}" alt="player" class="player">
                 <img src="{{ asset('../img/salvos/slash.gif') }}" alt="slash" class="slash none">
                 <img src="{{ asset('../img/salvos/fireball.gif') }}" alt="fireball" class="fireball none">
                 <img src="{{ asset('../img/salvos/dragon_idle.gif') }}" alt="dragon" class="dragon">
                 <div class="actionbar w-100 position-absolute d-flex justify-content-center">
-                    <button class="button-salvos" id="button-attack" onclick="prosesAttack()">Attack</button>
-                    <button class="button-salvos" id="button-upgrade" onclick="prosesUpgrade()">Upgrade Weapon</button>
-                    <button class="button-salvos" id="button-potion" onclick="prosesBuyPotion()">Buy Potion</button>
-                    <button class="button-salvos" id="button-revive" onclick="prosesRevive()">Revive</button>
-                    <button class="button-salvos" id="button-powerup" onclick="prosesPowerup()">Power Up</button>
+                    <button class="button-salvos px-4" id="button-attack" onclick="prosesAttack()"><img
+                            src="{{ asset('../img/salvos/slash.gif') }}" alt="slash" class="icon"> Attack</button>
+                    <button class="button-salvos px-4" id="button-upgrade" onclick="prosesUpgrade()"> <img
+                            src="{{ asset('../img/salvos/senjataLVL2.png') }}" alt="pedang" class="icon">Upgrade
+                        Weapon</button>
+                    <button class="button-salvos px-4" id="button-potion" onclick="prosesBuyPotion()"><img
+                            src="{{ asset('../img/salvos/potion.png') }}" alt="slash" class="icon">Buy
+                        Potion</button>
+                    <button class="button-salvos px-4" id="button-revive" onclick="prosesRevive()"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-bandaid icon" viewBox="0 0 16 16">
+                            <path
+                                d="M14.121 1.879a3 3 0 0 0-4.242 0L8.733 3.026l4.261 4.26 1.127-1.165a3 3 0 0 0 0-4.242ZM12.293 8 8.027 3.734 3.738 8.031 8 12.293 12.293 8Zm-5.006 4.994L3.03 8.737 1.879 9.88a3 3 0 0 0 4.241 4.24l.006-.006 1.16-1.121ZM2.679 7.676l6.492-6.504a4 4 0 0 1 5.66 5.653l-1.477 1.529-5.006 5.006-1.523 1.472a4 4 0 0 1-5.653-5.66l.001-.002 1.505-1.492.001-.002Z" />
+                            <path
+                                d="M5.56 7.646a.5.5 0 1 1-.706.708.5.5 0 0 1 .707-.708Zm1.415-1.414a.5.5 0 1 1-.707.707.5.5 0 0 1 .707-.707ZM8.39 4.818a.5.5 0 1 1-.708.707.5.5 0 0 1 .707-.707Zm0 5.657a.5.5 0 1 1-.708.707.5.5 0 0 1 .707-.707ZM9.803 9.06a.5.5 0 1 1-.707.708.5.5 0 0 1 .707-.707Zm1.414-1.414a.5.5 0 1 1-.706.708.5.5 0 0 1 .707-.708ZM6.975 9.06a.5.5 0 1 1-.707.708.5.5 0 0 1 .707-.707ZM8.39 7.646a.5.5 0 1 1-.708.708.5.5 0 0 1 .707-.708Zm1.413-1.414a.5.5 0 1 1-.707.707.5.5 0 0 1 .707-.707Z" />
+                        </svg>Revive</button>
+                    <button class="button-salvos px-4" id="button-powerup" onclick="prosesPowerup()"><img
+                            src="{{ asset('../img/salvos/powerUp.png') }}" alt="slash" class="icon">Power
+                        Up</button>
                 </div>
             </div>
-        </div>
-
-
-        <div>
-            {{-- Team Select --}}
 
         </div>
-        {{-- <h3 style="color:white">Ini Nama Boss</h3>
-            <h5 style="color:white">HP <span id="enemy_hp">-</span></h5> --}}
+
     </div>
     </div>
 
@@ -252,7 +284,7 @@
             });
         }
 
-        
+
         const prosesBuyPotion1 = () => {
             let team_id = $('#team').val();
             $.ajax({

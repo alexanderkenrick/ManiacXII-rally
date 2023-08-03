@@ -2,7 +2,7 @@
     padding: 0 !important;
     overflow: hidden    ;
 }
- 
+
 .select2-container--default .select2-selection--single .select2-selection__rendered{
     color: #fff;
 }
@@ -15,7 +15,6 @@
 .select2-selection--single {
     width: 100%;
     background: transparent;
-    border: 0px black !important;
 }
 
 .select2-dropdown--below {
@@ -53,6 +52,9 @@
 .krona{
     width: 30px;
     height: 30px;
+}
+.krona-icon{
+    margin-right:5px;
 }
 .monster {
     animation: MoveUpDown 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
@@ -121,16 +123,51 @@
     border-radius: 10px;
     background-color: #19376d;
     color: #a5d7e8;
+    padding: 10px 5px;
     
 }
 
 .button-salvos:hover{
-    background-color: #19376d; 
+    background-color: #19376d;   
     /* width: ;  */
 }
 
 .none{
     display: none;
+}
+
+.bi-bandaid{
+    color: #fff;
+}
+.container-modal{
+    width: 500px;
+    height: auto;
+    background-color: #fff;
+    top: 300px;
+    left: 600px;
+    border-radius: 20px;
+    z-index: 1;
+}
+#modal-header{
+    text-align: center;
+    border-top-left-radius:19px ;
+    border-top-right-radius:19px ;
+}
+#modal-footer{
+    gap: 50px;
+}
+#modal-header{
+    padding: 10px;
+    background-color: #19376d;
+    color: #a5d7e8;
+    letter-spacing: 2px;
+}
+.potion{
+    width: 50px;
+}
+.icon{
+    width: 30px;
+    margin-right: 10px;
 }
 @keyframes MoveUpDown {
 
