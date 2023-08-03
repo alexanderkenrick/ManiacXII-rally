@@ -16,7 +16,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="image-background col-">
-                <div class="container-modal position-absolute">
+                <div class="container-modal position-absolute" id="myModal" style="display: none;">
                     <div id="modal-header">
                         Market
                     </div>
@@ -29,11 +29,12 @@
                         </div>
                     </div>
                     <div id="modal-footer" class="d-flex justify-content-center pb-3">
-                        <button class="button-salvos market">
+                        <button class="button-salvos market" onclick="prosesBuyPotion1()">
                             <img class="krona krona-icon" src="{{ asset('../img/salvos/krona.png') }}"
                                 alt="">100/1000
                             hp</button>
-                        <button class="button-salvos"><img class="krona krona-icon"
+                        <button class="button-salvos" onclick="prosesBuyPotion2()">
+                            <img class="krona krona-icon"
                                 src="{{ asset('../img/salvos/krona.png') }}" alt="">200/3000 hp</button>
                     </div>
                 </div>
@@ -141,6 +142,10 @@
             $('#log').text('');
         }
 
+        const prosesBuyPotion = () => {
+            $('#myModal').toggle();
+        }
+
         const load = () => {
             let team_id = $('#team').val();
 
@@ -196,9 +201,13 @@
                             $('.slash').removeClass('none');
                             $('.player').attr('src', "../img/salvos/player_idle.gif");
                         }, 1600);
-                        setTimeout(function() {
-                            prosesEnemyAttack();
-                        }, 3200);
+                    }else{
+                        $('#button-attack').attr('disabled', false);
+                        $('#button-upgrade').attr('disabled', false);
+                        $('#button-potion').attr('disabled', false);
+                        $('#button-revive').attr('disabled', false);
+                        $('#button-powerup').attr('disabled', false);
+                        $('#turn_sapa').text("Your Turn");
                     }
                     setTimeout(function() {
                         $('#log').text(data[0].msg);
@@ -270,9 +279,18 @@
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
                     $('#turn_sapa').text("Enemy's Turn");
-                    setTimeout(function() {
-                        prosesEnemyAttack();
-                    }, 2000);
+                    if (data[0].status == true) {
+                        setTimeout(function() {
+                            prosesEnemyAttack();
+                        }, 2000);
+                    }else{
+                        $('#button-attack').attr('disabled', false);
+                        $('#button-upgrade').attr('disabled', false);
+                        $('#button-potion').attr('disabled', false);
+                        $('#button-revive').attr('disabled', false);
+                        $('#button-powerup').attr('disabled', false);
+                        $('#turn_sapa').text("Your Turn");
+                    }
                     setTimeout(function() {
                         $('#log').text(data[0].msg);
                         load();
@@ -286,6 +304,7 @@
 
 
         const prosesBuyPotion1 = () => {
+            $('#myModal').hide();
             let team_id = $('#team').val();
             $.ajax({
                 type: 'POST',
@@ -302,9 +321,18 @@
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
                     $('#turn_sapa').text("Enemy's Turn");
-                    setTimeout(function() {
-                        prosesEnemyAttack();
-                    }, 2000);
+                    if (data[0].status == true) {
+                        setTimeout(function() {
+                            prosesEnemyAttack();
+                        }, 2000);
+                    }else{
+                        $('#button-attack').attr('disabled', false);
+                        $('#button-upgrade').attr('disabled', false);
+                        $('#button-potion').attr('disabled', false);
+                        $('#button-revive').attr('disabled', false);
+                        $('#button-powerup').attr('disabled', false);
+                        $('#turn_sapa').text("Your Turn");
+                    }
                     setTimeout(function() {
                         $('#log').text(data[0].msg);
                         load();
@@ -317,6 +345,7 @@
         }
 
         const prosesBuyPotion2 = () => {
+            $('#myModal').hide();
             let team_id = $('#team').val();
             $.ajax({
                 type: 'POST',
@@ -333,9 +362,18 @@
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
                     $('#turn_sapa').text("Enemy's Turn");
-                    setTimeout(function() {
-                        prosesEnemyAttack();
-                    }, 2000);
+                    if (data[0].status == true) {
+                        setTimeout(function() {
+                            prosesEnemyAttack();
+                        }, 2000);
+                    }else{
+                        $('#button-attack').attr('disabled', false);
+                        $('#button-upgrade').attr('disabled', false);
+                        $('#button-potion').attr('disabled', false);
+                        $('#button-revive').attr('disabled', false);
+                        $('#button-powerup').attr('disabled', false);
+                        $('#turn_sapa').text("Your Turn");
+                    }
                     setTimeout(function() {
                         $('#log').text(data[0].msg);
                         load();
@@ -364,9 +402,18 @@
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
                     $('#turn_sapa').text("Enemy's Turn");
-                    setTimeout(function() {
-                        prosesEnemyAttack();
-                    }, 2000);
+                    if (data[0].status == true) {
+                        setTimeout(function() {
+                            prosesEnemyAttack();
+                        }, 2000);
+                    }else{
+                        $('#button-attack').attr('disabled', false);
+                        $('#button-upgrade').attr('disabled', false);
+                        $('#button-potion').attr('disabled', false);
+                        $('#button-revive').attr('disabled', false);
+                        $('#button-powerup').attr('disabled', false);
+                        $('#turn_sapa').text("Your Turn");
+                    }
                     setTimeout(function() {
                         $('#log').text(data[0].msg);
                         load();
@@ -395,9 +442,18 @@
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
                     $('#turn_sapa').text("Enemy's Turn");
-                    setTimeout(function() {
-                        prosesEnemyAttack();
-                    }, 2000);
+                    if (data[0].status == true) {
+                        setTimeout(function() {
+                            prosesEnemyAttack();
+                        }, 2000);
+                    }else{
+                        $('#button-attack').attr('disabled', false);
+                        $('#button-upgrade').attr('disabled', false);
+                        $('#button-potion').attr('disabled', false);
+                        $('#button-revive').attr('disabled', false);
+                        $('#button-powerup').attr('disabled', false);
+                        $('#turn_sapa').text("Your Turn");
+                    }
                     setTimeout(function() {
                         $('#log').text(data[0].msg);
                         load();

@@ -13,6 +13,10 @@ class Team extends Model
         return $this->hasMany(Point::class);
     }
 
+    protected $fillable = [
+        'currency'
+    ];
+
     // buat ambil nama tim dari akun
     public function account()
     {

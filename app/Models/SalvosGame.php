@@ -11,7 +11,7 @@ class SalvosGame extends Model
     use HasFactory;
 
     protected $fillable = [
-        'enemy_hp', 'player_hp','turn' , 'multiple_dmg'
+        'enemy_hp', 'player_hp','turn' , 'multiple_dmg', 'weap_lv'
     ];
 
 
