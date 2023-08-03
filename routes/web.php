@@ -29,6 +29,7 @@ Route::group(['middleware' => ['guest']],
 Route::group(['middleware' => ['auth', 'admin']],
     function () {
         Route::get('/leaderboard', [\App\Http\Controllers\AdminController::class, 'index']);
+        Route::post('/leaderboard-history', [\App\Http\Controllers\AdminController::class, 'getHistory'])->name('admin.history');
     }
 );
 
