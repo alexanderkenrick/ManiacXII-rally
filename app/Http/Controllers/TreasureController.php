@@ -86,8 +86,7 @@ class TreasureController extends Controller
                 $team_pos->save();
                 $msg = "";
                 TreasureController::createInventory($request['team_id']);
-            }
-            else{
+            } else {
                 $msg = "Cannot start there tile's too full";
             }
         }
@@ -254,33 +253,9 @@ class TreasureController extends Controller
         $team_pos = TreasurePlayer::where("teams_id", '=', $request['team_id'])->first();
         $team = Team::where("id", '=', $request['id'])->first();
         $item = $team->item()->wherePivot("items_id", 1)->get();
-
-        if ($item[0]->pivot->count > 0) {
-            $item[0]->pivot->count = 0;
-            $row = $team_pos->row;
-            $col = $team_pos->column;
-            $map = DB::table('treasure_maps')
-                ->where('row', '=', $row)
-                ->where('column', '=', $col)
-                ->get();
-            if ($map[0]->digged == 0) {
-                $krona = $map[0]->krona;
-                $map[0]->digged = 1;
-                $team->currency += $krona;
-
-                $msg = "Digging succeeded! you got " . $krona . " !";
-                DB::table('treasure_maps')->where('row', $row)->where('column', $col)->update(['digged' => $map[0]->digged]);
-                $team->save();
-                $team_pos->move_left -= 1;
-                $team_pos->save();
-                $item[0]->pivot->save();
-            } else {
-
-                $team->currency;
-                $msg = "Digging failed the tile is already digged!";
-            }
-        } else {
-            if ($team->currency >= 100) {
+        if ($team_pos->move_left > 0) {
+            if ($item[0]->pivot->count > 0) {
+                $item[0]->pivot->count = 0;
                 $row = $team_pos->row;
                 $col = $team_pos->column;
                 $map = DB::table('treasure_maps')
@@ -290,9 +265,9 @@ class TreasureController extends Controller
                 if ($map[0]->digged == 0) {
                     $krona = $map[0]->krona;
                     $map[0]->digged = 1;
-                    $team->currency += ($krona-100);
+                    $team->currency += $krona;
 
-                    $msg = "Digging succeeded! you bought shovel for 100 and you got " . $krona . " !";
+                    $msg = "Digging succeeded! you got " . $krona . " !";
                     DB::table('treasure_maps')->where('row', $row)->where('column', $col)->update(['digged' => $map[0]->digged]);
                     $team->save();
                     $team_pos->move_left -= 1;
@@ -304,9 +279,37 @@ class TreasureController extends Controller
                     $msg = "Digging failed the tile is already digged!";
                 }
             } else {
-                $msg = "Your krona is not enough to use a shovel";
+                if ($team->currency >= 100) {
+                    $row = $team_pos->row;
+                    $col = $team_pos->column;
+                    $map = DB::table('treasure_maps')
+                        ->where('row', '=', $row)
+                        ->where('column', '=', $col)
+                        ->get();
+                    if ($map[0]->digged == 0) {
+                        $krona = $map[0]->krona;
+                        $map[0]->digged = 1;
+                        $team->currency += ($krona - 100);
+
+                        $msg = "Digging succeeded! you bought shovel for 100 and you got " . $krona . " !";
+                        DB::table('treasure_maps')->where('row', $row)->where('column', $col)->update(['digged' => $map[0]->digged]);
+                        $team->save();
+                        $team_pos->move_left -= 1;
+                        $team_pos->save();
+                        $item[0]->pivot->save();
+                    } else {
+
+                        $team->currency;
+                        $msg = "Digging failed the tile is already digged!";
+                    }
+                } else {
+                    $msg = "Your krona is not enough to use a shovel";
+                }
             }
+        } else {
+            $msg = "You are out of moves!";
         }
+
         return response()->json(array([
             'msg' => $msg,
             'krona' => $team->currency
