@@ -26,6 +26,12 @@ Route::group(['middleware' => ['guest']],
 
 );
 
+Route::group(['middleware' => ['auth', 'admin']],
+    function () {
+        Route::get('/leaderboard', [\App\Http\Controllers\AdminController::class, 'index']);
+    }
+);
+
 //Route::get('/penpos', function() {
 //    return view('penpos.input');
 //})->name('input-penpos');
@@ -39,7 +45,6 @@ Route::group(['middleware' => ['guest']],
 // );
 Route::group(['middleware' => ['auth', 'penpos']],
     function(){
-        Route::get('/leaderboard', [\App\Http\Controllers\AdminController::class, 'index']);
         Route::get('/penpos', [\App\Http\Controllers\PenposController::class, 'index'])->name('penpos.home');
         Route::post('/penpos-input', [\App\Http\Controllers\PenposController::class, 'inputPoin'])->name('penpos.input');
         Route::post('/penpos-update', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.update');
@@ -51,7 +56,7 @@ Route::group(['middleware' => ['auth', 'penpos']],
         Route::post('/salvos-enemyAttack', [\App\Http\Controllers\SalvosController::class, 'prosesEnemyAttack'])->name('salvos.enemyAttack');
         Route::post('/salvos-upgrade', [\App\Http\Controllers\SalvosController::class, 'upgradeWeap'])->name('salvos.upgrade');
 
-        
+
     }
 );
 

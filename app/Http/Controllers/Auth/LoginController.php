@@ -59,7 +59,7 @@ class LoginController extends Controller
             if (Auth::user()->role === "0")
             {
 //                $redirectTo = RouteServiceProvider::ADMIN;
-                return redirect()->intended('/admin');
+                return redirect()->intended('/leaderboard');
             }
             else if (Auth::user()->role === "1")
             {
