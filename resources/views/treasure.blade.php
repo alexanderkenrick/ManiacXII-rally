@@ -82,7 +82,6 @@
                                 </div>
                                 <div class="button-container">
                                     <button class="button" id="shovel-use" onclick="useShovel()">Use</button>
-                                    <button class="button-buy" id="shovel-buy" onclick="buyItem(1)">Buy</button>
                                 </div>
                             </div>
                             <div class="item">
@@ -91,12 +90,9 @@
                                         id="thief-image">
                                 </div>
                                 <div class="text-container px-3">
-                                    <h2>Thief Bag <span style="font-size: 16px">(200)</span></h2>
-                                    <p>Jumlah : <span id="thief-remaining">-</span></p>
-                                </div>
+                                    <h2>Thief Bag <span style="font-size: 16px">(200)</span></h2>                                </div>
                                 <div class="button-container">
                                     <button class="button" id="thief-use" onclick="useThief()">Use</button>
-                                    <button class="button-buy" id="thief-buy" onclick="buyItem(2)">Buy</button>
                                 </div>
                             </div>
                             <div class="item">
@@ -106,11 +102,11 @@
                                 </div>
                                 <div class="text-container px-3">
                                     <h2>Angel Card <span style="font-size: 16px">(150)</span></h2>
-                                    <p>Jumlah : <span id="angel-remaining">-</span></p>
+                                    <p>Status : <span id="angel-status">Inactive</span></p>
+                                
                                 </div>
                                 <div class="button-container">
                                     <button class="button" id="angel-use" onclick="useAngel()">Use</button>
-                                    <button class="button-buy" id="angel-buy" onclick="buyItem(3)">Buy</button>
                                 </div>
                             </div>
                         </div>
@@ -259,12 +255,18 @@
                     'id': team_id,
                 },
                 success: function(data) {
-                    let team_inv = data[0].teamInventory;
+
                     // console.log(team_inv);
-                    $("#shovel-remaining").text(team_inv[0]);
-                    $("#thief-remaining").text(team_inv[1]);
-                    $("#angel-remaining").text(team_inv[2]);
+                    $("#shovel-remaining").text(data[0].shovel);
                     $('#sisa-gerakan').text(data[0].moves);
+                    console.log(data[0].angelStatus);
+                    if(data[0].angelStatus==0){
+                        $('#angel-status').text('Inactive');
+                        $('#angel-status').addClass("badge bg-danger");
+                    }else if(data[0].angelStatus==1){
+                        $('#angel-status').text('Active');
+                        $('#angel-status').addClass("badge bg-success");
+                    }
                     $('#krona').text(data[0].krona);
                 },
                 error: function(data) {
@@ -284,12 +286,14 @@
                     'id': team_id,
                 },
                 success: function(data) {
-                    let team_inv = data[0].teamInventory;
-                    // console.log(team_inv);
-                    $("#shovel-remaining").text(team_inv[0]);
-                    $("#thief-remaining").text(team_inv[1]);
-                    $("#angel-remaining").text(team_inv[2]);
+                    $("#shovel-remaining").text(data[0].shovel);
                     $('#sisa-gerakan').text(data[0].moves);
+                    
+                    if(data[0].angetStatus=='0'){
+                        $('#angel-status').text('Inactive');
+                    }else if(data[0].angetStatus=='1'){
+                        $('#angel-status').text('Active');
+                    }
                     $('#krona').text(data[0].krona);
                 },
                 error: function(data) {

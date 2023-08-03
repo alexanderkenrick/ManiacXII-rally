@@ -174,7 +174,7 @@ body {
 
 .inventory-section .button-container{
     display: flex;
-    justify-content: end;
+    justify-content: center;
     align-items: center;
     flex-basis: 100px;
     gap: 5px;
