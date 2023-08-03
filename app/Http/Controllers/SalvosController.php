@@ -84,6 +84,113 @@ class SalvosController extends Controller
         ]), 200);
     }
 
+    public function buyPotion(Request $request)
+    {
+        $team = Team::where("id", "=", $request['id'])->first();
+        $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
+        $price1 = 100;
+        $price2 = 200;
+        $heal1 = 1000;
+        $heal2 = 3000;
+        $price = 0;
+        $heal = 0;
+        if ($team->player_hp <= 0)
+        {
+            return response()->json(array([
+                'msg' => 'Tidak dapat membeli potion',
+            ]), 200);
+        }
+        if ($request['buy'] == 1)
+        {
+            $price = $price1;
+            $heal = $heal1;
+        }
+        else if ($request['buy'] == 2)
+        {
+            $price = $price2;
+            $heal = $heal2;
+        }
+        if ($team->currency < $price)
+        {
+            return response()->json(array([
+                'msg' => 'Krona tidak cukup untuk buy potion',
+            ]), 200);
+        }
+        $team->update([
+            'currency' => $team->currency - $price,
+            'player_hp' => $team->player_hp + $heal
+        ]);
+        $updateTurn = $salvosGame->turn + 1;
+        $salvosGame->update([
+            'turn' => $updateTurn
+        ]);
+        return response()->json(array([
+            'msg' => 'Berhasil membeli potion, HP mu bertambah '.$heal,
+        ]), 200);
+    }
+
+    public function revive(Request $request)
+    {
+        $team = Team::where("id", "=", $request['id'])->first();
+        $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
+        $price = 1000;
+        $reviveHP = 2500;
+        if ($team->player_hp > 0)
+        {
+            return response()->json(array([
+                'msg' => 'Tidak dapat melakukan revive',
+            ]), 200);
+        }
+        if ($team->currency < $price)
+        {
+            return response()->json(array([
+                'msg' => 'Krona tidak cukup untuk revive',
+            ]), 200);
+        }
+        $team->update([
+            'currency' => $team->currency - $price,
+            'player_hp' => $team->player_hp + $reviveHP
+        ]);
+        $updateTurn = $salvosGame->turn + 1;
+        $salvosGame->update([
+            'turn' => $updateTurn
+        ]);
+        return response()->json(array([
+            'msg' => 'Berhasil revive',
+        ]), 200);
+    }
+
+    public function powerup(Request $request)
+    {
+        $team = Team::where("id", "=", $request['id'])->first();
+        $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
+        $price = 150;
+        $multiple = rand(0, 50) / 10;
+        if ($team->player_hp <= 0)
+        {
+            return response()->json(array([
+                'msg' => 'Tidak dapat melakukan power up',
+            ]), 200);
+        }
+        if ($team->currency < $price)
+        {
+            return response()->json(array([
+                'msg' => 'Krona tidak cukup untuk revive',
+            ]), 200);
+        }
+        $team->update([
+            'currency' => $team->currency - $price,
+            'multiple_dmg' => $multiple
+        ]);
+        $updateTurn = $salvosGame->turn + 1;
+        $salvosGame->update([
+            'turn' => $updateTurn
+        ]);
+        return response()->json(array([
+            'msg' => 'Berhasil power up, mendapatkan multiple dmg x'.$multiple.' untuk serangan selanjutnya',
+        ]), 200);
+    }
+
     public function upgradeWeap(Request $request)
     {
         $team = Team::where("id", "=", $request['id'])->first();
@@ -92,6 +199,13 @@ class SalvosController extends Controller
         $price = 150;
         if ($weapLv == 2)
             $price = 200;
+            
+        if ($team->player_hp <= 0)
+        {
+            return response()->json(array([
+                'msg' => 'Tidak dapat melakukan upgrade',
+            ]), 200);
+        }
         if ($team->currency < $price)
         {
             return response()->json(array([
@@ -130,12 +244,14 @@ class SalvosController extends Controller
         $enemyHP = $salvosGame->enemy_hp;
         $weapLv = $salvosGame->weap_lv;
         $turn = $salvosGame->turn;
+        $multiple = $salvosGame->multiple;
         if ($weapLv == 1)
             $dmg = 100;
         else if ($weapLv == 2)
             $dmg = 200;
         else if ($weapLv == 3)
             $dmg = 300;
+        $dmg = $dmg * $multiple;
         
         $updatedHP = $enemyHP - $dmg;
         $updateTurn = $turn + 1;
@@ -153,6 +269,7 @@ class SalvosController extends Controller
         $salvosGame->update([
             'enemy_hp' => $updatedHP, 
             'turn' => $updateTurn, 
+            'multiple' => 1
         ]);
         return response()->json(array([
             'status' => true,
@@ -162,11 +279,9 @@ class SalvosController extends Controller
 
     public function prosesEnemyAttack(Request $request)
     {
-        $team = Team::where("id", "=", $request['id'])->first();
         $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
         $salvosDamage = SalvosDamage::all();
         $playerHP = $salvosGame->player_hp;
-        $weapLv = $salvosGame->weap_lv;
         $turn = $salvosGame->turn;
         if ($turn % 3 == 0) // nyerangnya enemy tiap 3 turn
         {

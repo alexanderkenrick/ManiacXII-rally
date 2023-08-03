@@ -50,6 +50,9 @@ Route::group(['middleware' => ['auth', 'penpos']],
         Route::post('/salvos-playerAttack', [\App\Http\Controllers\SalvosController::class, 'prosesPlayerAttack'])->name('salvos.playerAttack');
         Route::post('/salvos-enemyAttack', [\App\Http\Controllers\SalvosController::class, 'prosesEnemyAttack'])->name('salvos.enemyAttack');
         Route::post('/salvos-upgrade', [\App\Http\Controllers\SalvosController::class, 'upgradeWeap'])->name('salvos.upgrade');
+        Route::post('/salvos-buypotion', [\App\Http\Controllers\SalvosController::class, 'buyPotion'])->name('salvos.buyPotion');
+        Route::post('/salvos-revive', [\App\Http\Controllers\SalvosController::class, 'revive'])->name('salvos.revive');
+        Route::post('/salvos-powerup', [\App\Http\Controllers\SalvosController::class, 'powerup'])->name('salvos.powerup');
 
         
     }

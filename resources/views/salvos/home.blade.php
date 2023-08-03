@@ -43,7 +43,7 @@
                             <p class="player-desc" style="color:white">Level <span id="weap_lv">-</span></p>
                         </div>
                     </div>
-                    <h3 style="color:white;text-align: center">Turn<br><span id="turn"></span></h3>
+                    <h3 style="color:white;text-align: center">Turn<br><span id="turn"></span><br><br><span id="turn_sapa">Your Turn</span></h3>
                     <div class="salvos-section hb">
                         <label for="health-salvos" class="health-label">Salvos</label>
                         <div class="healthbar h-s">
@@ -51,7 +51,7 @@
                             <div id="health-salvos"></div>
                         </div>
                         <div id="log_get" st+yle="padding-left:10px; padding-top:5px; ">
-                            <p class="ms-3" style="color:white">Log <span id="log"></span></p>
+                            <p class="ms-3" style="color:white">Log<br><span id="log"></span></p>
                         </div>
                     </div>
 
@@ -63,9 +63,9 @@
                 <div class="actionbar w-100 position-absolute d-flex justify-content-center">
                     <button class="button-salvos" id="button-attack" onclick="prosesAttack()">Attack</button>
                     <button class="button-salvos" id="button-upgrade" onclick="prosesUpgrade()">Upgrade Weapon</button>
-                    <button class="button-salvos" id="button-potion" onclick="prosesUpgrade()">Buy Potion</button>
-                    <button class="button-salvos" id="button-revive" onclick="prosesUpgrade()">Revive</button>
-                    <button class="button-salvos" id="button-powerup" onclick="prosesUpgrade()">Power Up</button>
+                    <button class="button-salvos" id="button-potion" onclick="prosesBuyPotion()">Buy Potion</button>
+                    <button class="button-salvos" id="button-revive" onclick="prosesRevive()">Revive</button>
+                    <button class="button-salvos" id="button-powerup" onclick="prosesPowerup()">Power Up</button>
                 </div>
             </div>
         </div>
@@ -149,6 +149,7 @@
                     $('#button-potion').attr('disabled', true);
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
+                    $('#turn_sapa').text("Enemy's Turn");
                     if (data[0].status == true) {
                         $('.player').attr('src', "../img/salvos/player_atk.gif");
                         setTimeout(() => {
@@ -165,7 +166,7 @@
                         }, 1600);
                         setTimeout(function() {
                             prosesEnemyAttack();
-                        }, 2000);
+                        }, 3200);
                     }
                     setTimeout(function() {
                         $('#log').text(data[0].msg);
@@ -212,6 +213,7 @@
                         $('#button-potion').attr('disabled', false);
                         $('#button-revive').attr('disabled', false);
                         $('#button-powerup').attr('disabled', false);
+                        $('#turn_sapa').text("Your Turn");
                     }, 3000);
                 },
                 error: function(data) {
@@ -235,6 +237,132 @@
                     $('#button-potion').attr('disabled', true);
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
+                    $('#turn_sapa').text("Enemy's Turn");
+                    setTimeout(function() {
+                        prosesEnemyAttack();
+                    }, 2000);
+                    setTimeout(function() {
+                        $('#log').text(data[0].msg);
+                        load();
+                    }, 2500);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        
+        const prosesBuyPotion1 = () => {
+            let team_id = $('#team').val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('salvos.buyPotion') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'id': team_id,
+                    'buy': 1
+                },
+                success: function(data) {
+                    $('#button-attack').attr('disabled', true);
+                    $('#button-upgrade').attr('disabled', true);
+                    $('#button-potion').attr('disabled', true);
+                    $('#button-revive').attr('disabled', true);
+                    $('#button-powerup').attr('disabled', true);
+                    $('#turn_sapa').text("Enemy's Turn");
+                    setTimeout(function() {
+                        prosesEnemyAttack();
+                    }, 2000);
+                    setTimeout(function() {
+                        $('#log').text(data[0].msg);
+                        load();
+                    }, 2500);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        const prosesBuyPotion2 = () => {
+            let team_id = $('#team').val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('salvos.buyPotion') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'id': team_id,
+                    'buy': 2
+                },
+                success: function(data) {
+                    $('#button-attack').attr('disabled', true);
+                    $('#button-upgrade').attr('disabled', true);
+                    $('#button-potion').attr('disabled', true);
+                    $('#button-revive').attr('disabled', true);
+                    $('#button-powerup').attr('disabled', true);
+                    $('#turn_sapa').text("Enemy's Turn");
+                    setTimeout(function() {
+                        prosesEnemyAttack();
+                    }, 2000);
+                    setTimeout(function() {
+                        $('#log').text(data[0].msg);
+                        load();
+                    }, 2500);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        const prosesRevive = () => {
+            let team_id = $('#team').val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('salvos.revive') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'id': team_id,
+                    'buy': 2
+                },
+                success: function(data) {
+                    $('#button-attack').attr('disabled', true);
+                    $('#button-upgrade').attr('disabled', true);
+                    $('#button-potion').attr('disabled', true);
+                    $('#button-revive').attr('disabled', true);
+                    $('#button-powerup').attr('disabled', true);
+                    $('#turn_sapa').text("Enemy's Turn");
+                    setTimeout(function() {
+                        prosesEnemyAttack();
+                    }, 2000);
+                    setTimeout(function() {
+                        $('#log').text(data[0].msg);
+                        load();
+                    }, 2500);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        const prosesPowerup = () => {
+            let team_id = $('#team').val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('salvos.powerup') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'id': team_id,
+                    'buy': 2
+                },
+                success: function(data) {
+                    $('#button-attack').attr('disabled', true);
+                    $('#button-upgrade').attr('disabled', true);
+                    $('#button-potion').attr('disabled', true);
+                    $('#button-revive').attr('disabled', true);
+                    $('#button-powerup').attr('disabled', true);
+                    $('#turn_sapa').text("Enemy's Turn");
                     setTimeout(function() {
                         prosesEnemyAttack();
                     }, 2000);
