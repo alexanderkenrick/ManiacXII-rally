@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'penpos' => \App\Http\Middleware\PenposMiddleware::class,
         'peserta' => \App\Http\Middleware\PesertaMiddleware::class,
         'treasure' => \App\Http\Middleware\TreasureMiddleware::class,
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
     ];
 }
