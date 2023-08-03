@@ -10,7 +10,6 @@
 @endsection
 
 @section('content')
-
     <div class="mx-1 my-4">
 
         <div class="row px-2">
@@ -20,14 +19,14 @@
                         <table id="map-table">
 
                         </table>
-                        @for($i=1;$i<=10;$i++)
+                        @for ($i = 1; $i <= 10; $i++)
                             @php
-                                $alpha = ['a','b','c','d','e','f','g','h','i','j']
+                                $alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
                             @endphp
-                        <span id='x-{{$i}}'>{{$alpha[$i-1]}}</span>
+                            <span id='x-{{ $i }}'>{{ $alpha[$i - 1] }}</span>
                         @endfor
                         @for ($i = 1; $i <= 15; $i++)
-                            <span id='y-{{$i}}'>{{$i}}</span>
+                            <span id='y-{{ $i }}'>{{ $i }}</span>
                         @endfor
                     </div>
 
@@ -45,7 +44,7 @@
                                 <option value="-" selected disabled>- Pilih Team -</option>
                                 @foreach ($teams as $team)
                                     <option value="{{ $team->id }}" id="{{ $team->id }}">
-                                        [{{$team->id}}]&nbsp;{{ $team->account->name }}
+                                        [{{ $team->id }}]&nbsp;{{ $team->account->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -134,12 +133,11 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('script')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             updateMap();
         });
 
@@ -308,43 +306,50 @@
                     '_token': '<?php echo csrf_token(); ?>',
                 },
                 success: function(data) {
-                    document.getElementById("map-table") .innerHTML = '';
+                    document.getElementById("map-table").innerHTML = '';
                     // console.log(data[0].array_Team.length);
-                    let counterId=0;
+                    let counterId = 0;
                     let playerCount = 0;
-                    for (let i = 0 ;i <10 ; i++) {
-                        document.getElementById("map-table") .innerHTML += `<tr id="baris-${i+1}">`;
-                            let kolom = ''; 
-                            for (let j = 0 ;j <15 ; j++){
-                                let tempRow = data[0].array_Map[counterId]['row'];
-                                let tempCol = data[0].array_Map[counterId]['column'];
+                    for (let i = 0; i < 10; i++) {
+                        document.getElementById("map-table").innerHTML += `<tr id="baris-${i+1}">`;
+                        let kolom = '';
+                        for (let j = 0; j < 15; j++) {
+                            let tempRow = data[0].array_Map[counterId]['row'];
+                            let tempCol = data[0].array_Map[counterId]['column'];
 
-                                if(data[0].array_Map[counterId]['digged']=='1'){
-                                    if((tempRow == 1) || (tempCol == 15) || (tempCol == 1) || (tempRow == 15)){
-                                        kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom" onclick='startPosition(${tempRow},${tempCol})'></td>`;
-                                    }else{
-                                        kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"></td>`;
-                                    }
-                                        
-                                }else{
-                                    if((tempRow == 1) || (tempCol == 15) || (tempCol == 1) || (tempRow == 15)){
-                                        kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah" onclick='startPosition(${tempRow},${tempCol})'></td>`;
-                                    }else{
-                                        kolom+=`<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah"></td>`;
-                                    }
-                                    
+                            if (data[0].array_Map[counterId]['digged'] == '1') {
+                                if ((tempRow == 1) || (tempCol == 15) || (tempCol == 1) || (tempRow ==
+                                    15)) {
+                                    kolom +=
+                                        `<td id="${tempRow}-${tempCol}" class="map-kolom" onclick='startPosition(${tempRow},${tempCol})'></td>`;
+                                } else {
+                                    kolom += `<td id="${tempRow}-${tempCol}" class="map-kolom"></td>`;
                                 }
-                                counterId+=1;
+
+                            } else {
+                                if ((tempRow == 1) || (tempCol == 15) || (tempCol == 1) || (tempRow ==
+                                    15)) {
+                                    kolom +=
+                                        `<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah" onclick='startPosition(${tempRow},${tempCol})'></td>`;
+                                } else {
+                                    kolom +=
+                                        `<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah"></td>`;
+                                }
+
                             }
-                            kolom+=`</tr>`;
+                            counterId += 1;
+                        }
+                        kolom += `</tr>`;
 
                         document.getElementById(`baris-${i+1}`).innerHTML += kolom;
                     }
 
-                    if(data[0].array_Team.length){
-                        for(let playerCount = 0;playerCount < data[0].array_Team.length;playerCount++){
-                            let tempSpan = `<span class="pion">${data[0].array_Team[playerCount]['teams_id']}</span>`;
-                            let tempId = `${data[0].array_Team[playerCount]['row']}-${data[0].array_Team[playerCount]['column']}`;
+                    if (data[0].array_Team.length) {
+                        for (let playerCount = 0; playerCount < data[0].array_Team.length; playerCount++) {
+                            let tempSpan =
+                                `<span class="pion">${data[0].array_Team[playerCount]['teams_id']}</span>`;
+                            let tempId =
+                                `${data[0].array_Team[playerCount]['row']}-${data[0].array_Team[playerCount]['column']}`;
                             // console.log(tempId);
                             document.getElementById(tempId).innerHTML += tempSpan;
                         }
@@ -357,7 +362,7 @@
         }
         // setInterval(updateMap, 3000);
 
-        const addShovel = () =>{
+        const addShovel = () => {
             let team_id = $('#team').val();
             $.ajax({
                 type: 'POST',
@@ -375,12 +380,12 @@
             });
         }
 
-        $('#team').change(function (e) { 
-            shovelUsed = false; 
+        $('#team').change(function(e) {
+            shovelUsed = false;
         });
 
         const removeShovel = () => {
-            if(shovelUsed==false){
+            if (shovelUsed == false) {
                 let team_id = $('#team').val();
                 $.ajax({
                     type: 'POST',
@@ -400,7 +405,7 @@
             getTeamInventory();
         }
 
-        const useShovel =()=>{
+        const useShovel = () => {
             let team_id = $('#team').val();
             $.ajax({
                 type: 'POST',
@@ -411,7 +416,7 @@
                     'id': team_id,
                 },
                 success: function(data) {
-            
+
                     alert(data[0].msg);
                     $('#krona').text(data[0].krona);
                     refreshInventory();
@@ -424,7 +429,7 @@
             });
         }
 
-        const useThief =()=>{
+        const useThief = () => {
             let team_id = $('#team').val();
             $.ajax({
                 type: 'POST',
@@ -446,7 +451,7 @@
             });
         }
 
-        const useAngel =()=>{
+        const useAngel = () => {
             let team_id = $('#team').val();
             $.ajax({
                 type: 'POST',
@@ -467,7 +472,7 @@
             });
         }
 
-        const buyItem =(items_id)=>{
+        const buyItem = (items_id) => {
             let team_id = $('#team').val();
             $.ajax({
                 type: 'POST',
@@ -487,7 +492,7 @@
             });
         }
 
-        const startPosition = (row,col)=>{
+        const startPosition = (row, col) => {
             let team_id = $('#team').val();
             $.ajax({
                 type: 'POST',
@@ -499,7 +504,7 @@
                     'col': col,
                 },
                 success: function(data) {
-                    if(data[0].msg!=""){
+                    if (data[0].msg != "") {
                         alert(data[0].msg);
                     }
                     getTeamInventory();
@@ -510,6 +515,5 @@
                 }
             });
         }
-        
     </script>
 @endsection

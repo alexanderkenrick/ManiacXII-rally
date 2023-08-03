@@ -34,11 +34,13 @@
                             <h5 style="color:white" class="label-hp"><span id="player_hp">-</span>/10000</h5>
                             <div id="health-player"></div>
                         </div>
-                        <div class="krona-container">
+                        <div class="krona-container d-flex">
                             <img src="{{ asset('../img/salvos/krona.png') }}" alt="krona" class="krona mt-2">
+                            <p class="ps-1 mb-0 player-desc" style="color:white">Krona : <span id="krona">-</span></p>
                         </div>
-                        <div class="weapon-container">
-
+                        <div class="weapon-container d-flex align-content-center">
+                            <img src="{{ asset('../img/salvos/senjataLVL1.png') }}" alt="krona" class="krona mt-2">
+                            <p class="player-desc" style="color:white">Weapon Level: <span id="weap_lv">-</span></p>
                         </div>
                     </div>
                     <h3 style="color:white">Turn </h3>
@@ -48,41 +50,36 @@
                             <h5 style="color:white" class="label-hp"><span id="enemy_hp">-</span>/10000</h5>
                             <div id="health-salvos"></div>
                         </div>
-                        <div id="log" style="padding-left:10px; padding-top:5px; ">
-                            <p style="color:white">Log <span id="log"></span></p>
-                            <p style="color:white">Weap Lv : <span id="weap_lv">-</span></p>
+                        <div id="log" st+yle="padding-left:10px; padding-top:5px; ">
+                            <p class="ms-3" style="color:white">Log <span id="log"></span></p>
                         </div>
                     </div>
 
                 </div>
-                <img src="{{ asset('../img/salvos/monster.png') }}" alt="player" class="player">
+                <img src="{{ asset('../img/salvos/player_idle.gif') }}" alt="player" class="player">
                 <img src="{{ asset('../img/salvos/dragon_idle.gif') }}" alt="dragon" class="dragon">
+                <div class="actionbar w-100 position-absolute d-flex justify-content-center">
+                    <button class="button-salvos" id="button-attack" onclick="prosesAttack()">Attack</button>
+                    <button class="button-salvos" id="button-upgrade" onclick="prosesUpgrade()">Upgrade Weapon</button>
+                    <button class="button-salvos">Buy Potion</button>
+                    <button class="button-salvos">Revive</button>
+                    <button class="button-salvos">Power Up</button>
+                </div>
             </div>
         </div>
+
 
         <div>
             {{-- Team Select --}}
 
         </div>
-        <div class="description">
-            {{-- <h3 style="color:white">HP <span id="player_hp">-</span></h3> --}}
-
-            <p style="color:white">Krona : <span id="krona">-</span></p>
-        </div>
-        <div class="col-6">
-            <h3 style="color:white">Ini Nama Boss</h3>
-            <h5 style="color:white">HP <span id="enemy_hp">-</span></h5>
-
-        </div>
+        {{-- <h3 style="color:white">Ini Nama Boss</h3>
+            <h5 style="color:white">HP <span id="enemy_hp">-</span></h5> --}}
     </div>
     </div>
 
     </div>
     <!-- action bawah -->
-    {{-- <div class="actionbar">
-        <button class="button" id="button-attack" onclick="prosesAttack()">Attack</button>
-            <button class="button" id="button-upgrade" onclick="prosesUpgrade()">Upgrade Weapon</button>
-    </div> --}}
 
     </div>
 @endsection

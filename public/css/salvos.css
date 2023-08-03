@@ -36,11 +36,9 @@
 
 
 .actionbar {
-    position: fixed;
-    left: 32px;
-    right: 32px;
-    bottom: 32px;
-    height: 25%;
+    bottom: 40px;
+    gap: 30px   ;
+    /* padding-right: 25px; */
 }
 
 .selection {
@@ -97,6 +95,14 @@
     bottom: 105px;
 }
 
+.player-desc{
+    padding-top: 11px;
+}
+
+.button-salvos{
+    border-radius: 10px;
+}
+
 @keyframes MoveUpDown {
 
     0%,
@@ -122,14 +128,6 @@
     width: 300px;
     /* top: 20px; */
 }
-
-/* .player-section {
-    left: 20px
-} */
-
-/* .salvos-section {
-    right: 20px;
-} */
 
 .healthbar {
     width: 100%;
