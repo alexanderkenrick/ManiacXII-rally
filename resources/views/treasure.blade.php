@@ -63,9 +63,9 @@
                                 </div>
                             </div>
                             <div class="timer-button-section d-flex justify-content-center">
-                                <button class="button" id="button-start" onclick="addShovel()">Start</button>
+                                <button class="button" id="button-start">Start</button>
                                 <button class="button" id="button-pause">Pause</button>
-                                <button class="button" id="button-reset" onclick="removeShovel()">Reset</button>
+                                <button class="button" id="button-reset">Reset</button>
                             </div>
                         </div>
 
