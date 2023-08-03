@@ -36,34 +36,36 @@
                         </div>
                         <div class="krona-container d-flex">
                             <img src="{{ asset('../img/salvos/krona.png') }}" alt="krona" class="krona mt-2">
-                            <p class="ps-1 mb-0 player-desc" style="color:white">Krona : <span id="krona">-</span></p>
+                            <p class="ps-1 mb-0 player-desc" style="color:white"><span id="krona">-</span></p>
                         </div>
                         <div class="weapon-container d-flex align-content-center">
                             <img src="{{ asset('../img/salvos/senjataLVL1.png') }}" alt="krona" class="krona mt-2">
-                            <p class="player-desc" style="color:white">Weapon Level: <span id="weap_lv">-</span></p>
+                            <p class="player-desc" style="color:white">Level <span id="weap_lv">-</span></p>
                         </div>
                     </div>
-                    <h3 style="color:white">Turn </h3>
+                    <h3 style="color:white;text-align: center">Turn<br><span id="turn"></span></h3>
                     <div class="salvos-section hb">
                         <label for="health-salvos" class="health-label">Salvos</label>
                         <div class="healthbar h-s">
                             <h5 style="color:white" class="label-hp"><span id="enemy_hp">-</span>/10000</h5>
                             <div id="health-salvos"></div>
                         </div>
-                        <div id="log" st+yle="padding-left:10px; padding-top:5px; ">
+                        <div id="log_get" st+yle="padding-left:10px; padding-top:5px; ">
                             <p class="ms-3" style="color:white">Log <span id="log"></span></p>
                         </div>
                     </div>
 
                 </div>
                 <img src="{{ asset('../img/salvos/player_idle.gif') }}" alt="player" class="player">
+                <img src="{{ asset('../img/salvos/slash.gif') }}" alt="slash" class="slash none">
+                <img src="{{ asset('../img/salvos/fireball.gif') }}" alt="fireball" class="fireball none">
                 <img src="{{ asset('../img/salvos/dragon_idle.gif') }}" alt="dragon" class="dragon">
                 <div class="actionbar w-100 position-absolute d-flex justify-content-center">
                     <button class="button-salvos" id="button-attack" onclick="prosesAttack()">Attack</button>
                     <button class="button-salvos" id="button-upgrade" onclick="prosesUpgrade()">Upgrade Weapon</button>
-                    <button class="button-salvos">Buy Potion</button>
-                    <button class="button-salvos">Revive</button>
-                    <button class="button-salvos">Power Up</button>
+                    <button class="button-salvos" id="button-potion" onclick="prosesUpgrade()">Buy Potion</button>
+                    <button class="button-salvos" id="button-revive" onclick="prosesUpgrade()">Revive</button>
+                    <button class="button-salvos" id="button-powerup" onclick="prosesUpgrade()">Power Up</button>
                 </div>
             </div>
         </div>
@@ -142,12 +144,33 @@
                     'id': team_id,
                 },
                 success: function(data) {
-                    $('#log').text(data[0].msg);
-                    load();
+                    $('#button-attack').attr('disabled', true);
+                    $('#button-upgrade').attr('disabled', true);
+                    $('#button-potion').attr('disabled', true);
+                    $('#button-revive').attr('disabled', true);
+                    $('#button-powerup').attr('disabled', true);
+                    if (data[0].status == true) {
+                        $('.player').attr('src', "../img/salvos/player_atk.gif");
+                        setTimeout(() => {
+                            $('.dragon').attr('src', "../img/salvos/dragon_hit.gif");
+                        }, 2500);
+
+                        setTimeout(() => {
+                            $('.dragon').attr('src', "../img/salvos/dragon_idle.gif");
+                            $('.slash').addClass('none');
+                        }, 3000);
+                        setTimeout(() => {
+                            $('.slash').removeClass('none');
+                            $('.player').attr('src', "../img/salvos/player_idle.gif");
+                        }, 1600);
+                        setTimeout(function() {
+                            prosesEnemyAttack();
+                        }, 2000);
+                    }
                     setTimeout(function() {
-                        prosesEnemyAttack();
-                    }, 2000);
-                    load();
+                        $('#log').text(data[0].msg);
+                        load();
+                    }, 2500);
                 },
                 error: function(data) {
                     console.log(data);
@@ -165,8 +188,31 @@
                     'id': team_id,
                 },
                 success: function(data) {
-                    $('#log').text(data[0].msg);
-                    load();
+                    if (data[0].status == true) {
+                        $('.dragon').attr('src', "../img/salvos/dragon_atk.gif");
+                        setTimeout(() => {
+                            $('.player').attr('src', "../img/salvos/player_hit.gif");
+                        }, 2500);
+                        setTimeout(() => {
+                            $('.player').attr('src', "../img/salvos/player_idle.gif");
+                            $('.fireball').addClass('none');
+                        }, 3000);
+                        setTimeout(() => {
+                            $('.fireball').removeClass('none');
+                        }, 1600);
+                        setTimeout(() => {
+                            $('.dragon').attr('src', "../img/salvos/dragon_idle.gif");
+                        }, 2600);
+                    }
+                    setTimeout(function() {
+                        load();
+                        $('#log').text(data[0].msg);
+                        $('#button-attack').attr('disabled', false);
+                        $('#button-upgrade').attr('disabled', false);
+                        $('#button-potion').attr('disabled', false);
+                        $('#button-revive').attr('disabled', false);
+                        $('#button-powerup').attr('disabled', false);
+                    }, 3000);
                 },
                 error: function(data) {
                     console.log(data);
@@ -184,13 +230,25 @@
                     'id': team_id,
                 },
                 success: function(data) {
-                    $('#log').text(data[0].msg);
-                    load();
+                    $('#button-attack').attr('disabled', true);
+                    $('#button-upgrade').attr('disabled', true);
+                    $('#button-potion').attr('disabled', true);
+                    $('#button-revive').attr('disabled', true);
+                    $('#button-powerup').attr('disabled', true);
+                    setTimeout(function() {
+                        prosesEnemyAttack();
+                    }, 2000);
+                    setTimeout(function() {
+                        $('#log').text(data[0].msg);
+                        load();
+                    }, 2500);
                 },
                 error: function(data) {
                     console.log(data);
                 }
             });
         }
+
+        $('#button-attack').click(function(e) {});
     </script>
 @endsection

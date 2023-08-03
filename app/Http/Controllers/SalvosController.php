@@ -105,7 +105,11 @@ class SalvosController extends Controller
                 'msg' => 'Weapon sudah mencapai level maksimal',
             ]), 200);
         }
-        $salvosGame->update(['weap_lv' => $updated]);
+        $updateTurn = $salvosGame->turn + 1;
+        $salvosGame->update([
+            'weap_lv' => $updated, 
+            'turn' => $updateTurn
+        ]);
         return response()->json(array([
             'msg' => 'Weapon berhasil diupgrade ke level '.$updated,
         ]), 200);

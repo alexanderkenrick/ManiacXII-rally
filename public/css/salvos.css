@@ -1,5 +1,6 @@
 .py-4{
     padding: 0 !important;
+    overflow: hidden    ;
 }
  
 .select2-container--default .select2-selection--single .select2-selection__rendered{
@@ -37,7 +38,7 @@
 
 .actionbar {
     bottom: 40px;
-    gap: 30px   ;
+    gap: 50px;
     /* padding-right: 25px; */
 }
 
@@ -99,10 +100,38 @@
     padding-top: 11px;
 }
 
-.button-salvos{
-    border-radius: 10px;
+.slash{
+    position: absolute;
+    width: 100px;
+    left: 300px;
+    bottom: 230px;
+    animation: slashAnimation ease-in-out 2.5s alternate;
 }
 
+
+.fireball{
+    position: absolute;
+    width: 500px;
+    right: 300px;
+    bottom: 230px;
+    animation: fireballAnimation ease-in-out 2.5s alternate;
+}
+
+.button-salvos{
+    border-radius: 10px;
+    background-color: #19376d;
+    color: #a5d7e8;
+    
+}
+
+.button-salvos:hover{
+    background-color: #19376d; 
+    /* width: ;  */
+}
+
+.none{
+    display: none;
+}
 @keyframes MoveUpDown {
 
     0%,
@@ -112,6 +141,40 @@
 
     50% {
         bottom: 175px;
+    }
+}
+
+@keyframes slashAnimation {
+    0%{
+        transform: translate(0,0);
+    } 
+    33%{
+        opacity: 1;
+        visibility: visible;
+    } 
+    40%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+        transform: translateX(2000px);
+    }
+}
+
+@keyframes fireballAnimation {
+    0%{
+        transform: translate(0,0);
+    } 
+    33%{
+        opacity: 1;
+        visibility: visible;
+    } 
+    40%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+        transform: translateX(-2500px);
     }
 }
 
