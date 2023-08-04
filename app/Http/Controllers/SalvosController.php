@@ -118,10 +118,20 @@ class SalvosController extends Controller
                 'msg' => 'Krona tidak cukup untuk buy potion',
             ]), 200);
         }
-        $team->update([
-            'currency' => $team->currency - $price,
-        ]);
-        $updateTurn = $salvosGame->turn + 1;
+        $updateTurn = $salvosGame->turn;
+       
+        // Pengecekan klu HP 10k gak bisa beli heal
+        if($salvosGame->player_hp != 10000){
+            $team->update([
+                'currency' => $team->currency - $price,
+            ]);
+            $updateTurn = $salvosGame->turn + 1;
+        }
+        // Pengecekan klu setelah heal, health lbh dr 10k
+        if($salvosGame->player_hp + $heal>10000){
+            $salvosGame->player_hp = 10000;
+        }
+
         $salvosGame->update([
             'turn' => $updateTurn,
             'player_hp' => $salvosGame->player_hp + $heal
@@ -136,8 +146,8 @@ class SalvosController extends Controller
     {
         $team = Team::where("id", "=", $request['id'])->first();
         $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
-        $price = 1000;
-        $reviveHP = 2500;
+        $price = 200;
+        $reviveHP = 1000;
         if ($salvosGame->player_hp > 0)
         {
             return response()->json(array([
@@ -170,8 +180,8 @@ class SalvosController extends Controller
     {
         $team = Team::where("id", "=", $request['id'])->first();
         $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
-        $price = 150;
-        $multiple = rand(0, 50) / 10;
+        $price = 100;
+        $multiple = rand(0, 70) / 10;
         if ($salvosGame->player_hp <= 0)
         {
             return response()->json(array([
@@ -205,9 +215,9 @@ class SalvosController extends Controller
         $team = Team::where("id", "=", $request['id'])->first();
         $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
         $weapLv = $salvosGame->weap_lv;
-        $price = 150;
+        $price = 100;
         if ($weapLv == 2)
-            $price = 200;
+            $price = 150;
             
         if ($salvosGame->player_hp <= 0)
         {
@@ -223,7 +233,7 @@ class SalvosController extends Controller
                 'msg' => 'Krona tidak cukup untuk upgrade weapon',
             ]), 200);
         }
-        $team->update(['currency' => $team->currency - $price]);
+        
         $updated = $weapLv + 1;
         if ($updated > 3){
             return response()->json(array([
@@ -231,6 +241,7 @@ class SalvosController extends Controller
                 'msg' => 'Weapon sudah mencapai level maksimal',
             ]), 200);
         }
+        $team->update(['currency' => $team->currency - $price]);
         $updateTurn = $salvosGame->turn + 1;
         $salvosGame->update([
             'weap_lv' => $updated, 
