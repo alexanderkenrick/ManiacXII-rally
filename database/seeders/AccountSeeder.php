@@ -254,6 +254,13 @@ class AccountSeeder extends Seeder
                 'name' => 'Salvos 2',
                 'role' => '4'
             ],
+            [
+                'id' => '35',
+                'username' => 'salvos3',
+                'password' => Hash::make('maniac123'),
+                'name' => 'Salvos 3',
+                'role' => '4'
+            ],
 
         ];
         foreach ($accounts as $value) {
