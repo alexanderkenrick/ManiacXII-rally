@@ -292,7 +292,7 @@ class SalvosController extends Controller
         $salvosDamage = SalvosDamage::all();
         $playerHP = $salvosGame->player_hp;
         $turn = $salvosGame->turn;
-        if ($turn % 3 == 0) // nyerangnya enemy tiap 3 turn
+        if ($turn % 3 == 0 || $salvosGame->enemy_hp > 0) // nyerangnya enemy tiap 3 turn
         {
             $dmg = 500;
             foreach($salvosDamage as $data){
