@@ -273,7 +273,7 @@ class SalvosController extends Controller
         $detail = 'Serangan berhasil dengan damage '.$dmg;
         if ($updatedHP < 0){
             $updatedHP = 0;
-            $detail += "\nSalvos sudah dikalahkan pada turn ".$updateTurn;
+            $detail .= "\nSalvos sudah dikalahkan pada turn ".$updateTurn;
         }
         $salvosGame->update([
             'enemy_hp' => $updatedHP, 
