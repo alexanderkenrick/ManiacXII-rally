@@ -342,6 +342,9 @@ class TreasureController extends Controller
 
                 $msg = "Thief bag succeeded! you got " . ($stolenKrona) . " !";
 
+                $team_pos->move_left -= 1;
+                $team_pos->save();
+
                 $opp_team->save();
                 $team->save();
                 $item[0]->pivot->save();
@@ -365,6 +368,8 @@ class TreasureController extends Controller
                     $team->currency -= 200;
                     $opp_team->save();
                     $team->save();
+                    $team_pos->move_left -= 1;
+                    $team_pos->save();
                     $item[0]->pivot->save();
                 } else {
                     $opp_team_pos[0]->angel_active = 0;
@@ -396,6 +401,7 @@ class TreasureController extends Controller
                 $item[0]->pivot->count -= 1;
                 $team_pos->angel_active = true;
                 $msg = "Using angel card succeeded!";
+                $team_pos->move_left -= 1;
             } else {
                 $msg = "Using angel card failed! Angel card already active!";
             }
@@ -405,6 +411,8 @@ class TreasureController extends Controller
                     $team_pos->angel_active = true;
                     $team->currency -= 150;
                     $msg = "Using angel card succeeded!";
+                    $team_pos->move_left -= 1;
+
                 } else {
                     $msg = "Using angel card failed! Angel card already active!";
                 }

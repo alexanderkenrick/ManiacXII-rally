@@ -184,6 +184,7 @@ body {
 .krona-section{
     display: flex;
     justify-content: space-between;
+    color: #ffd93d;
 }
 
 .movement-section{

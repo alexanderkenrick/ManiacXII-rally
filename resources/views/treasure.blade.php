@@ -10,9 +10,9 @@
 @endsection
 
 @section('content')
-    <div class="mx-1 my-4">
+    <div class="mx-1 my-4 d-flex align-items-center w-100 justify-content-center" style="height:90vh">
 
-        <div class="row px-2">
+        <div class="row px-2 w-100">
             <div class="col-8 ">
                 <div class="map-wrapper">
                     <div class="marking">
