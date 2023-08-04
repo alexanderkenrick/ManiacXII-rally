@@ -49,18 +49,6 @@ Route::group(['middleware' => ['auth', 'penpos']],
         Route::get('/penpos', [\App\Http\Controllers\PenposController::class, 'index'])->name('penpos.home');
         Route::post('/penpos-input', [\App\Http\Controllers\PenposController::class, 'inputPoin'])->name('penpos.input');
         Route::post('/penpos-update', [\App\Http\Controllers\PenposController::class, 'updateCurrency'])->name('penpos.update');
-
-        // SALVOS
-        Route::get('/salvos', [\App\Http\Controllers\SalvosController::class, 'index'])->name('salvos.home');
-        Route::post('/salvos-load', [\App\Http\Controllers\SalvosController::class, 'load'])->name('salvos.load');
-        Route::post('/salvos-playerAttack', [\App\Http\Controllers\SalvosController::class, 'prosesPlayerAttack'])->name('salvos.playerAttack');
-        Route::post('/salvos-enemyAttack', [\App\Http\Controllers\SalvosController::class, 'prosesEnemyAttack'])->name('salvos.enemyAttack');
-        Route::post('/salvos-upgrade', [\App\Http\Controllers\SalvosController::class, 'upgradeWeap'])->name('salvos.upgrade');
-        Route::post('/salvos-buypotion', [\App\Http\Controllers\SalvosController::class, 'buyPotion'])->name('salvos.buyPotion');
-        Route::post('/salvos-revive', [\App\Http\Controllers\SalvosController::class, 'revive'])->name('salvos.revive');
-        Route::post('/salvos-powerup', [\App\Http\Controllers\SalvosController::class, 'powerup'])->name('salvos.powerup');
-
-
     }
 );
 
@@ -79,6 +67,20 @@ Route::group(['middleware' => ['auth', 'treasure']],
         Route::post('/treasure-buyItem', [\App\Http\Controllers\TreasureController::class, 'buyItem'])->name('treasure.buyItem');
         Route::post('/treasure-addShovel', [\App\Http\Controllers\TreasureController::class, 'addShovel'])->name('treasure.addShovel');
         Route::post('/treasure-removeShovel', [\App\Http\Controllers\TreasureController::class, 'removeShovel'])->name('treasure.removeShovel');
+    }
+);
+
+Route::group(['middleware' => ['auth', 'salvos']],
+    function(){
+        // SALVOS
+        Route::get('/salvos', [\App\Http\Controllers\SalvosController::class, 'index'])->name('salvos.home');
+        Route::post('/salvos-load', [\App\Http\Controllers\SalvosController::class, 'load'])->name('salvos.load');
+        Route::post('/salvos-playerAttack', [\App\Http\Controllers\SalvosController::class, 'prosesPlayerAttack'])->name('salvos.playerAttack');
+        Route::post('/salvos-enemyAttack', [\App\Http\Controllers\SalvosController::class, 'prosesEnemyAttack'])->name('salvos.enemyAttack');
+        Route::post('/salvos-upgrade', [\App\Http\Controllers\SalvosController::class, 'upgradeWeap'])->name('salvos.upgrade');
+        Route::post('/salvos-buypotion', [\App\Http\Controllers\SalvosController::class, 'buyPotion'])->name('salvos.buyPotion');
+        Route::post('/salvos-revive', [\App\Http\Controllers\SalvosController::class, 'revive'])->name('salvos.revive');
+        Route::post('/salvos-powerup', [\App\Http\Controllers\SalvosController::class, 'powerup'])->name('salvos.powerup');
     }
 );
 

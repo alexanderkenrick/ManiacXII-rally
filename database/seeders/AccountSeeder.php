@@ -240,6 +240,20 @@ class AccountSeeder extends Seeder
                 'name' => 'Treasure 2',
                 'role' => '3'
             ],
+            [
+                'id' => '33',
+                'username' => 'salvos1',
+                'password' => Hash::make('maniac123'),
+                'name' => 'Salvos 1',
+                'role' => '4'
+            ],
+            [
+                'id' => '34',
+                'username' => 'salvos2',
+                'password' => Hash::make('maniac123'),
+                'name' => 'Salvos 2',
+                'role' => '4'
+            ],
 
         ];
         foreach ($accounts as $value) {

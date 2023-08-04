@@ -76,6 +76,12 @@ class LoginController extends Controller
 //                $redirectTo = RouteServiceProvider::TEAM;
                 return redirect()->intended('/treasure');
             }
+            else if (Auth::user()->role === "4")
+            {
+//                $redirectTo = RouteServiceProvider::TEAM;
+                return redirect()->intended('/salvos');
+            }
+        
         }
 
         return back()->with('loginError', 'Login Gagal, kombinasi username dan password salah!');

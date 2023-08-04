@@ -167,6 +167,22 @@ class PostSeeder extends Seeder
                 'file_photo_loc' => "",
                 'post_type' => "Single"
             ], 
+            [
+                'id' => '20',
+                'penpos_id' => '33',
+                'name' => 'Salvos 1',
+                'status' => "Full",
+                'file_photo_loc' => "",
+                'post_type' => "Single"
+            ], 
+            [
+                'id' => '21',
+                'penpos_id' => '34',
+                'name' => 'Salvos 2',
+                'status' => "Full",
+                'file_photo_loc' => "",
+                'post_type' => "Single"
+            ], 
         ];
         foreach ($posts as $value){
             Post::create($value);
