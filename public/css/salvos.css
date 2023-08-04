@@ -36,9 +36,37 @@
 
 
 .actionbar {
+    animation: actionBarUp 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) normal forwards;
+    bottom: 40px;
+    gap: 50px;
+}
+
+.actionbar-down {
+    animation: actionBarDown 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) normal forwards;
     bottom: 40px;
     gap: 50px;
     /* padding-right: 25px; */
+}
+
+@keyframes actionBarDown {
+
+    0% {
+        bottom: 40px;
+    }
+    100% {
+        bottom: -80px;
+    }
+}
+
+
+@keyframes actionBarUp {
+
+    0% {
+        bottom: -80px;
+    }
+    100% {
+        bottom: 40px;
+    }
 }
 
 .selection {

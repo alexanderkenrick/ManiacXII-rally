@@ -85,7 +85,7 @@
                 <img src="{{ asset('../img/salvos/slash.gif') }}" alt="slash" class="slash none">
                 <img src="{{ asset('../img/salvos/fireball.gif') }}" alt="fireball" class="fireball none">
                 <img src="{{ asset('../img/salvos/dragon_idle.gif') }}" alt="dragon" class="dragon">
-                <div class="actionbar w-100 position-absolute d-flex justify-content-center">
+                <div class="actionbar w-100 position-absolute d-flex justify-content-center" id="actionbar">
                     <button class="button-salvos px-4" id="button-attack" onclick="prosesAttack()"><img
                             src="{{ asset('../img/salvos/slash.gif') }}" alt="slash" class="icon"> Attack</button>
                     <button class="button-salvos px-4" id="button-upgrade" onclick="prosesUpgrade()"> <img
@@ -161,6 +161,14 @@
                     healthBarPlayer('player', data[0].player_hp);
                     $("#enemy_hp").text(data[0].enemy_hp);
                     healthBarPlayer('salvos', data[0].enemy_hp);
+                    if (data[0].player_hp <= 0)
+                        $('.player').hide();
+                    else
+                        $('.player').show();
+                    if (data[0].enemy_hp <= 0)
+                        $('.dragon').hide();
+                    else
+                        $('.dragon').show();
                     $('#krona').text(data[0].krona);
                     $('#weap_lv').text(data[0].weap_lv);
                     $('#turn').text(data[0].turn);
@@ -187,7 +195,12 @@
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
                     $('#turn_sapa').text("Enemy's Turn");
+                    $('#actionbar').removeClass("actionbar");
+                    $('#actionbar').addClass("actionbar-down");
                     if (data[0].status == true) {
+                        setTimeout(function() {
+                            prosesEnemyAttack();
+                        }, 3200);
                         $('.player').attr('src', "../img/salvos/player_atk.gif");
                         setTimeout(() => {
                             $('.dragon').attr('src', "../img/salvos/dragon_hit.gif");
@@ -208,6 +221,8 @@
                         $('#button-revive').attr('disabled', false);
                         $('#button-powerup').attr('disabled', false);
                         $('#turn_sapa').text("Your Turn");
+                        $('#actionbar').removeClass("actionbar-down");
+                        $('#actionbar').addClass("actionbar");
                     }
                     setTimeout(function() {
                         $('#log').text(data[0].msg);
@@ -255,6 +270,8 @@
                         $('#button-revive').attr('disabled', false);
                         $('#button-powerup').attr('disabled', false);
                         $('#turn_sapa').text("Your Turn");
+                        $('#actionbar').removeClass("actionbar-down");
+                        $('#actionbar').addClass("actionbar");
                     }, 3000);
                 },
                 error: function(data) {
@@ -279,19 +296,23 @@
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
                     $('#turn_sapa').text("Enemy's Turn");
+                    $('#actionbar').removeClass("actionbar");
+                    $('#actionbar').addClass("actionbar-down");
                     if (data[0].status == true) {
                         setTimeout(function() {
                             prosesEnemyAttack();
                         }, 2000);
                     }else{
+                    }
+                    setTimeout(function() {
                         $('#button-attack').attr('disabled', false);
                         $('#button-upgrade').attr('disabled', false);
                         $('#button-potion').attr('disabled', false);
                         $('#button-revive').attr('disabled', false);
                         $('#button-powerup').attr('disabled', false);
                         $('#turn_sapa').text("Your Turn");
-                    }
-                    setTimeout(function() {
+                        $('#actionbar').removeClass("actionbar-down");
+                        $('#actionbar').addClass("actionbar");
                         $('#log').text(data[0].msg);
                         load();
                     }, 2500);
@@ -321,19 +342,23 @@
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
                     $('#turn_sapa').text("Enemy's Turn");
+                    $('#actionbar').removeClass("actionbar");
+                    $('#actionbar').addClass("actionbar-down");
                     if (data[0].status == true) {
                         setTimeout(function() {
                             prosesEnemyAttack();
                         }, 2000);
                     }else{
+                    }
+                    setTimeout(function() {
                         $('#button-attack').attr('disabled', false);
                         $('#button-upgrade').attr('disabled', false);
                         $('#button-potion').attr('disabled', false);
                         $('#button-revive').attr('disabled', false);
                         $('#button-powerup').attr('disabled', false);
                         $('#turn_sapa').text("Your Turn");
-                    }
-                    setTimeout(function() {
+                        $('#actionbar').removeClass("actionbar-down");
+                        $('#actionbar').addClass("actionbar");
                         $('#log').text(data[0].msg);
                         load();
                     }, 2500);
@@ -362,19 +387,23 @@
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
                     $('#turn_sapa').text("Enemy's Turn");
+                    $('#actionbar').removeClass("actionbar");
+                    $('#actionbar').addClass("actionbar-down");
                     if (data[0].status == true) {
                         setTimeout(function() {
                             prosesEnemyAttack();
                         }, 2000);
                     }else{
+                    }
+                    setTimeout(function() {
                         $('#button-attack').attr('disabled', false);
                         $('#button-upgrade').attr('disabled', false);
                         $('#button-potion').attr('disabled', false);
                         $('#button-revive').attr('disabled', false);
                         $('#button-powerup').attr('disabled', false);
                         $('#turn_sapa').text("Your Turn");
-                    }
-                    setTimeout(function() {
+                        $('#actionbar').removeClass("actionbar-down");
+                        $('#actionbar').addClass("actionbar");
                         $('#log').text(data[0].msg);
                         load();
                     }, 2500);
@@ -402,19 +431,23 @@
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
                     $('#turn_sapa').text("Enemy's Turn");
+                    $('#actionbar').removeClass("actionbar");
+                    $('#actionbar').addClass("actionbar-down");
                     if (data[0].status == true) {
                         setTimeout(function() {
                             prosesEnemyAttack();
                         }, 2000);
                     }else{
+                    }
+                    setTimeout(function() {
                         $('#button-attack').attr('disabled', false);
                         $('#button-upgrade').attr('disabled', false);
                         $('#button-potion').attr('disabled', false);
                         $('#button-revive').attr('disabled', false);
                         $('#button-powerup').attr('disabled', false);
                         $('#turn_sapa').text("Your Turn");
-                    }
-                    setTimeout(function() {
+                        $('#actionbar').removeClass("actionbar-down");
+                        $('#actionbar').addClass("actionbar");
                         $('#log').text(data[0].msg);
                         load();
                     }, 2500);
@@ -442,19 +475,23 @@
                     $('#button-revive').attr('disabled', true);
                     $('#button-powerup').attr('disabled', true);
                     $('#turn_sapa').text("Enemy's Turn");
+                    $('#actionbar').removeClass("actionbar");
+                    $('#actionbar').addClass("actionbar-down");
                     if (data[0].status == true) {
                         setTimeout(function() {
                             prosesEnemyAttack();
                         }, 2000);
                     }else{
+                    }
+                    setTimeout(function() {
                         $('#button-attack').attr('disabled', false);
                         $('#button-upgrade').attr('disabled', false);
                         $('#button-potion').attr('disabled', false);
                         $('#button-revive').attr('disabled', false);
                         $('#button-powerup').attr('disabled', false);
                         $('#turn_sapa').text("Your Turn");
-                    }
-                    setTimeout(function() {
+                        $('#actionbar').removeClass("actionbar-down");
+                        $('#actionbar').addClass("actionbar");
                         $('#log').text(data[0].msg);
                         load();
                     }, 2500);

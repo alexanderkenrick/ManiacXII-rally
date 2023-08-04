@@ -183,7 +183,7 @@ class SalvosController extends Controller
         {
             return response()->json(array([
                 'status' => false,
-                'msg' => 'Krona tidak cukup untuk revive',
+                'msg' => 'Krona tidak cukup untuk power up',
             ]), 200);
         }
         $team->update([
@@ -273,13 +273,7 @@ class SalvosController extends Controller
         $detail = 'Serangan berhasil dengan damage '.$dmg;
         if ($updatedHP < 0){
             $updatedHP = 0;
-            $bonusKrona = 2500 - $turn*10;
-            $updatedKrona = $team->currency + $bonusKrona;
-            $team->update([
-                'currency' => $updatedKrona,
-            ]);
             $detail += "\nSalvos sudah dikalahkan pada turn ".$updateTurn;
-            $detail += "\nMendapatkan bonus krona ".$updatedKrona;
         }
         $salvosGame->update([
             'enemy_hp' => $updatedHP, 
