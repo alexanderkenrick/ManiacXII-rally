@@ -42,20 +42,27 @@ class PenposController extends Controller
             $request->session()->flash('valid', 'true');
             $teamName = request()->get('team_name');
             $teamId = PenposController::searchByName($teamName);
-            $penposId = Post::where('penpos_id', Auth::user()->id)->first()->id;
-            $poin = $request->get('poin');
+            $penposId = Post::where('penpos_id', Auth::user()->id)->first();
+            $penpos2 = Post::where('name', $penposId->name)->where('penpos_id', '!=', $penposId->penpos_id)->first();
+            $poinCheck = Point::where('post_id', $penpos2->penpos_id)->where('team_id', $teamId)->first();
+            if ($poinCheck == null) {
+                $poin = $request->get('poin');
 
-            $addPoint = new Point();
-            $addPoint->post_id = $penposId;
-            $addPoint->team_id = $teamId;
-            $addPoint->point = $poin;
-            $addPoint->save();
+                $addPoint = new Point();
+                $addPoint->post_id = $penposId->id;
+                $addPoint->team_id = $teamId;
+                $addPoint->point = $poin;
+                $addPoint->save();
+                $msg = 'Success';
 
-            $this->updateCurrency($teamId, $poin);
+                $this->updateCurrency($teamId, $poin);
+            }else{
+                $msg = 'Failed, Team already played before';
+            }
         }
 
         return response()->json(array([
-            'msg' => 'Success'
+            'msg' => $msg,
         ]), 200);
     }
 
