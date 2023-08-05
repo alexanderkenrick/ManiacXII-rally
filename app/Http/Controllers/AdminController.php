@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Point;
 use App\Models\Post;
 use App\Models\SalvosGame;
+use App\Models\SalvosRevive;
 use App\Models\Team;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class AdminController extends Controller
                 $isWin =  $salvosGame["enemy_hp"] == "0";
                 $playerHP = $salvosGame["player_hp"];
                 $totalDamage = 10000 - $salvosGame["enemy_hp"];
-                $reviveCount = 0;  // Masih nggak tau ngambil e
+                $reviveCount = SalvosRevive::where("salvos_games_id", $team->id)->count();
 
                 $gameBesPoint = ($reviveCount * -50) + $playerHP + $totalDamage;
 
@@ -62,7 +63,7 @@ class AdminController extends Controller
             SORT_DESC,
             $teamsData
         );
-        
+
         return view('leaderboard', compact('teamsData'));
 
     }
