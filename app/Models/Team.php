@@ -34,6 +34,10 @@ class Team extends Model
         return $this->hasMany(SalvosPost::class);
     }
 
+    public function salvos_games() {
+        return $this->hasMany("\App\Models\SalvosGame", "teams_id", "id");
+    }
+
     public function treasure_post() {
         return $this->hasMany(TreasurePost::class);
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Point;
 use App\Models\Post;
+use App\Models\SalvosGame;
 use App\Models\Team;
 use Illuminate\Http\Request;
 
@@ -16,12 +17,32 @@ class AdminController extends Controller
 
         foreach ($teams as $team) {
             $rallyPoint = Point::where('team_id', $team->id)->sum('point') * 0.6;
-            $gameBesPoint = 50;
-            // Buat cek sortingan e (Kalo udh fix dihapus ae)
-            if ($team->id == 2) {
-                $gameBesPoint = 20;
+            $gameBesPoint = 0;
+//            $gameBesPoint = 50;
+//            // Buat cek sortingan e (Kalo udh fix dihapus ae)
+//            if ($team->id == 2) {
+//                $gameBesPoint = 20;
+//            }
+
+            $salvosGame = SalvosGame::where("teams_id", $team->id)->first();
+            if ($salvosGame) {
+                $isWin =  $salvosGame["enemy_hp"] == "0";
+                $playerHP = $salvosGame["player_hp"];
+                $totalDamage = 10000 - $salvosGame["enemy_hp"];
+                $reviveCount = 0;  // Masih nggak tau ngambil e
+
+                $gameBesPoint = ($reviveCount * -50) + $playerHP + $totalDamage;
+
+                if ($isWin) {
+                    $gameBesPoint += 2500 - (($salvosGame->turn - 30) * 50);
+                } else {
+                    $gameBesPoint -= 1250;
+                }
             }
-            $totalPoint = $rallyPoint + $gameBesPoint;
+
+//            dd($gameBesPoint);
+
+            $totalPoint = $rallyPoint + ($gameBesPoint * 0.4);
             $arr = [
                 "team_id" => $team->id,
                 "rally_point" => $rallyPoint,
@@ -34,7 +55,14 @@ class AdminController extends Controller
 //        $teamsData = collect($teamsData)->sort()->reverse()->toArray();
 
         // Sort berdasarkan Total Point
-        array_multisort( array_column($teamsData, "total_point"), SORT_DESC, $teamsData);
+        array_multisort(
+            array_column($teamsData, "total_point"),
+            SORT_DESC,
+            array_column($teamsData, "rally_point"),
+            SORT_DESC,
+            $teamsData
+        );
+        
         return view('leaderboard', compact('teamsData'));
 
     }
