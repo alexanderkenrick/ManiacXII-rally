@@ -26,7 +26,7 @@ class TreasureController extends Controller
     {
         $team = Team::where("id", "=", $request['id'])->first();
         $team_pos = TreasurePlayer::where("teams_id", "=", $request['id'])->first();
-        $team_pos->move_left = 10;
+        $team_pos->move_left = 7;
 
         $moves = $team_pos->move_left;
         $team_pos->save();
