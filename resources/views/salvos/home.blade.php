@@ -169,9 +169,9 @@
                         $('.dragon').show();
                     $('#krona').text(data[0].krona);
                     $('#weap_lv').text(data[0].weap_lv);
-                    if (data[0].weap_lv === 1){
+                    if (data[0].weap_lv == 1){
                         $('#sword').attr('src', "../img/salvos/senjataLVL1.png");
-                    }else if (data[0].weap_lv === 2){
+                    }else if (data[0].weap_lv == 2){
                         $('#sword').attr('src', "../img/salvos/senjataLVL2.png");
                     }else{
                         $('#sword').attr('src', "../img/salvos/senjataLVL3.png"); 
