@@ -42,7 +42,7 @@ class SalvosController extends Controller
         }
         $playerDmgTimes = floor($interval/$dmgPlayerEvery);
         $enemyDmgTimes = floor($interval/$dmgEnemyEvery);
-        for ($i=0; $i < $playerDmgTimes; $i++) { 
+        for ($i=0; $i < $playerDmgTimes; $i++) {
             $hpEnemy -= $dmgPlayer;
         }
         for ($i=0; $i < $enemyDmgTimes; $i++) {
@@ -54,10 +54,9 @@ class SalvosController extends Controller
             }
             $hpPlayer -= $dmgEnemy * $multiple;
         }
-        SalvosGame::where('id', $salvosGame->id)->update(['player_hp' => $hpPlayer, 
+        SalvosGame::where('id', $salvosGame->id)->update(['player_hp' => $hpPlayer,
                                                           'enemy_hp' => $hpEnemy,
                                                           'status' => $status]);
-        
         return view('salvos.home', compact('teams'));*/
 
     }
@@ -119,7 +118,7 @@ class SalvosController extends Controller
             ]), 200);
         }
         $updateTurn = $salvosGame->turn;
-       
+
         // Pengecekan klu HP 10k gak bisa beli heal
         if($salvosGame->player_hp != 10000){
             $team->update([
@@ -218,7 +217,7 @@ class SalvosController extends Controller
         $price = 100;
         if ($weapLv == 2)
             $price = 150;
-            
+
         if ($salvosGame->player_hp <= 0)
         {
             return response()->json(array([
@@ -233,7 +232,7 @@ class SalvosController extends Controller
                 'msg' => 'Krona tidak cukup untuk upgrade weapon',
             ]), 200);
         }
-        
+
         $updated = $weapLv + 1;
         if ($updated > 3){
             return response()->json(array([
@@ -244,7 +243,7 @@ class SalvosController extends Controller
         $team->update(['currency' => $team->currency - $price]);
         $updateTurn = $salvosGame->turn + 1;
         $salvosGame->update([
-            'weap_lv' => $updated, 
+            'weap_lv' => $updated,
             'turn' => $updateTurn
         ]);
         return response()->json(array([
@@ -278,7 +277,7 @@ class SalvosController extends Controller
         else if ($weapLv == 3)
             $dmg = 300;
         $dmg = $dmg * $multiple;
-        
+
         $updatedHP = $enemyHP - $dmg;
         $updateTurn = $turn + 1;
         $detail = 'Serangan berhasil dengan damage '.$dmg;
@@ -287,8 +286,8 @@ class SalvosController extends Controller
             $detail .= "\nSalvos sudah dikalahkan pada turn ".$updateTurn;
         }
         $salvosGame->update([
-            'enemy_hp' => $updatedHP, 
-            'turn' => $updateTurn, 
+            'enemy_hp' => $updatedHP,
+            'turn' => $updateTurn,
             'multiple_dmg' => 1
         ]);
         return response()->json(array([
@@ -316,7 +315,7 @@ class SalvosController extends Controller
                 $updatedHP = 0;
             }
             $salvosGame->update([
-                'player_hp' => $updatedHP, 
+                'player_hp' => $updatedHP,
             ]);
             return response()->json(array([
                 'status' => true,
