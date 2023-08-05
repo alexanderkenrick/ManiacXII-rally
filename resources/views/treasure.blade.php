@@ -58,7 +58,7 @@
                                         Timer
                                     </div>
                                     <div class="col d-flex justify-content-end">
-                                        <span id="timer">05:00</span>
+                                        <span id="timer">04:00</span>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                                         id="thief-image">
                                 </div>
                                 <div class="text-container px-3">
-                                    <h2>Thief Bag <span style="font-size: 16px">(200)</span></h2>                                </div>
+                                    <h2>Thief Bag <span style="font-size: 16px">(150)</span></h2>                                </div>
                                 <div class="button-container">
                                     <button class="button" id="thief-use" onclick="useThief()">Use</button>
                                 </div>
@@ -101,7 +101,7 @@
                                         id="angel-image">
                                 </div>
                                 <div class="text-container px-3">
-                                    <h2>Angel Card <span style="font-size: 16px">(150)</span></h2>
+                                    <h2>Angel Card <span style="font-size: 16px">(100)</span></h2>
                                     <p>Status : <span id="angel-status">Inactive</span></p>
                                 
                                 </div>
@@ -141,7 +141,7 @@
 
         // Timer
         var timer;
-        var second = 300;
+        var second = 240;
         var running = false;
         $(document).on('click', '#button-start', function() {
             if (!running) {
@@ -165,7 +165,7 @@
                         });
                         running = false;
                         clearInterval(timer);
-                        second = 300;
+                        second = 240;
                     }
                 }, 1000);
             }

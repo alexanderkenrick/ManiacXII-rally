@@ -356,8 +356,8 @@ class TreasureController extends Controller
                 DB::table('treasure_players')->where('teams_id', $opp_team_pos[0]->teams_id)->update(['angel_active' => $opp_team_pos[0]->angel_active]);
             }
         } else {
-            if ($team->currency >= 200) {
-                $item[0]->pivot->count -= 1;
+            if ($team->currency >= 150) {
+                // $item[0]->pivot->count -= 1;
 
                 if ($opp_team_pos[0]->angel_active  == 0) {
 
@@ -366,7 +366,7 @@ class TreasureController extends Controller
                     $opp_team->currency -= $stolenKrona;
 
                     $msg = "Thief bag succeeded! you got " . ($stolenKrona) . " !";
-                    $team->currency -= 200;
+                    $team->currency -= 150;
                     $opp_team->save();
                     $team->save();
                     $team_pos->move_left -= 1;
@@ -374,7 +374,7 @@ class TreasureController extends Controller
                     $item[0]->pivot->save();
                 } else {
                     $opp_team_pos[0]->angel_active = 0;
-                    $team->currency -= 200;
+                    $team->currency -= 150;
                     $msg = "Thief bag failed the opposing team has an angel card!";
                     $item[0]->pivot->save();
                     $team->save();
@@ -407,10 +407,10 @@ class TreasureController extends Controller
                 $msg = "Using angel card failed! Angel card already active!";
             }
         } else {
-            if ($team->currency >= 150) {
+            if ($team->currency >= 100) {
                 if ($team_pos->angel_active  == 0) {
                     $team_pos->angel_active = true;
-                    $team->currency -= 150;
+                    $team->currency -= 100;
                     $msg = "Using angel card succeeded!";
                     $team_pos->move_left -= 1;
 
