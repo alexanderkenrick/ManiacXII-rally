@@ -289,10 +289,14 @@
                     $("#shovel-remaining").text(data[0].shovel);
                     $('#sisa-gerakan').text(data[0].moves);
                     
-                    if(data[0].angetStatus=='0'){
+                    if(data[0].angelStatus==0){
                         $('#angel-status').text('Inactive');
-                    }else if(data[0].angetStatus=='1'){
+                        $('#angel-status').addClass("badge bg-danger");
+                        $('#angel-status').removeClass("badge bg-success");   
+                    }else if(data[0].angelStatus==1){
                         $('#angel-status').text('Active');
+                        $('#angel-status').removeClass("badge bg-danger");                        
+                        $('#angel-status').addClass("badge bg-success");
                     }
                     $('#krona').text(data[0].krona);
                 },
