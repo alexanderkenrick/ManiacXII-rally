@@ -127,8 +127,8 @@ class SalvosController extends Controller
             $updateTurn = $salvosGame->turn + 1;
         }
         // Pengecekan klu setelah heal, health lbh dr 10k
-        if($salvosGame->player_hp + $heal>10000){
-            $salvosGame->player_hp = 10000;
+        if($salvosGame->player_hp + $heal>=10000){
+            $heal = 10000-$salvosGame->player_hp;
         }
 
         $salvosGame->update([
