@@ -16,21 +16,45 @@ class SalvosSeeder extends Seeder
     {
         $dmgs = [
             [
-                'multiple' => rand(1,10),
+                'multiple' => rand(1,7),
                 'turn' => 6,
             ],
             [
-                'multiple' => rand(1,10),
+                'multiple' => rand(1,7),
                 'turn' => 12,
             ],
             [
-                'multiple' => rand(1,10),
+                'multiple' => rand(1,7),
                 'turn' => 18,
             ],
             [
-                'multiple' => rand(1,10),
-                'turn' => 18+6,
-            ]
+                'multiple' => rand(1,7),
+                'turn' => 24,
+            ],
+            [
+                'multiple' => rand(1,7),
+                'turn' => 30,
+            ],
+            [
+                'multiple' => rand(1,7),
+                'turn' => 36,
+            ],
+            [
+                'multiple' => rand(1,7),
+                'turn' => 42,
+            ],
+            [
+                'multiple' => rand(1,7),
+                'turn' => 48,
+            ],
+            [
+                'multiple' => rand(1,7),
+                'turn' => 54,
+            ],
+            [
+                'multiple' => rand(1,7),
+                'turn' => 60,
+            ],
         ];
         foreach ($dmgs as $value) {
             SalvosDamage::create($value);

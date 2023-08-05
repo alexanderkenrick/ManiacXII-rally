@@ -61,7 +61,7 @@
                             <p class="ps-1 mb-0 player-desc" style="color:white"><span id="krona">-</span></p>
                         </div>
                         <div class="weapon-container d-flex align-content-center">
-                            <img src="{{ asset('../img/salvos/senjataLVL1.png') }}" alt="krona" id="sword" class="mt-2">
+                            <img src="{{ asset('../img/salvos/senjataLVL1.png') }}" alt="krona" id="sword" class="krona mt-2">
                             <p class="player-desc" style="color:white">Level <span id="weap_lv">-</span></p>
                         </div>
                     </div>
