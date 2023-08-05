@@ -61,21 +61,23 @@
                             <p class="ps-1 mb-0 player-desc" style="color:white"><span id="krona">-</span></p>
                         </div>
                         <div class="weapon-container d-flex align-content-center">
-                            <img src="{{ asset('../img/salvos/senjataLVL1.png') }}" alt="krona" class="krona mt-2">
+                            <img src="{{ asset('../img/salvos/senjataLVL1.png') }}" alt="krona" id="sword" class="mt-2">
                             <p class="player-desc" style="color:white">Level <span id="weap_lv">-</span></p>
                         </div>
                     </div>
-                    <h3 style="color:white;text-align: center">Turn<br><span id="turn"></span><br><br><span
-                            id="turn_sapa">Your Turn</span></h3>
+                    <h3 style="color:white;text-align: center">Turn<br><span id="turn"></span><br><br>
+                        {{-- <span
+                            id="turn_sapa">Your Turn</span> --}}
+                            <div id="log_get" st+yle="padding-left:10px; padding-top:5px; ">
+                                <p class="ms-3" style="color:white"><span id="log"></span></p>
+                            </div></h3>
                     <div class="salvos-section hb">
                         <label for="health-salvos" class="health-label">Salvos</label>
                         <div class="healthbar h-s">
                             <h5 style="color:white" class="label-hp"><span id="enemy_hp">-</span>/10000</h5>
                             <div id="health-salvos"></div>
                         </div>
-                        <div id="log_get" st+yle="padding-left:10px; padding-top:5px; ">
-                            <p class="ms-3" style="color:white">Log<br><span id="log"></span></p>
-                        </div>
+                        
                     </div>
 
 
@@ -167,6 +169,13 @@
                         $('.dragon').show();
                     $('#krona').text(data[0].krona);
                     $('#weap_lv').text(data[0].weap_lv);
+                    if (data[0].weap_lv === 1){
+                        $('#sword').attr('src', "../img/salvos/senjataLVL1.png");
+                    }else if (data[0].weap_lv === 2){
+                        $('#sword').attr('src', "../img/salvos/senjataLVL2.png");
+                    }else{
+                        $('#sword').attr('src', "../img/salvos/senjataLVL3.png"); 
+                    }
                     $('#turn').text(data[0].turn);
                 },
                 error: function(data) {
@@ -357,7 +366,7 @@
                         $('#actionbar').addClass("actionbar");
                         $('#log').text(data[0].msg);
                         load();
-                    }, 2500);
+                    }, 1500);
                 },
                 error: function(data) {
                     console.log(data);
@@ -402,7 +411,7 @@
                         $('#actionbar').addClass("actionbar");
                         $('#log').text(data[0].msg);
                         load();
-                    }, 2500);
+                    }, 1500);
                 },
                 error: function(data) {
                     console.log(data);

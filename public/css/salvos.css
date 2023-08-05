@@ -46,7 +46,7 @@
 .actionbar-down {
     animation: actionBarDown 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) normal forwards;
     bottom: 40px;
-    gap: 50px;
+    gap: 50px;  
     /* padding-right: 25px; */
 }
 
@@ -80,6 +80,11 @@
     color: black;
 }
 .krona {
+    width: 30px;
+    height: 30px;
+}
+
+#sword{
     width: 30px;
     height: 30px;
 }
@@ -119,13 +124,13 @@
 .dragon {
     position: absolute;
     right: 3%;
-    bottom: 105px;
+    bottom: 135px;
 }
 
 .player {
     position: absolute;
     left: 80px;
-    bottom: 105px;
+    bottom: 135px;
 }
 
 .player-desc {
