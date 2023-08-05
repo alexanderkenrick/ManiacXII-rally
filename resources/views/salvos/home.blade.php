@@ -4,7 +4,7 @@
     {{-- Bootstrap Select --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"> --}}
     <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('/css/treasure.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/salvos.css') }}">
@@ -113,10 +113,6 @@
     </div>
     </div>
 
-    </div>
-    <!-- action bawah -->
-
-    </div>
 @endsection
 @section('script')
     <script>

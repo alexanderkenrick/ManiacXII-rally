@@ -1,16 +1,17 @@
-.py-4{
+.py-4 {
     padding: 0 !important;
-    overflow: hidden    ;
+    overflow: hidden;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered{
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__rendered {
     color: #fff;
 }
-.select2-container--default .select2-selection--single{
+.select2-container--default .select2-selection--single {
     background: transparent !important;
-    color: #fff;;
+    color: #fff;
     margin-bottom: 8px;
-        
 }
 .select2-selection--single {
     width: 100%;
@@ -22,8 +23,10 @@
     border-radius: 10px !important;
 }
 
-.select2-container--default.select2-container--open.select2-container--below .select2-selection--single,
-.select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+.select2-container--default.select2-container--open.select2-container--below
+    .select2-selection--single,
+.select2-container--default.select2-container--open.select2-container--below
+    .select2-selection--multiple {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 }
@@ -33,7 +36,6 @@
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
 }
-
 
 .actionbar {
     animation: actionBarUp 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) normal forwards;
@@ -77,12 +79,12 @@
     background-color: #ddd;
     color: black;
 }
-.krona{
+.krona {
     width: 30px;
     height: 30px;
 }
-.krona-icon{
-    margin-right:5px;
+.krona-icon {
+    margin-right: 5px;
 }
 .monster {
     animation: MoveUpDown 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
@@ -107,7 +109,7 @@
 }
 
 .image-background {
-    background-image: url('../img/salvos/bg_battle fixed.png');
+    background-image: url("../img/salvos/bg_battle.png");
     background-position: center;
     background-size: cover;
     width: 100%;
@@ -126,11 +128,11 @@
     bottom: 105px;
 }
 
-.player-desc{
+.player-desc {
     padding-top: 11px;
 }
 
-.slash{
+.slash {
     position: absolute;
     width: 100px;
     left: 300px;
@@ -138,8 +140,7 @@
     animation: slashAnimation ease-in-out 2.5s alternate;
 }
 
-
-.fireball{
+.fireball {
     position: absolute;
     width: 500px;
     right: 300px;
@@ -147,27 +148,26 @@
     animation: fireballAnimation ease-in-out 2.5s alternate;
 }
 
-.button-salvos{
+.button-salvos {
     border-radius: 10px;
     background-color: #19376d;
     color: #a5d7e8;
     padding: 10px 5px;
-    
 }
 
-.button-salvos:hover{
-    background-color: #19376d;   
+.button-salvos:hover {
+    background-color: #19376d;
     /* width: ;  */
 }
 
-.none{
+.none {
     display: none;
 }
 
-.bi-bandaid{
+.bi-bandaid {
     color: #fff;
 }
-.container-modal{
+.container-modal {
     width: 500px;
     height: auto;
     background-color: #fff;
@@ -176,29 +176,28 @@
     border-radius: 20px;
     z-index: 1;
 }
-#modal-header{
+#modal-header {
     text-align: center;
-    border-top-left-radius:19px ;
-    border-top-right-radius:19px ;
+    border-top-left-radius: 19px;
+    border-top-right-radius: 19px;
 }
-#modal-footer{
+#modal-footer {
     gap: 50px;
 }
-#modal-header{
+#modal-header {
     padding: 10px;
     background-color: #19376d;
     color: #a5d7e8;
     letter-spacing: 2px;
 }
-.potion{
+.potion {
     width: 50px;
 }
-.icon{
+.icon {
     width: 30px;
     margin-right: 10px;
 }
 @keyframes MoveUpDown {
-
     0%,
     100% {
         bottom: 150px;
@@ -210,34 +209,34 @@
 }
 
 @keyframes slashAnimation {
-    0%{
-        transform: translate(0,0);
-    } 
-    33%{
+    0% {
+        transform: translate(0, 0);
+    }
+    33% {
         opacity: 1;
         visibility: visible;
-    } 
-    40%{
+    }
+    40% {
         opacity: 0;
     }
-    100%{
+    100% {
         opacity: 0;
         transform: translateX(2000px);
     }
 }
 
 @keyframes fireballAnimation {
-    0%{
-        transform: translate(0,0);
-    } 
-    33%{
+    0% {
+        transform: translate(0, 0);
+    }
+    33% {
         opacity: 1;
         visibility: visible;
-    } 
-    40%{
+    }
+    40% {
         opacity: 0;
     }
-    100%{
+    100% {
         opacity: 0;
         transform: translateX(-2500px);
     }
@@ -271,7 +270,7 @@
 }
 
 .health-label {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: bold;
     color: #fff;
     text-indent: 10px;
