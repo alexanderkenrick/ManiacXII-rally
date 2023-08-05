@@ -49,6 +49,7 @@ class TreasureController extends Controller
         $moves = $team_pos->move_left;
         $shovel = $team->item()->wherePivot("items_id", 1)->get();
         $angelStatus = $team_pos->angel_active;
+
         return response()->json(array([
             'shovel' => $shovel[0]->pivot->count,
             'angelStatus' => $angelStatus,
