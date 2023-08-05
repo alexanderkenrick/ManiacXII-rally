@@ -322,6 +322,12 @@ class SalvosController extends Controller
                 'msg' => 'Musuh menyerang dengan damage '.$dmg,
             ]), 200);
         }
+        if ($salvosGame->enemy_hp <= 0){
+            return response()->json(array([
+                'status' => false,
+                'msg' => 'Salvos sudah dikalahkan pada turn '.$turn,
+            ]), 200);
+        }
         return response()->json(array([
             'status' => false,
             'msg' => 'Musuh tidak ada penyerangan',

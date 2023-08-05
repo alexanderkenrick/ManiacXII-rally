@@ -163,10 +163,20 @@
                         $('.player').hide();
                     else
                         $('.player').show();
-                    if (data[0].enemy_hp <= 0)
+                    if (data[0].enemy_hp <= 0){
                         $('.dragon').hide();
-                    else
+                        if ($('#actionbar').hasClass("actionbar")){
+                            $('#actionbar').removeClass("actionbar");
+                            $('#actionbar').addClass("actionbar-down");
+                        }
+                    }
+                    else{
                         $('.dragon').show();
+                        if ($('#actionbar').hasClass("actionbar-down")){
+                            $('#actionbar').removeClass("actionbar-down");
+                            $('#actionbar').addClass("actionbar");
+                        }
+                    }
                     $('#krona').text(data[0].krona);
                     $('#weap_lv').text(data[0].weap_lv);
                     if (data[0].weap_lv == 1){
@@ -308,8 +318,6 @@
                             prosesEnemyAttack();
                         }, 2000);
                     }else{
-                    }
-                    setTimeout(function() {
                         $('#button-attack').attr('disabled', false);
                         $('#button-upgrade').attr('disabled', false);
                         $('#button-potion').attr('disabled', false);
@@ -318,6 +326,8 @@
                         $('#turn_sapa').text("Your Turn");
                         $('#actionbar').removeClass("actionbar-down");
                         $('#actionbar').addClass("actionbar");
+                    }
+                    setTimeout(function() {
                         $('#log').text(data[0].msg);
                         load();
                     }, 2500);
@@ -354,8 +364,6 @@
                             prosesEnemyAttack();
                         }, 2000);
                     }else{
-                    }
-                    setTimeout(function() {
                         $('#button-attack').attr('disabled', false);
                         $('#button-upgrade').attr('disabled', false);
                         $('#button-potion').attr('disabled', false);
@@ -364,6 +372,8 @@
                         $('#turn_sapa').text("Your Turn");
                         $('#actionbar').removeClass("actionbar-down");
                         $('#actionbar').addClass("actionbar");
+                    }
+                    setTimeout(function() {
                         $('#log').text(data[0].msg);
                         load();
                     }, 1500);
@@ -399,8 +409,6 @@
                             prosesEnemyAttack();
                         }, 2000);
                     }else{
-                    }
-                    setTimeout(function() {
                         $('#button-attack').attr('disabled', false);
                         $('#button-upgrade').attr('disabled', false);
                         $('#button-potion').attr('disabled', false);
@@ -409,6 +417,8 @@
                         $('#turn_sapa').text("Your Turn");
                         $('#actionbar').removeClass("actionbar-down");
                         $('#actionbar').addClass("actionbar");
+                    }
+                    setTimeout(function() {
                         $('#log').text(data[0].msg);
                         load();
                     }, 1500);
@@ -443,8 +453,6 @@
                             prosesEnemyAttack();
                         }, 2000);
                     }else{
-                    }
-                    setTimeout(function() {
                         $('#button-attack').attr('disabled', false);
                         $('#button-upgrade').attr('disabled', false);
                         $('#button-potion').attr('disabled', false);
@@ -453,6 +461,8 @@
                         $('#turn_sapa').text("Your Turn");
                         $('#actionbar').removeClass("actionbar-down");
                         $('#actionbar').addClass("actionbar");
+                    }
+                    setTimeout(function() {
                         $('#log').text(data[0].msg);
                         load();
                     }, 2500);
@@ -487,8 +497,6 @@
                             prosesEnemyAttack();
                         }, 2000);
                     }else{
-                    }
-                    setTimeout(function() {
                         $('#button-attack').attr('disabled', false);
                         $('#button-upgrade').attr('disabled', false);
                         $('#button-potion').attr('disabled', false);
@@ -497,6 +505,9 @@
                         $('#turn_sapa').text("Your Turn");
                         $('#actionbar').removeClass("actionbar-down");
                         $('#actionbar').addClass("actionbar");
+                        $('#log').text(data[0].msg);
+                    }
+                    setTimeout(function() {
                         $('#log').text(data[0].msg);
                         load();
                     }, 2500);
