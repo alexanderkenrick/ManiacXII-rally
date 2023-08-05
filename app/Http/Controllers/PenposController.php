@@ -44,7 +44,8 @@ class PenposController extends Controller
             $teamId = PenposController::searchByName($teamName);
             $penposId = Post::where('penpos_id', Auth::user()->id)->first();
             $penpos2 = Post::where('name', $penposId->name)->where('penpos_id', '!=', $penposId->penpos_id)->first();
-            $poinCheck = Point::where('post_id', $penpos2->penpos_id)->where('team_id', $teamId)->first();
+            $poinCheck = Point::where('post_id', $penpos2->id)->where('team_id', $teamId)->first();
+            
             if ($poinCheck == null) {
                 $poin = $request->get('poin');
 

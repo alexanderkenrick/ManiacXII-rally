@@ -441,7 +441,8 @@
                 success: function(data) {
                     console.log('Input poin berhasil!' + '\nTeam: ' + teamName +
                         "\nPoin: " + poin);
-                    Toaster.fire({
+                    if(data[0].msg == "Success"){
+                        Toaster.fire({
                         icon: 'success',
                         animation: true,
                         title: 'Input Poin Berhasil!'
@@ -449,10 +450,20 @@
 
                     $("#team").val('');
                     $("#inputPoint").val('');
-
+                    }else{
+                        Toaster.fire({
+                        icon: 'error',
+                        animation: true,
+                        title: data[0].msg,
+                    });
+                    
+                    $("#team").val('');
+                    $("#inputPoint").val('');
+                    }
                 },
                 error: function(data) {
-                    window.location.reload();
+                    console.log(data);
+                    //window.location.reload();
                 }
             });
         }

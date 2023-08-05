@@ -191,6 +191,14 @@ class PostSeeder extends Seeder
                 'file_photo_loc' => "",
                 'post_type' => "Single"
             ], 
+            [
+                'id' => '23',
+                'penpos_id' => '36',
+                'name' => 'Walking Fairy Tail Game',
+                'status' => "Full",
+                'file_photo_loc' => "",
+                'post_type' => "Single"
+            ], 
         ];
         foreach ($posts as $value){
             Post::create($value);
