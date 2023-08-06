@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth', 'admin']],
     function () {
         Route::get('/leaderboard', [\App\Http\Controllers\AdminController::class, 'index']);
         Route::post('/leaderboard-history', [\App\Http\Controllers\AdminController::class, 'getHistory'])->name('admin.history');
+        Route::post("/leaderboard-rincian", [\App\Http\Controllers\AdminController::class, 'getRincian'])->name('admin.rincian');
     }
 );
 

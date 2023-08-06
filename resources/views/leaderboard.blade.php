@@ -126,7 +126,7 @@
                     <tr class="table-success">
                         <td class="text-center fs-5 fw-bold py-4">{{ $team }}</td>
                         <td class="text-center fs-5 py-4 rallyPoint">{{ $data["rally_point"]  }} <button id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rallyButton">History</button></td>
-                        <td class="text-center fs-5 py-4">{{ $data["game_besar_point"] }}</td>
+                        <td class="text-center fs-5 py-4"><div class="d-flex flex-column align-items-center justify-content-center">{{ $data["game_besar_point"] }} <a id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rincian">Rincian</a></div></td>
                         <td class="text-center fs-5 fw-semibold py-4">{{ $data["total_point"] }}</td>
                     </tr>
                     @php($cnt++)
@@ -134,7 +134,7 @@
                     <tr>
                         <td class="text-center fs-5 fw-bold py-4">{{ $team }}</td>
                         <td class="text-center fs-5 py-4 rallyPoint">{{ $data["rally_point"]  }} <button id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rallyButton">History</button></td>
-                        <td class="text-center fs-5 py-4">{{ $data["game_besar_point"] }}</td>
+                        <td class="text-center fs-5 py-4 w-25"><div class="d-flex flex-column align-items-center justify-content-center">{{ $data["game_besar_point"] }} <a id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rincian">Rincian</a></div></td>
                         <td class="text-center fs-5 fw-semibold py-4">{{ $data["total_point"] }}</td>
                     </tr>
                 @endif
@@ -156,7 +156,7 @@
         <div class="modal-content">
             <!-- HEADER -->
             <div class="modal-header">
-                <h2>History</h2>
+                <h2 id="modal-header__title"></h2>
                 <span class="close">&times;</span>
             </div>
             <div class="divider"></div>
@@ -170,10 +170,13 @@
         const modal = document.getElementById("myModal");
         const closeModal = document.querySelector(".close");
         const buttons = document.querySelectorAll(".rallyButton");
+        const gameBesButtons = document.querySelectorAll(".rincian");
         const modalItem = document.getElementById("modal-item")
+        const modalHeaderTitle = document.getElementById("modal-header__title");
 
         const getHistory = async (id) => {
             modalItem.innerHTML = "";
+            modalHeaderTitle.innerHTML = "History";
             console.log(id);
             let points;
             let posts;
@@ -214,6 +217,60 @@
 
             modal.style.display = "block";
         }
+
+        const getRincian = async (id) => {
+            modalItem.innerHTML = "";
+            modalHeaderTitle.innerHTML = "Rincian Salvos";
+            let keputusan, playerHp, totalDamage, turn, gameBesPoint, revive;
+            await $.ajax({
+                type: 'POST',
+                url: '{{ route('admin.rincian') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'id': id,
+                },
+                success: function (data) {
+                    if (data[0].status) {
+                        revive = data[0].revive;
+                        keputusan = data[0].keputusan;
+                        playerHp = data[0]['player_hp'];
+                        totalDamage = data[0]['total_damage'];
+                        turn = data[0].turn;
+                        gameBesPoint = data[0]['game_bes_point'];
+                        console.log(revive);
+
+                        let pKeputusan = document.createElement('p');
+                        let pPlayerHp = document.createElement('p');
+                        let pTotalDamage = document.createElement('p');
+                        let pTurn = document.createElement('p');
+                        let pGameBesPoint = document.createElement('p');
+                        let pRevive = document.createElement('p');
+
+                        pKeputusan.innerHTML = keputusan;
+                        pPlayerHp.innerHTML = playerHp;
+                        pTotalDamage.innerHTML = totalDamage;
+                        pTurn.innerHTML = turn;
+                        pGameBesPoint.innerHTML = gameBesPoint;
+                        pRevive.innerHTML = revive;
+
+                        modalItem.append(pKeputusan, pPlayerHp, pTotalDamage, pTurn, pGameBesPoint, pRevive);
+                    } else {
+                        let h1 = document.createElement('h1');
+                        h1.classList.add('display-4', 'fw-normal', 'text-danger', 'text-center');
+                        h1.innerHTML = "Belum Main";
+                        modalItem.append(h1);
+                    }
+                }
+            });
+
+            modal.style.display = "block";
+        }
+
+        gameBesButtons.forEach((button) => {
+            button.addEventListener('click', (event) => {
+                getRincian(button.id);
+            })
+        })
 
         // Open modal
         buttons.forEach((button) => {
