@@ -100,6 +100,7 @@
             display: flex;
             flex-direction: column;
             width: 100%;
+            height: 100%;
             margin-top: 20px;
             gap: 20px;
         }
@@ -127,7 +128,7 @@
                         <td class="text-center fs-5 fw-bold py-4">{{ $team }}</td>
                         <td class="text-center fs-5 py-4 rallyPoint">{{ $data["rally_point"]  }} <button id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rallyButton">History</button></td>
                         <td class="text-center fs-5 py-4"><div class="d-flex flex-column align-items-center justify-content-center">{{ $data["game_besar_point"] }} <a id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rincian">Rincian</a></div></td>
-                        <td class="text-center fs-5 fw-semibold py-4">{{ $data["total_point"] }}</td>
+                        <td class="text-center fs-3 fw-semibold py-4">{{ $data["total_point"] }}</td>
                     </tr>
                     @php($cnt++)
                 @else
@@ -135,7 +136,7 @@
                         <td class="text-center fs-5 fw-bold py-4">{{ $team }}</td>
                         <td class="text-center fs-5 py-4 rallyPoint">{{ $data["rally_point"]  }} <button id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rallyButton">History</button></td>
                         <td class="text-center fs-5 py-4 w-25"><div class="d-flex flex-column align-items-center justify-content-center">{{ $data["game_besar_point"] }} <a id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rincian">Rincian</a></div></td>
-                        <td class="text-center fs-5 fw-semibold py-4">{{ $data["total_point"] }}</td>
+                        <td class="text-center fs-3 fw-semibold py-4">{{ $data["total_point"] }}</td>
                     </tr>
                 @endif
             @endforeach
@@ -161,7 +162,7 @@
             </div>
             <div class="divider"></div>
             <!-- ITEM -->
-            <div id="modal-item">
+            <div id="modal-item" class="overflow-auto">
             </div>
         </div>
     </div>
@@ -220,7 +221,7 @@
 
         const getRincian = async (id) => {
             modalItem.innerHTML = "";
-            modalHeaderTitle.innerHTML = "Rincian Salvos";
+            // modalHeaderTitle.innerHTML = "Rincian Salvos";
             let keputusan, playerHp, totalDamage, turn, gameBesPoint, revive, playerHpPercent;
             await $.ajax({
                 type: 'POST',
@@ -230,6 +231,7 @@
                     'id': id,
                 },
                 success: function (data) {
+                    modalHeaderTitle.innerHTML = data[0].team_name + " - Battle of Salvos";
                     if (data[0].status) {
                         revive = data[0].revive;
                         keputusan = data[0].keputusan;
@@ -247,8 +249,16 @@
 
                         // Player HP
                         let divPlayerHp = document.createElement('div');
+                        let pPlayerHpLabel = document.createElement('p');
                         let pPlayerHp = document.createElement('p');
                         let divProgress = document.createElement('div');
+                        let divPlayer = document.createElement('div');
+                        divPlayer.classList.add('d-flex', 'justify-content-between');
+                        pPlayerHpLabel.innerHTML = "Player HP";
+                        pPlayerHpLabel.classList.add('fw-bold', 'fs-4');
+                        pPlayerHp.innerHTML = playerHp;
+                        pPlayerHp.classList.add('fw-bold', 'text-primary', 'fs-4');
+                        divPlayer.append(pPlayerHpLabel, pPlayerHp);
                         divProgress.classList.add('progress');
                         let divProgressBar = document.createElement('div');
                         divProgressBar.classList.add('progress-bar');
@@ -259,21 +269,56 @@
                         divProgressBar.ariaValueMin = "0";
                         divProgressBar.ariaValueMax = "100";
                         divProgress.append(divProgressBar);
-                        divPlayerHp.append(pPlayerHp, divProgress);
+                        divPlayerHp.append(divPlayer, divProgress);
 
+                        // Total Damage
                         let pTotalDamage = document.createElement('p');
+                        let pTotalDamageLabel = document.createElement('p');
+                        let divTotalDamage = document.createElement('div');
+                        divTotalDamage.classList.add('d-flex', 'justify-content-between');
+                        pTotalDamageLabel.innerHTML = "Total Damage";
+                        pTotalDamageLabel.classList.add('fw-bold', 'fs-4');
+                        pTotalDamage.innerHTML = totalDamage;
+                        pTotalDamage.classList.add('fw-bold', 'fs-4', 'text-primary');
+                        divTotalDamage.append(pTotalDamageLabel, pTotalDamage);
+
+                        // Turn
                         let pTurn = document.createElement('p');
-                        let pGameBesPoint = document.createElement('p');
+                        let pTurnLabel = document.createElement('p');
+                        let divTurn = document.createElement('div');
+                        divTurn.classList.add('d-flex', 'justify-content-between');
+                        pTurnLabel.innerHTML = "Total Turn";
+                        pTurnLabel.classList.add('fw-bold', 'fs-4');
+                        pTurn.innerHTML = turn;
+                        pTurn.classList.add('fw-bold', 'fs-4', 'text-primary');
+                        divTurn.append(pTurnLabel, pTurn);
+
+                        // Revive
                         let pRevive = document.createElement('p');
+                        let pReviveLabel = document.createElement('p');
+                        let divRevive = document.createElement('div');
+                        divRevive.classList.add('d-flex', 'justify-content-between');
+                        pReviveLabel.innerHTML = "Total Revive";
+                        pReviveLabel.classList.add('fw-bold', 'fs-4');
+                        pRevive.innerHTML = revive;
+                        pRevive.classList.add('fw-bold', 'fs-4', 'text-primary');
+                        divRevive.append(pReviveLabel, pRevive);
 
+                        // Game Bes Point
+                        let pGameBesPointLabel = document.createElement('p');
+                        let pGameBesPoint = document.createElement('p');
+                        let divGameBesPoint = document.createElement('div');
+                        divGameBesPoint.classList.add('d-flex', 'justify-content-between');
+                        pGameBesPointLabel.innerHTML = "Point";
+                        pGameBesPointLabel.classList.add('fw-bold', 'fs-4');
+                        pGameBesPoint.innerHTML = gameBesPoint;
+                        pGameBesPoint.classList.add('fw-bold', 'fs-4', 'text-primary');
+                        divGameBesPoint.append(pGameBesPointLabel, pGameBesPoint);
+
+                        // Keputusan
                         pKeputusan.innerHTML = keputusan;
-                        pPlayerHp.innerHTML = "Player HP : " + playerHp;
-                        pTotalDamage.innerHTML = "Total Damage : " + totalDamage;
-                        pTurn.innerHTML = "Total Turn : " + turn;
-                        pGameBesPoint.innerHTML = "Point : " + gameBesPoint;
-                        pRevive.innerHTML = "Revive : " + revive;
 
-                        modalItem.append(pKeputusan, divPlayerHp, pTotalDamage, pTurn, pGameBesPoint, pRevive);
+                        modalItem.append(pKeputusan, divPlayerHp, divTotalDamage, divTurn, divRevive, divGameBesPoint);
                     } else {
                         let h1 = document.createElement('h1');
                         h1.classList.add('display-4', 'fw-normal', 'text-danger', 'text-center');

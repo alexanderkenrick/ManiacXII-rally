@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\Point;
 use App\Models\Post;
 use App\Models\SalvosGame;
@@ -71,12 +72,14 @@ class AdminController extends Controller
 
     public function getRincian(Request $request) {
         $teamId = $request->get('id');
+        $team = Team::where('id', $teamId)->first();
         $salvosGame = SalvosGame::where('teams_id', $teamId)->first();
 
         // Kalo belum main (nggak tercatat)
         if (!$salvosGame) {
             return response()->json(array([
-                'status' => false
+                'status' => false,
+                'team_name' => $team->account->name
             ]), 200);
         }
 
@@ -96,6 +99,7 @@ class AdminController extends Controller
 
         return response()->json(array([
             'status' => true,
+            'team_name' => $team->account->name,
             'keputusan' => ($isWin) ? "Menang" : "Kalah",
             'player_hp' => $playerHP,
             'total_damage' => $totalDamage,
