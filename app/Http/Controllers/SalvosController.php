@@ -169,6 +169,12 @@ class SalvosController extends Controller
             'turn' => $updateTurn,
             'player_hp' => $salvosGame->player_hp + $reviveHP
         ]);
+
+        // catet revive
+        $salvosRevive = new SalvosRevive();
+        $salvosRevive->salvos_games_id = $salvosGame->id;
+        $salvosRevive->save();
+
         return response()->json(array([
             'status' => true,
             'msg' => 'Berhasil revive',
