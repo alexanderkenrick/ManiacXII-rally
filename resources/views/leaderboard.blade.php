@@ -221,7 +221,7 @@
         const getRincian = async (id) => {
             modalItem.innerHTML = "";
             modalHeaderTitle.innerHTML = "Rincian Salvos";
-            let keputusan, playerHp, totalDamage, turn, gameBesPoint, revive;
+            let keputusan, playerHp, totalDamage, turn, gameBesPoint, revive, playerHpPercent;
             await $.ajax({
                 type: 'POST',
                 url: '{{ route('admin.rincian') }}',
@@ -234,26 +234,46 @@
                         revive = data[0].revive;
                         keputusan = data[0].keputusan;
                         playerHp = data[0]['player_hp'];
+                        playerHpPercent = (playerHp / 100);
                         totalDamage = data[0]['total_damage'];
                         turn = data[0].turn;
                         gameBesPoint = data[0]['game_bes_point'];
                         console.log(revive);
 
+                        // Keputusan
                         let pKeputusan = document.createElement('p');
+                        pKeputusan.classList.add('display-4', 'fw-normal', 'text-center');
+                        (keputusan === "Menang") ? pKeputusan.classList.add('text-success') : pKeputusan.classList.add('text-danger');
+
+                        // Player HP
+                        let divPlayerHp = document.createElement('div');
                         let pPlayerHp = document.createElement('p');
+                        let divProgress = document.createElement('div');
+                        divProgress.classList.add('progress');
+                        let divProgressBar = document.createElement('div');
+                        divProgressBar.classList.add('progress-bar');
+                        divProgressBar.style.width = playerHpPercent + "%";
+                        divProgressBar.ariaRoleDescription = "progressbar";
+                        divProgressBar.ariaLabel = "Player HP";
+                        divProgressBar.ariaValueNow = playerHpPercent;
+                        divProgressBar.ariaValueMin = "0";
+                        divProgressBar.ariaValueMax = "100";
+                        divProgress.append(divProgressBar);
+                        divPlayerHp.append(pPlayerHp, divProgress);
+
                         let pTotalDamage = document.createElement('p');
                         let pTurn = document.createElement('p');
                         let pGameBesPoint = document.createElement('p');
                         let pRevive = document.createElement('p');
 
                         pKeputusan.innerHTML = keputusan;
-                        pPlayerHp.innerHTML = playerHp;
-                        pTotalDamage.innerHTML = totalDamage;
-                        pTurn.innerHTML = turn;
-                        pGameBesPoint.innerHTML = gameBesPoint;
-                        pRevive.innerHTML = revive;
+                        pPlayerHp.innerHTML = "Player HP : " + playerHp;
+                        pTotalDamage.innerHTML = "Total Damage : " + totalDamage;
+                        pTurn.innerHTML = "Total Turn : " + turn;
+                        pGameBesPoint.innerHTML = "Point : " + gameBesPoint;
+                        pRevive.innerHTML = "Revive : " + revive;
 
-                        modalItem.append(pKeputusan, pPlayerHp, pTotalDamage, pTurn, pGameBesPoint, pRevive);
+                        modalItem.append(pKeputusan, divPlayerHp, pTotalDamage, pTurn, pGameBesPoint, pRevive);
                     } else {
                         let h1 = document.createElement('h1');
                         h1.classList.add('display-4', 'fw-normal', 'text-danger', 'text-center');
