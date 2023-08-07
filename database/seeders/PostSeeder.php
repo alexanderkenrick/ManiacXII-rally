@@ -153,7 +153,7 @@ class PostSeeder extends Seeder
             ], 
             [
                 'id' => '18',
-                'penpos_id' => '31',
+                'penpos_id' => '19',
                 'name' => 'Treasure 1',
                 'status' => "Full",
                 'file_photo_loc' => "",
@@ -161,7 +161,7 @@ class PostSeeder extends Seeder
             ], 
             [
                 'id' => '19',
-                'penpos_id' => '32',
+                'penpos_id' => '20',
                 'name' => 'Treasure 2',
                 'status' => "Full",
                 'file_photo_loc' => "",
@@ -169,7 +169,7 @@ class PostSeeder extends Seeder
             ], 
             [
                 'id' => '20',
-                'penpos_id' => '33',
+                'penpos_id' => '21',
                 'name' => 'Salvos 1',
                 'status' => "Full",
                 'file_photo_loc' => "",
@@ -177,7 +177,7 @@ class PostSeeder extends Seeder
             ], 
             [
                 'id' => '21',
-                'penpos_id' => '34',
+                'penpos_id' => '22',
                 'name' => 'Salvos 2',
                 'status' => "Full",
                 'file_photo_loc' => "",
@@ -185,16 +185,8 @@ class PostSeeder extends Seeder
             ], 
             [
                 'id' => '22',
-                'penpos_id' => '35',
+                'penpos_id' => '23',
                 'name' => 'Salvos 3',
-                'status' => "Full",
-                'file_photo_loc' => "",
-                'post_type' => "Single"
-            ], 
-            [
-                'id' => '23',
-                'penpos_id' => '36',
-                'name' => 'Walking Fairy Tail Game',
                 'status' => "Full",
                 'file_photo_loc' => "",
                 'post_type' => "Single"
@@ -203,5 +195,6 @@ class PostSeeder extends Seeder
         foreach ($posts as $value){
             Post::create($value);
         }
+
     }
 }

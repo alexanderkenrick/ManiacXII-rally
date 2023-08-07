@@ -15,6 +15,19 @@ class AccountSeeder extends Seeder
      */
     public function run()
     {
+        function csvToArray($csv)
+        {
+            // create file handle to read CSV file
+            $csvToRead = fopen($csv, 'r');
+
+            // read CSV file using comma as delimiter
+            while (!feof($csvToRead)) {
+                $csvArray[] = fgetcsv($csvToRead, 1000, ',');
+            }
+
+            fclose($csvToRead);
+            return $csvArray;
+        }
         $accounts = [
             [
                 'id' => '1',
@@ -142,136 +155,58 @@ class AccountSeeder extends Seeder
                 'name' => 'Bingo',
                 'role' => '1'
             ],
+
             [
                 'id' => '19',
-                'username' => 'tim1',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Tim 1',
-                'role' => '2'
-            ],
-            [
-                'id' => '20',
-                'username' => 'tim2',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Tim 2',
-                'role' => '2'
-            ],
-            [
-                'id' => '21',
-                'username' => 'tim3',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Tim 3',
-                'role' => '2'
-            ],
-            [
-                'id' => '22',
-                'username' => 'tim4',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Tim 4',
-                'role' => '2'
-            ],
-            [
-                'id' => '23',
-                'username' => 'tim5',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Tim 5',
-                'role' => '2'
-            ],
-            [
-                'id' => '24',
-                'username' => 'tim6',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Tim 6',
-                'role' => '2'
-            ],
-            [
-                'id' => '25',
-                'username' => 'tim7',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Tim 7',
-                'role' => '2'
-            ],
-            [
-                'id' => '26',
-                'username' => 'tim8',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Tim 8',
-                'role' => '2'
-            ],
-            [
-                'id' => '27',
-                'username' => 'tim9',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Tim 9',
-                'role' => '2'
-            ],
-            [
-                'id' => '28',
-                'username' => 'tim10',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Tim 10',
-                'role' => '2'
-            ],
-            [
-                'id' => '29',
-                'username' => 'tim11',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Tim 11',
-                'role' => '2'
-            ],
-            [
-                'id' => '30',
-                'username' => 'tim12',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Tim 12',
-                'role' => '2'
-            ],
-            [
-                'id' => '31',
                 'username' => 'treasure1',
                 'password' => Hash::make('maniac123'),
                 'name' => 'Treasure 1',
                 'role' => '3'
             ],
             [
-                'id' => '32',
+                'id' => '20',
                 'username' => 'treasure2',
                 'password' => Hash::make('maniac123'),
                 'name' => 'Treasure 2',
                 'role' => '3'
             ],
             [
-                'id' => '33',
+                'id' => '21',
                 'username' => 'salvos1',
                 'password' => Hash::make('maniac123'),
                 'name' => 'Salvos 1',
                 'role' => '4'
             ],
             [
-                'id' => '34',
+                'id' => '22',
                 'username' => 'salvos2',
                 'password' => Hash::make('maniac123'),
                 'name' => 'Salvos 2',
                 'role' => '4'
             ],
             [
-                'id' => '35',
+                'id' => '23',
                 'username' => 'salvos3',
                 'password' => Hash::make('maniac123'),
                 'name' => 'Salvos 3',
                 'role' => '4'
             ],
-            [
-                'id' => '36',
-                'username' => 'walking2',
-                'password' => Hash::make('maniac123'),
-                'name' => 'Walking Fairy Tail Game',
-                'role' => '1'
-            ],
 
         ];
         foreach ($accounts as $value) {
             Account::create($value);
+        }
+        // CSV file to read into an Array
+        $csvFile = 'database/data/teams.csv';
+        $csvArray = csvToArray($csvFile);
+        for ($i = 0; $i < 39; $i++) {
+            Account::create([
+                'id' => $i+24,
+                'username' => 'tim' . $i,
+                'password' => Hash::make('maniac123'),
+                'name' => $csvArray[$i][0],
+                'role' => '2'
+            ]);
         }
     }
 }
