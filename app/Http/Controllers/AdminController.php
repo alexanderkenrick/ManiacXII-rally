@@ -43,7 +43,7 @@ class AdminController extends Controller
                     $gameBesPoint -= 1250;
                 }
 
-                $gameBesPoint = $gameBesPoint ;
+                $gameBesPoint = $gameBesPoint * 0.4;
                 if($totalDamage == 0){
                     $gameBesPoint = 0;
                 }
@@ -103,7 +103,7 @@ class AdminController extends Controller
             $gameBesPoint -= 1250;
         }
 
-        $gameBesPoint = $gameBesPoint ;
+        $gameBesPoint = $gameBesPoint * 0.4;
 
         return response()->json(array([
             'status' => true,
