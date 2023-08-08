@@ -20,7 +20,7 @@ class TreasureMapSeeder extends Seeder
             {
                 $getKrona = 0;
                 $rand = rand(0, 100);
-                if ($rand < 60)
+                if ($rand < 50)
                     $getKrona = rand(0, 10);
                 else
                     $getKrona = rand(10, 20);
