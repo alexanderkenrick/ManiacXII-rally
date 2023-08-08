@@ -199,7 +199,9 @@
 
                         document.getElementById(`${urutan}-namaTeam`).innerHTML = tim;
                         document.getElementById(`${urutan}-rallyPoint`).innerHTML = rally;
+                        document.getElementById(`${urutan}-rallyPoint`).nextElementSibling.id = id;
                         document.getElementById(`${urutan}-gameBesPoint`).innerHTML = gameBes;
+                        document.getElementById(`${urutan}-gameBesPoint`).nextElementSibling.id = id;
                         document.getElementById(`${urutan}-totalPoint`).innerHTML = total;
                         // console.log(tim, id, rally, gameBes, total);
                         urutan++;
