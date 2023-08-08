@@ -34,7 +34,7 @@ class AdminController extends Controller
                 $totalDamage = 10000 - $salvosGame["enemy_hp"];
                 $reviveCount = SalvosRevive::where("salvos_games_id", $team->id)->get();
                 $reviveCount = count($reviveCount);
-                
+
                 $gameBesPoint = ($reviveCount * -50) + $playerHP + $totalDamage;
 
                 if ($isWin) {
@@ -74,6 +74,70 @@ class AdminController extends Controller
 
         return view('leaderboard', compact('teamsData'));
 
+    }
+
+    public function load(Request $request)
+    {
+        $teams = Team::all();
+        $teamsData = [];
+
+        foreach ($teams as $team) {
+            $rallyPoint = Point::where('team_id', $team->id)->sum('point') * 0.6;
+            $gameBesPoint = 0;
+//            $gameBesPoint = 50;
+//            // Buat cek sortingan e (Kalo udh fix dihapus ae)
+//            if ($team->id == 2) {
+//                $gameBesPoint = 20;
+//            }
+
+            $salvosGame = SalvosGame::where("teams_id", $team->id)->first();
+            if ($salvosGame) {
+                $isWin =  $salvosGame["enemy_hp"] == "0";
+                $playerHP = $salvosGame["player_hp"];
+                $totalDamage = 10000 - $salvosGame["enemy_hp"];
+                $reviveCount = SalvosRevive::where("salvos_games_id", $team->id)->get();
+                $reviveCount = count($reviveCount);
+
+                $gameBesPoint = ($reviveCount * -50) + $playerHP + $totalDamage;
+
+                if ($isWin) {
+                    $gameBesPoint += 2500 - (($salvosGame->turn - 30) * 50);
+                } else {
+                    $gameBesPoint -= 1250;
+                }
+
+                $gameBesPoint = $gameBesPoint * 0.4;
+                if($totalDamage == 0){
+                    $gameBesPoint = 0;
+                }
+            }
+
+//            dd($gameBesPoint);
+
+            $totalPoint = $rallyPoint + ($gameBesPoint);
+            $arr = [
+                "team_id" => $team->id,
+                "rally_point" => $rallyPoint,
+                "game_besar_point" => $gameBesPoint,
+                "total_point" => $totalPoint
+            ];
+            $teamsData += array($team->account->name => $arr);
+        }
+
+//        $teamsData = collect($teamsData)->sort()->reverse()->toArray();
+
+        // Sort berdasarkan Total Point
+        array_multisort(
+            array_column($teamsData, "total_point"),
+            SORT_DESC,
+            array_column($teamsData, "rally_point"),
+            SORT_DESC,
+            $teamsData
+        );
+
+        return response()->json(array([
+            'data' => $teamsData
+        ]), 200);
     }
 
     public function getRincian(Request $request) {

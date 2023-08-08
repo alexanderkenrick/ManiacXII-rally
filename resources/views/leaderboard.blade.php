@@ -121,24 +121,26 @@
             @php
                 // 10 tim yg lolos penyisihan
                 $cnt = 1;
+                $urutan = 1;
             @endphp
             @foreach($teamsData as $team => $data)
                 @if($cnt <= 10)
                     <tr class="table-success">
-                        <td class="text-center fs-5 fw-bold py-4">{{ $team }}</td>
-                        <td class="text-center fs-5 py-4 rallyPoint">{{ $data["rally_point"]  }} <button id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rallyButton">History</button></td>
-                        <td class="text-center fs-5 py-4"><div class="d-flex flex-column align-items-center justify-content-center">{{ $data["game_besar_point"] }} <a id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rincian">Rincian</a></div></td>
-                        <td class="text-center fs-3 fw-semibold py-4">{{ $data["total_point"] }}</td>
+                        <td class="text-center fs-5 fw-bold py-4"><span id="{{ $urutan }}-namaTeam">{{ $team }}</span></td>
+                        <td class="text-center fs-5 py-4 rallyPoint"><span id="{{ $urutan }}-rallyPoint">{{ $data["rally_point"]  }}</span> <button id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rallyButton">History</button></td>
+                        <td class="text-center fs-5 py-4"><div class="d-flex flex-column align-items-center justify-content-center"><span id="{{ $urutan }}-gameBesPoint">{{ $data["game_besar_point"] }}</span> <a id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rincian">Rincian</a></div></td>
+                        <td class="text-center fs-3 fw-semibold py-4"><span id="{{ $urutan }}-totalPoint">{{ $data["total_point"] }}</span></td>
                     </tr>
                     @php($cnt++)
                 @else
                     <tr>
-                        <td class="text-center fs-5 fw-bold py-4">{{ $team }}</td>
-                        <td class="text-center fs-5 py-4 rallyPoint">{{ $data["rally_point"]  }} <button id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rallyButton">History</button></td>
-                        <td class="text-center fs-5 py-4 w-25"><div class="d-flex flex-column align-items-center justify-content-center">{{ $data["game_besar_point"] }} <a id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rincian">Rincian</a></div></td>
-                        <td class="text-center fs-3 fw-semibold py-4">{{ $data["total_point"] }}</td>
+                        <td class="text-center fs-5 fw-bold py-4"><span id="{{ $urutan }}-namaTeam">{{ $team }}</span></td>
+                        <td class="text-center fs-5 py-4 rallyPoint"><span id="{{ $urutan }}-rallyPoint">{{ $data["rally_point"]  }}</span> <button id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rallyButton">History</button></td>
+                        <td class="text-center fs-5 py-4 w-25"><div class="d-flex flex-column align-items-center justify-content-center"><span id="{{ $urutan }}-gameBesPoint">{{ $data["game_besar_point"] }}</span> <a id="{{ $data["team_id"] }}" class="w-75 btn btn-primary mt-2 rincian">Rincian</a></div></td>
+                        <td class="text-center fs-3 fw-semibold py-4"><span id="{{ $urutan }}-totalPoint">{{ $data["total_point"] }}</span></td>
                     </tr>
                 @endif
+                @php($urutan++)
             @endforeach
             </tbody>
         </table>
@@ -168,6 +170,57 @@
     </div>
 
     <script>
+
+        setInterval(async () => {
+            await load();
+            console.log("load");
+        }, 10000);
+
+        const load = async () => {
+            let teams;
+            await $.ajax({
+                type: 'POST',
+                url: '{{ route('admin.load') }}',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                },
+                success: function (data) {
+                    // teams = JSON.parse(data[0].data);
+                    let rally, gameBes, total, id;
+                    let urutan = 1;
+                    // console.log(data[0].data);
+
+                    for (const [key, value] of Object.entries(data[0].data)) {
+                        let tim = key;
+                        id = data[0].data[key]["team_id"];
+                        rally = data[0].data[key]["rally_point"];
+                        gameBes = data[0].data[key]["game_besar_point"];
+                        total = data[0].data[key]["total_point"];
+
+                        document.getElementById(`${urutan}-namaTeam`).innerHTML = tim;
+                        document.getElementById(`${urutan}-rallyPoint`).innerHTML = rally;
+                        document.getElementById(`${urutan}-gameBesPoint`).innerHTML = gameBes;
+                        document.getElementById(`${urutan}-totalPoint`).innerHTML = total;
+                        // console.log(tim, id, rally, gameBes, total);
+                        urutan++;
+                    }
+
+                    // for (let i = 0; i < data[0].data.length; i++) {
+                    //     let tim = data[0].data;
+                    //     id = tim["team_id"]
+                    //     rally = tim["rally_point"];
+                    //     gameBes = tim["game_besar_point"];
+                    //     total = tim["total_point"];
+                    //
+                    //     document.getElementById(`${id}-namaTeam`).innerHTML = tim;
+                    //     document.getElementById(`${id}-rallyPoint`).innerHTML = rally;
+                    //     document.getElementById(`${id}-gameBesPoint`).innerHTML = gameBes;
+                    //     document.getElementById(`${id}-totalPoint`).innerHTML = total;
+                    // }
+                }
+            });
+        }
+
         const modal = document.getElementById("myModal");
         const closeModal = document.querySelector(".close");
         const buttons = document.querySelectorAll(".rallyButton");
