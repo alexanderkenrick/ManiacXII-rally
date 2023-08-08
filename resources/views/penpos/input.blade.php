@@ -474,6 +474,7 @@
             // handle the scanned code as you like, for example:
             console.log(`Code matched = ${decodedText}`, decodedResult);
             $('#team').attr('value', decodedText);
+            navigator.vibrate(200);
         }
 
         function onScanFailure(error) {
