@@ -368,15 +368,15 @@
                                 <div class="team-select my-2 ">
                                     <label for="team" style="">Nama Tim :</label>
                                     <br>
-                                    <input type="text" id='team' value="" class="" disabled>
-                                    {{-- <select name="team" id="team" class="select2" required>
+                                    <input type="text" id='team' value="" class="" disabled hidden>
+                                    <select name="team" id="team" class="select2" required>
                                     <option value="-" selected disabled>- Pilih Team -</option>
                                     @foreach ($teams as $team)
-                                        <option value="{{ $team->id }}" id="{{ $team->id }}">
+                                        <option value="{{ $team->account->name }}" id="{{ $team->account->name }}">
                                             {{ $team->account->name }}
                                         </option>
                                     @endforeach
-                                </select> --}}
+                                </select>
                                 </div>
                                 <label for="inputPoin" style="">Input Poin :</label>
                                 <br>
