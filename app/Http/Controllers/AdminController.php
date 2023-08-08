@@ -32,7 +32,8 @@ class AdminController extends Controller
                 $isWin =  $salvosGame["enemy_hp"] == "0";
                 $playerHP = $salvosGame["player_hp"];
                 $totalDamage = 10000 - $salvosGame["enemy_hp"];
-                $reviveCount = SalvosRevive::where("salvos_games_id", $team->id)->count();
+                $reviveCount = SalvosRevive::where("salvos_games_id", $team->id)->get();
+                $reviveCount = count($reviveCount);
                 
                 $gameBesPoint = ($reviveCount * -50) + $playerHP + $totalDamage;
 
