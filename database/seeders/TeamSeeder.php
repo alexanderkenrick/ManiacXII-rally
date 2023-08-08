@@ -18,7 +18,7 @@ class TeamSeeder extends Seeder
             Team::create([
                 'id' => $i,
                 'account_id' => $i+23,
-                'currency' => '0',
+                'currency' => '500',
                 'file_qr_loc' => ""
             ]);
         }
