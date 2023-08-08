@@ -41,11 +41,13 @@ class AdminController extends Controller
                 } else {
                     $gameBesPoint -= 1250;
                 }
+
+                $gameBesPoint = $gameBesPoint * 0.4;
             }
 
 //            dd($gameBesPoint);
 
-            $totalPoint = $rallyPoint + ($gameBesPoint * 0.4);
+            $totalPoint = $rallyPoint + ($gameBesPoint);
             $arr = [
                 "team_id" => $team->id,
                 "rally_point" => $rallyPoint,
@@ -96,6 +98,8 @@ class AdminController extends Controller
         } else {
             $gameBesPoint -= 1250;
         }
+
+        $gameBesPoint = $gameBesPoint * 0.4;
 
         return response()->json(array([
             'status' => true,
