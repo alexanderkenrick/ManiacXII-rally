@@ -172,6 +172,10 @@
             filter: drop-shadow(0 0 0.75rem #4f200d)
         }
 
+        .scan-success{
+            background: #F2ADAB;
+        }
+
         /* media quaries */
         @media (max-width:1200px) {
             .cloud1 {
@@ -364,7 +368,7 @@
                                 <div class="team-select my-2 ">
                                     <label for="team" style="">Nama Tim :</label>
                                     <br>
-                                    <input type="text" id='team' value="" disabled>
+                                    <input type="text" id='team' value="" class="" disabled>
                                     {{-- <select name="team" id="team" class="select2" required>
                                     <option value="-" selected disabled>- Pilih Team -</option>
                                     @foreach ($teams as $team)
@@ -475,7 +479,9 @@
             // handle the scanned code as you like, for example:
             console.log(`Code matched = ${decodedText}`, decodedResult);
             $('#team').attr('value', decodedText);
+            $('#team').addClass('scan-success');
             navigator.vibrate(200);
+
         }
 
         function onScanFailure(error) {
