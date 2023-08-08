@@ -460,6 +460,7 @@
                     $("#team").val('');
                     $("#inputPoint").val('');
                     }
+                    setTimeout(window.location.reload(),1500);
                 },
                 error: function(data) {
                     console.log(data);
