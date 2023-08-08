@@ -476,11 +476,6 @@
             console.log(`Code matched = ${decodedText}`, decodedResult);
             $('#team').attr('value', decodedText);
             navigator.vibrate(200);
-            Toaster.fire({
-                icon: 'success',
-                animation: true,
-                title: decodedText+" telah discan";
-            });
         }
 
         function onScanFailure(error) {
