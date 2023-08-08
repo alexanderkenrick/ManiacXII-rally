@@ -16,11 +16,11 @@ class SalvosSeeder extends Seeder
     {
         $dmgs = [
             [
-                'multiple' => rand(1,7),
+                'multiple' => rand(1,5),
                 'turn' => 6,
             ],
             [
-                'multiple' => rand(1,7),
+                'multiple' => rand(1,5),
                 'turn' => 12,
             ],
             [
