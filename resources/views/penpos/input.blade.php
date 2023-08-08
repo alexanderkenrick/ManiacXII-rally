@@ -465,7 +465,7 @@
                         $("#team").val('');
                         $("#inputPoint").val('');
                     }
-                    setTimeout(window.location.reload(), 1500);
+                    setTimeout(function(){window.location.reload();}, 7000);
                 },
                 error: function(data) {
                     console.log(data);
