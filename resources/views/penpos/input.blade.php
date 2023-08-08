@@ -368,7 +368,7 @@
                                 <div class="team-select my-2 ">
                                     <label for="team" style="">Nama Tim :</label>
                                     <br>
-                                    <input type="text" id='team' value="" class="" disabled hidden>
+                                    <input type="text" id='team-qr' value="" class="" disabled hidden>
                                     <select name="team" id="team" class="select2" required>
                                     <option value="-" selected disabled>- Pilih Team -</option>
                                     @foreach ($teams as $team)
@@ -432,7 +432,9 @@
 
 
         const inputPoin = () => {
-            const teamName = $('#team').val();
+            let teamName = $('#team-qr').val();
+            teamName = $('#team').val();
+
             const poin = $('#inputPoint').val();
 
             $.ajax({
@@ -454,6 +456,8 @@
                         });
 
                         $("#team").val('');
+                        $("#team-qr").val('');
+
                         $("#inputPoint").val('');
                     } else {
                         Toaster.fire({
@@ -463,6 +467,8 @@
                         });
 
                         $("#team").val('');
+                        $("#team-qr").val('');
+
                         $("#inputPoint").val('');
                     }
                     setTimeout(function(){window.location.reload();}, 7000);
@@ -478,8 +484,8 @@
         function onScanSuccess(decodedText, decodedResult) {
             // handle the scanned code as you like, for example:
             console.log(`Code matched = ${decodedText}`, decodedResult);
-            $('#team').attr('value', decodedText);
-            $('#team').addClass('scan-success');
+            $('#team-qr').attr('value', decodedText);
+            $('#team-qr').addClass('scan-success');
             navigator.vibrate(200);
 
         }
