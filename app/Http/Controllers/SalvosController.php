@@ -186,7 +186,7 @@ class SalvosController extends Controller
         $team = Team::where("id", "=", $request['id'])->first();
         $salvosGame = SalvosGame::where("teams_id", "=", $request['id'])->first();
         $price = 100;
-        $multiple = rand(0, 70) / 10;
+        $multiple = rand(11, 70) / 10;
         if ($salvosGame->player_hp <= 0)
         {
             return response()->json(array([
