@@ -289,6 +289,7 @@
                 left: -8em;
                 z-index: -1;
             }
+
             .butterfly1 {
                 display: none;
             }
@@ -350,9 +351,9 @@
                             <h1 class="penpos-name" style="font-weight: bolder;">{{ $penpos->name }}</h1>
                         </div>
                         <div class="card-body">
-                                <div class="qr-section">
-                                    <div id="reader" class="px-3 pt-4"></div>
-                                </div>
+                            <div class="qr-section">
+                                <div id="reader" class="px-3 pt-4"></div>
+                            </div>
                             @if (Session::has('valid'))
                                 @if (Session::get('valid') == 'false')
                                     <div class="alert alert-danger" style="">
@@ -441,26 +442,26 @@
                 success: function(data) {
                     console.log('Input poin berhasil!' + '\nTeam: ' + teamName +
                         "\nPoin: " + poin);
-                    if(data[0].msg == "Success"){
+                    if (data[0].msg == "Success") {
                         Toaster.fire({
-                        icon: 'success',
-                        animation: true,
-                        title: 'Input Poin Berhasil!'
-                    });
+                            icon: 'success',
+                            animation: true,
+                            title: 'Input Poin Berhasil!'
+                        });
 
-                    $("#team").val('');
-                    $("#inputPoint").val('');
-                    }else{
+                        $("#team").val('');
+                        $("#inputPoint").val('');
+                    } else {
                         Toaster.fire({
-                        icon: 'error',
-                        animation: true,
-                        title: data[0].msg,
-                    });
-                    
-                    $("#team").val('');
-                    $("#inputPoint").val('');
+                            icon: 'error',
+                            animation: true,
+                            title: data[0].msg,
+                        });
+
+                        $("#team").val('');
+                        $("#inputPoint").val('');
                     }
-                    setTimeout(window.location.reload(),1500);
+                    setTimeout(window.location.reload(), 1500);
                 },
                 error: function(data) {
                     console.log(data);
@@ -475,6 +476,11 @@
             console.log(`Code matched = ${decodedText}`, decodedResult);
             $('#team').attr('value', decodedText);
             navigator.vibrate(200);
+            Toaster.fire({
+                icon: 'success',
+                animation: true,
+                title: decodedText+" telah discan";
+            });
         }
 
         function onScanFailure(error) {
