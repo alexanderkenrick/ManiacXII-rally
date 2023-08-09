@@ -30,7 +30,7 @@ class PenposController extends Controller
         // Pengecekan textbox
         $validator = Validator::make($request->all(), [
             'team_name' => 'required',
-            'poin' => 'required|digits:3|digits_between:0,201|numeric'
+            'poin' => 'required'
         ]);
         // Klu gagal
         if ($validator->fails()) {
