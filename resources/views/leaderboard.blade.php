@@ -394,11 +394,10 @@
 
         // Open modal
         buttons.forEach((button) => {
-            let id = button.id;
             button.addEventListener('click', (event) => {
                 // console.log(id);
                 // getHistory(id).then()
-                getHistory(id);
+                getHistory(button.id);
             })
         });
 
