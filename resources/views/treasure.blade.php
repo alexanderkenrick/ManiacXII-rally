@@ -368,7 +368,7 @@
                 }
             });
         }
-        // setInterval(updateMap, 3000);
+        setInterval(updateMap, 3000);
 
         const addShovel = () => {
             let team_id = $('#team').val();
