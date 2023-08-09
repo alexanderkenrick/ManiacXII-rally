@@ -326,8 +326,7 @@
                             let tempCol = data[0].array_Map[counterId]['column'];
 
                             if (data[0].array_Map[counterId]['digged'] == '1') {
-                                if ((tempRow == 1) || (tempCol == 15) || (tempCol == 1) || (tempRow ==
-                                    15)) {
+                                if ((tempRow == 1) || (tempCol == 15) || (tempCol == 1) || (tempRow ==10)) {
                                     kolom +=
                                         `<td id="${tempRow}-${tempCol}" class="map-kolom" onclick='startPosition(${tempRow},${tempCol})'></td>`;
                                 } else {
@@ -335,8 +334,7 @@
                                 }
 
                             } else {
-                                if ((tempRow == 1) || (tempCol == 15) || (tempCol == 1) || (tempRow ==
-                                    15)) {
+                                if ((tempRow == 1) || (tempCol == 15) || (tempCol == 1) || (tempRow == 10)) {
                                     kolom +=
                                         `<td id="${tempRow}-${tempCol}" class="map-kolom"><img src="{{ asset('/img/treasure/tanah.png') }}" alt="" class="map-tanah" onclick='startPosition(${tempRow},${tempCol})'></td>`;
                                 } else {
