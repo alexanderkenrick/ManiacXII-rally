@@ -82,7 +82,7 @@ class AdminController extends Controller
         $teamsData = [];
 
         foreach ($teams as $team) {
-            $rallyPoint = Point::where('team_id', $team->id)->sum('point') * 0.6;
+            $rallyPoint = Point::where('team_id', $team->id)->sum('point') * 6;
             $gameBesPoint = 0;
 //            $gameBesPoint = 50;
 //            // Buat cek sortingan e (Kalo udh fix dihapus ae)
