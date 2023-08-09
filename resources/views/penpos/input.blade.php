@@ -380,7 +380,7 @@
                                 </div>
                                 <label for="inputPoin" style="">Input Poin :</label>
                                 <br>
-                                <input type="number" name="inputPoin" id="inputPoint" style="width: ;" required>
+                                <input type="number" name="inputPoin" id="inputPoint" style="width: ;" max='200' required>
                             </div>
                             <div class="submit-section d-flex justify-content-center py-3">
                                 <button class="btn btn-submit" onclick="inputPoin()" id="submitPoint">Submit</button>
@@ -432,8 +432,12 @@
 
 
         const inputPoin = () => {
-            let teamName = $('#team-qr').val();
-            teamName = $('#team').val();
+            let teamName='';
+            if($('#team-qr').val()!=''){
+                teamName = $('#team-qr').val();
+            }else if($('#team').val()!=''){
+                teamName = $('#team').val();
+            }            
 
             const poin = $('#inputPoint').val();
 
