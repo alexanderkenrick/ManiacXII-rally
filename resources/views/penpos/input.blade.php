@@ -368,15 +368,15 @@
                                 <div class="team-select my-2 ">
                                     <label for="team" style="">Nama Tim :</label>
                                     <br>
-                                    <input type="text" id='team-qr' value="" class="" disabled hidden>
-                                    <select name="team" id="team" class="select2" required>
-                                    <option value="-" selected disabled>- Pilih Team -</option>
-                                    @foreach ($teams as $team)
-                                        <option value="{{ $team->account->name }}" id="{{ $team->account->name }}">
-                                            {{ $team->account->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                    <input type="text" id='team-qr' value="" class="" disabled>
+                                    {{-- <select name="team" id="team" class="select2" required>
+                                        <option value="-" selected disabled>- Pilih Team -</option>
+                                        @foreach ($teams as $team)
+                                            <option value="{{ $team->account->name }}" id="{{ $team->account->name }}">
+                                                {{ $team->account->name }}
+                                            </option>
+                                        @endforeach
+                                    </select> --}}
                                 </div>
                                 <label for="inputPoin" style="">Input Poin :</label>
                                 <br>
@@ -432,12 +432,12 @@
 
 
         const inputPoin = () => {
-            let teamName='';
-            if($('#team-qr').val()!=''){
-                teamName = $('#team-qr').val();
-            }else if($('#team').val()!=''){
-                teamName = $('#team').val();
-            }            
+            let teamName = $('#team-qr').val();;
+            // if($('#team-qr').val()!=''){
+            //     teamName = $('#team-qr').val();
+            // }else if($('#team').val()!=''){
+            //     teamName = $('#team').val();
+            // }            
 
             const poin = $('#inputPoint').val();
 
@@ -459,7 +459,7 @@
                             title: 'Input Poin Berhasil!'
                         });
 
-                        $("#team").val('');
+                        // $("#team").val('');
                         $("#team-qr").val('');
 
                         $("#inputPoint").val('');
@@ -470,7 +470,7 @@
                             title: data[0].msg,
                         });
 
-                        $("#team").val('');
+                        // $("#team").val('');
                         $("#team-qr").val('');
 
                         $("#inputPoint").val('');
